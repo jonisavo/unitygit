@@ -1,6 +1,6 @@
 {
-    "name": "GitUnity.GUI",
-    "rootNamespace": "GitUnity.GUI",
+    "name": "UnityGit.GUI",
+    "rootNamespace": "UnityGit.GUI",
     "references": [
         "GUID:637d729f7da2eb44bba25a707c4e54bd"
     ],

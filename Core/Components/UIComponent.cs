@@ -3,11 +3,11 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace GitUnity.GUI.Components
+namespace UnityGit.GUI.Components
 {
     public abstract class UIComponent<T> : VisualElement where T : UIComponent<T>
     {
-        private const string AssetPath = "Packages/io.savolainen.git-unity.gui/Assets/Components";
+        private const string AssetPath = "Packages/io.savolainen.unitygit.gui/Assets/Components";
 
         private static readonly string ComponentName = typeof(T).Name;
         private static readonly string LayoutFileName = ComponentName + ".uxml";

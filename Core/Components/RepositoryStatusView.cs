@@ -2,7 +2,7 @@
 using LibGit2Sharp;
 using UnityEngine.UIElements;
 
-namespace GitUnity.GUI.Components
+namespace UnityGit.GUI.Components
 {
     public class RepositoryStatusView : UIComponent<RepositoryStatusView>
     {

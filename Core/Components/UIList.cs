@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine.UIElements;
 
-namespace GitUnity.GUI.Components
+namespace UnityGit.GUI.Components
 {
     public abstract class UIList<T, TItem, TElement> : UIComponent<T>
         where T : UIList<T, TItem, TElement>

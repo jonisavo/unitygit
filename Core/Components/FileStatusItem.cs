@@ -1,8 +1,7 @@
 ﻿using LibGit2Sharp;
-using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace GitUnity.GUI.Components
+namespace UnityGit.GUI.Components
 {
     public class FileStatusItem : UIComponent<FileStatusItem>
     {

@@ -1,12 +1,12 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using GitUnity.Core;
-using GitUnity.Core.Utilities;
-using GitUnity.GUI.Components;
-using RepositoryStatus = GitUnity.Core.RepositoryStatus;
+using UnityGit.Core;
+using UnityGit.Core.Utilities;
+using UnityGit.GUI.Components;
+using RepositoryStatus = UnityGit.Core.RepositoryStatus;
 
-namespace GitUnity.GUI
+namespace UnityGit.GUI
 {
     public class TestWindow : EditorWindow
     {
