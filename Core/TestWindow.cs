@@ -1,10 +1,9 @@
-﻿using System.Linq;
+﻿using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using GitUnity.Core;
 using GitUnity.GUI.Components;
-using LibGit2Sharp;
 using RepositoryStatus = GitUnity.Core.RepositoryStatus;
 
 namespace GitUnity.GUI
@@ -48,56 +47,19 @@ namespace GitUnity.GUI
             container.Add(button);
 
             if (!status.ProjectRepository.IsValid())
-            {
                 container.Add(new Label("Project repository is not valid."));
-            }
             else
-            {
-                container.Add(new Label(status.ProjectRepository.Repository.Info.Path));
-
-                var statusOptions = new StatusOptions
-                {
-                    ExcludeSubmodules = true,
-                    IncludeIgnored = false,
-                    IncludeUnaltered = false
-                };
-                var items = status.ProjectRepository.Repository.RetrieveStatus(statusOptions);
-                var untrackedItems =
-                    items.Untracked.Where(item => !item.State.HasFlag(FileStatus.Nonexistent))
-                        .ToList();
-
-                var trackedItems =
-                    items.Where(item => !item.State.HasFlag(FileStatus.NewInWorkdir))
-                        .ToList();
-                
-                container.Add(new FileStatusList(trackedItems, "Tracked"));
-                
-                container.Add(new FileStatusList(untrackedItems, "Untracked"));
-            }
+                container.Add(new RepositoryStatusView(status.ProjectRepository.Repository, "Project repository"));
 
             if (status.PackageRepositories.Count == 0)
-            {
                 container.Add(new Label("No package repositories found."));
-            }
             else
-            {
-                var foldout = new Foldout
-                {
-                    text = "Package repositories"
-                };
-
                 foreach (var packageRepo in status.PackageRepositories)
                 {
-                    var packageRepoContainer = new VisualElement();
-                    packageRepoContainer.Add(new Label(packageRepo.Key));
-                    packageRepoContainer.Add(new Label(packageRepo.Value.Info.Path));
-                    foldout.Add(packageRepoContainer);
+                    var packagePathParts = packageRepo.Key.Split(Path.DirectorySeparatorChar);
+                    var packageName = packagePathParts[packagePathParts.Length - 2];
+                    container.Add(new RepositoryStatusView(packageRepo.Value, packageName));
                 }
-
-                container.Add(foldout);
-            }
-            
-            Debug.Log("Hi");
         }
 
         private void Refresh()

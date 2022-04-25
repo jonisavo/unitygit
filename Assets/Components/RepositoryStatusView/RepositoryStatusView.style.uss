@@ -1,0 +1,8 @@
+﻿#repository-status-name-label {
+    -unity-font-style: bold;
+    font-size: 14px;
+}
+
+#repository-status-path-label {
+    font-size: 10px;
+}

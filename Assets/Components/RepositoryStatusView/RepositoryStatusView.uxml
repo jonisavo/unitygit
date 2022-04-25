@@ -1,0 +1,6 @@
+﻿<UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement name="repository-status-container">
+        <ui:Label name="repository-status-name-label" />
+        <ui:Label name="repository-status-path-label" />
+    </ui:VisualElement> 
+</UXML>
