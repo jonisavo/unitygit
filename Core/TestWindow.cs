@@ -35,7 +35,7 @@ namespace UnityGit.GUI
         public void CreateGUI()
         {
             var status = UnityGitStatus.Global;
-            var container = new VisualElement();
+            var container = new ScrollView();
             rootVisualElement.Add(container);
 
             var button = new Button(Refresh)
