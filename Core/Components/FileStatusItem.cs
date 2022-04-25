@@ -1,9 +1,12 @@
 ﻿using LibGit2Sharp;
+using UIComponents.Core;
 using UnityEngine.UIElements;
 
 namespace UnityGit.GUI.Components
 {
-    public class FileStatusItem : UIComponent<FileStatusItem>
+    [Layout("FileStatusItem/FileStatusItem.uxml", RelativeTo = AssetPaths.Components)]
+    [Stylesheet("FileStatusItem/FileStatusItem.style.uss", RelativeTo = AssetPaths.Components)]
+    public class FileStatusItem : UIComponent
     {
         private StatusEntry _statusEntry;
         private bool _ignored;

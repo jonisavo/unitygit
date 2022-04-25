@@ -1,10 +1,13 @@
 ﻿using System.Linq;
 using LibGit2Sharp;
+using UIComponents.Core;
 using UnityEngine.UIElements;
 
 namespace UnityGit.GUI.Components
 {
-    public class RepositoryStatusView : UIComponent<RepositoryStatusView>
+    [Layout("RepositoryStatusView/RepositoryStatusView.uxml", RelativeTo = AssetPaths.Components)]
+    [Stylesheet("RepositoryStatusView/RepositoryStatusView.style.uss", RelativeTo = AssetPaths.Components)]
+    public class RepositoryStatusView : UIComponent
     {
         public RepositoryStatusView(IRepository repository, string name)
         {

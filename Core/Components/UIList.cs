@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
+using UIComponents.Core;
 using UnityEngine.UIElements;
 
 namespace UnityGit.GUI.Components
 {
-    public abstract class UIList<T, TItem, TElement> : UIComponent<T>
-        where T : UIList<T, TItem, TElement>
-        where TElement : VisualElement
+    public abstract class UIList<TItem, TElement> : UIComponent where TElement : VisualElement
     {
         protected readonly List<TItem> Items;
 

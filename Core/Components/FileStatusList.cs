@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using LibGit2Sharp;
+using UIComponents.Core;
 using UnityEngine.UIElements;
 
 namespace UnityGit.GUI.Components
 {
-    public class FileStatusList : UIList<FileStatusList, StatusEntry, FileStatusItem>
+    [Layout("FileStatusList/FileStatusList.uxml", RelativeTo = AssetPaths.Components)]
+    [Stylesheet("FileStatusList/FileStatusList.style.uss", RelativeTo = AssetPaths.Components)]
+    public class FileStatusList : UIList<StatusEntry, FileStatusItem>
     {
         public FileStatusList(List<StatusEntry> statusEntries, string header) : base(statusEntries)
         {
