@@ -32,10 +32,16 @@ namespace UnityGit.GUI
             Refresh();
         }
 
+        private void OnBecameVisible()
+        {
+            Refresh();
+        }
+
         public void CreateGUI()
         {
             var status = UnityGitStatus.Global;
             var container = new ScrollView();
+            rootVisualElement.Clear();
             rootVisualElement.Add(container);
 
             var button = new Button(Refresh)
@@ -62,7 +68,6 @@ namespace UnityGit.GUI
         private void Refresh()
         {
             UnityGitStatus.Global.PopulateRepositories();
-            rootVisualElement.Clear();
             CreateGUI();
         }
     }
