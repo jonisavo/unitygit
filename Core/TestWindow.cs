@@ -61,7 +61,6 @@ namespace UnityGit.GUI
 
         private void Refresh()
         {
-            UnityGitStatus.Global.Clear();
             UnityGitStatus.Global.PopulateRepositories();
             rootVisualElement.Clear();
             CreateGUI();
