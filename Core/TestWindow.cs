@@ -1,8 +1,8 @@
-﻿using System.IO;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using GitUnity.Core;
+using GitUnity.Core.Utilities;
 using GitUnity.GUI.Components;
 using RepositoryStatus = GitUnity.Core.RepositoryStatus;
 
@@ -46,19 +46,18 @@ namespace GitUnity.GUI
             };
             container.Add(button);
 
-            if (!status.ProjectRepository.IsValid())
+            if (!status.HasProjectRepository())
                 container.Add(new Label("Project repository is not valid."));
             else
-                container.Add(new RepositoryStatusView(status.ProjectRepository.Repository, "Project repository"));
+                container.Add(new RepositoryStatusView(status.ProjectRepository, Application.productName));
 
-            if (status.PackageRepositories.Count == 0)
+            if (!status.HasPackageRepositories())
                 container.Add(new Label("No package repositories found."));
             else
                 foreach (var packageRepo in status.PackageRepositories)
                 {
-                    var packagePathParts = packageRepo.Key.Split(Path.DirectorySeparatorChar);
-                    var packageName = packagePathParts[packagePathParts.Length - 2];
-                    container.Add(new RepositoryStatusView(packageRepo.Value, packageName));
+                    var packageName = RepositoryUtilities.GetRepositoryName(packageRepo);
+                    container.Add(new RepositoryStatusView(packageRepo, packageName));
                 }
         }
 
