@@ -1,0 +1,18 @@
+{
+    "name": "GitUnity.GUI",
+    "rootNamespace": "GitUnity.GUI",
+    "references": [
+        "GUID:637d729f7da2eb44bba25a707c4e54bd"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

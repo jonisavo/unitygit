@@ -1,0 +1,10 @@
+﻿<UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement name="file-status-list-container">
+        <ui:Foldout name="file-status-list-foldout">
+            <ui:VisualElement name="file-status-list-options-container">
+                <ui:Button text="Select all" />
+            </ui:VisualElement>
+            <ui:ListView name="file-status-list-listview" selection-type="None" />
+        </ui:Foldout>
+    </ui:VisualElement>
+</UXML>

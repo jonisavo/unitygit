@@ -1,0 +1,9 @@
+﻿<UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement name="changed-file-container">
+        <ui:VisualElement name="changed-file-description-container">
+            <ui:Label name="changed-file-state" />
+            <ui:Label name="changed-file-filename" />
+        </ui:VisualElement>
+        <ui:Toggle name="changed-file-toggle" />
+    </ui:VisualElement>
+</UXML>
