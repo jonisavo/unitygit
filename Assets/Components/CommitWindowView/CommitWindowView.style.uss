@@ -1,0 +1,18 @@
+﻿#commit-window-view-container {
+    width: 95%;
+    height: 100%;
+    margin: 0 auto;
+    flex-direction: column;
+}
+
+#commit-window-status-container {
+    height: 80%;
+}
+
+#commit-window-view-message-container {
+    height: 20%;
+}
+
+#commit-window-view-commit-textfield {
+    height: 60%;
+}

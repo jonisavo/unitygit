@@ -1,0 +1,10 @@
+﻿<UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement name="commit-window-view-container">
+        <ui:ScrollView name="commit-window-view-status-container" />
+        <ui:VisualElement name="commit-window-view-message-container">
+            <ui:Label text="Commit message" />
+            <ui:TextField name="commit-window-view-commit-textfield" multiline="true" />
+            <ui:Button name="commit-window-view-commit-button" text="Commit" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</UXML>

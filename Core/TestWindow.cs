@@ -40,7 +40,9 @@ namespace UnityGit.GUI
         public void CreateGUI()
         {
             var status = UnityGitStatus.Global;
-            var container = new ScrollView();
+            var container = new VisualElement();
+            container.style.height = Length.Percent(100);
+            container.style.flexGrow = 1;
             rootVisualElement.Clear();
             rootVisualElement.Add(container);
 
@@ -50,19 +52,7 @@ namespace UnityGit.GUI
             };
             container.Add(button);
 
-            if (!status.HasProjectRepository())
-                container.Add(new Label("Project repository is not valid."));
-            else
-                container.Add(new RepositoryStatusView(status.ProjectRepository, Application.productName));
-
-            if (!status.HasPackageRepositories())
-                container.Add(new Label("No package repositories found."));
-            else
-                foreach (var packageRepo in status.PackageRepositories)
-                {
-                    var packageName = RepositoryUtilities.GetRepositoryName(packageRepo);
-                    container.Add(new RepositoryStatusView(packageRepo, packageName));
-                }
+            container.Add(new CommitWindowView(status));
         }
 
         private void Refresh()
