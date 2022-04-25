@@ -29,7 +29,6 @@ namespace UnityGit.GUI
 
         private void OnFileChanged(string path)
         {
-            Debug.Log("File changed");
             Refresh();
         }
 
