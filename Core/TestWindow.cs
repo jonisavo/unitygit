@@ -4,7 +4,6 @@ using UnityEngine.UIElements;
 using UnityGit.Core;
 using UnityGit.Core.Utilities;
 using UnityGit.GUI.Components;
-using RepositoryStatus = UnityGit.Core.RepositoryStatus;
 
 namespace UnityGit.GUI
 {
@@ -36,7 +35,7 @@ namespace UnityGit.GUI
 
         public void CreateGUI()
         {
-            var status = RepositoryStatus.Global;
+            var status = UnityGitStatus.Global;
             var container = new VisualElement();
             rootVisualElement.Add(container);
 
@@ -63,8 +62,8 @@ namespace UnityGit.GUI
 
         private void Refresh()
         {
-            RepositoryStatus.Global.Clear();
-            RepositoryStatus.Global.PopulateRepositories();
+            UnityGitStatus.Global.Clear();
+            UnityGitStatus.Global.PopulateRepositories();
             rootVisualElement.Clear();
             CreateGUI();
         }
