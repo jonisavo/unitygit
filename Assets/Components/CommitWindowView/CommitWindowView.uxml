@@ -2,14 +2,20 @@
     <ui:Button name="commit-window-view-refresh-button" text="Refresh" />
     <ui:VisualElement name="commit-window-view-container">
         <ui:ScrollView name="commit-window-view-status-container" />
-        <ui:VisualElement name="commit-window-view-message-container">
-            <ui:Label text="Author name" />
-            <ui:TextField name="commit-window-view-author-name-textfield" />
-            <ui:Label text="Author e-mail" />
-            <ui:TextField name="commit-window-view-author-email-textfield" />
+        <ui:Foldout name="commit-window-view-message-container" text="Commit...">
+            <ui:VisualElement name="commit-window-message-author-container">
+                <ui:VisualElement class="author-field">
+                    <ui:Label text="Author name" />
+                    <ui:TextField name="commit-window-view-author-name-textfield" />
+                </ui:VisualElement>
+                <ui:VisualElement class="author-field">
+                    <ui:Label text="Author e-mail" />
+                    <ui:TextField name="commit-window-view-author-email-textfield" />
+                </ui:VisualElement>
+            </ui:VisualElement>
             <ui:Label text="Commit message" />
             <ui:TextField name="commit-window-view-message-textfield" multiline="true" />
             <ui:Button name="commit-window-view-commit-button" text="Commit" />
-        </ui:VisualElement>
+        </ui:Foldout>
     </ui:VisualElement>
 </UXML>

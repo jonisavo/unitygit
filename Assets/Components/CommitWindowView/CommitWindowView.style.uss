@@ -3,17 +3,33 @@
     height: 100%;
     margin: 0 auto;
     flex-direction: column;
+    padding-bottom: 64px;
 }
 
 #commit-window-status-container {
-    height: 80%;
+    max-height: 80%;
 }
 
 #commit-window-view-message-container {
     position: absolute;
-    bottom: 0;
-    max-height: 20%;
+    bottom: 12px;
+    left: 0;
+    max-height: 55%;
+    max-width: 98%;
+    background-color: #333;
+    border-radius: 16px;
+    border-width: 2px;
+    border-color: #555;
+    padding: 6px;
     width: 100%;
+}
+
+#commit-window-message-author-container {
+    flex-direction: row;
+}
+
+.author-field {
+    width: 50%;
 }
 
 #commit-window-view-message-textfield {
