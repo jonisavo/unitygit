@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using LibGit2Sharp;
-using UnityEngine;
 
 namespace UnityGit.GUI.Services
 {
@@ -20,18 +19,6 @@ namespace UnityGit.GUI.Services
 
             if (_committedFilesDictionary[repository].Add(filePath))
                 FileSelectionChanged?.Invoke(repository, filePath, true);
-        }
-
-        public void LogSelectedFiles()
-        {
-            foreach (var repo in _committedFilesDictionary.Keys)
-            {
-                Debug.Log(repo.Info.Path);
-                foreach (var file in _committedFilesDictionary[repo])
-                    Debug.Log(file);
-            }
-            
-            CommitCreated?.Invoke(null);
         }
 
         public void DeselectFile(IRepository repository, string filePath)
@@ -58,6 +45,16 @@ namespace UnityGit.GUI.Services
         {
             foreach (var repository in _committedFilesDictionary.Keys)
                 CommitToRepository(repository, message, commitSignature);
+        }
+
+        public int GetSelectedCount()
+        {
+            var count = 0;
+
+            foreach (var selectedFiles in _committedFilesDictionary.Values)
+                count += selectedFiles.Count;
+            
+            return count;
         }
 
         private void CommitToRepository(IRepository repository, string message, Signature commitSignature)

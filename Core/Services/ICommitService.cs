@@ -14,11 +14,11 @@ namespace UnityGit.GUI.Services
 
         public void SelectFile(IRepository repository, string filePath);
 
-        public void LogSelectedFiles();
-
         public void DeselectFile(IRepository repository, string filePath);
 
         public bool IsFileSelected(IRepository repository, string filePath);
+
+        public int GetSelectedCount();
 
         public void CommitSelected(string message, Signature commitSignature);
     }

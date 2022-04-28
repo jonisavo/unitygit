@@ -13,6 +13,6 @@
     height: 20%;
 }
 
-#commit-window-view-commit-textfield {
+#commit-window-view-message-textfield {
     height: 60%;
 }

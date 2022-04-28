@@ -25,7 +25,6 @@ namespace UnityGit.GUI.Components
             _repository = repository;
             _commitService = Provide<ICommitService>();
             _commitService.FileSelectionChanged += OnFileSelectionChanged;
-            _commitService.CommitCreated += OnCommitCreated;
             _header = header;
             _selectAllButton = this.Q<Button>("file-status-list-select-all-button");
             _selectAllButton.clicked += SelectAllFiles;
@@ -86,11 +85,6 @@ namespace UnityGit.GUI.Components
         private void OnFileSelectionChanged(IRepository repository, string filePath, bool selected)
         {
             RefreshHeader();
-        }
-
-        private void OnCommitCreated(Commit commit)
-        {
-            SetFoldoutEnabled(_statusEntries.Count > 0);
         }
 
         public override FileStatusItem MakeItem()
