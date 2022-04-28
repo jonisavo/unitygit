@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using LibGit2Sharp;
+using UnityEditor;
 
 namespace UnityGit.GUI.Services
 {
@@ -16,10 +17,22 @@ namespace UnityGit.GUI.Services
             
             if (status == FileStatus.NewInIndex || status == FileStatus.NewInWorkdir)
             {
+                if (!EditorUtility.DisplayDialog(
+                        "Are you sure?",
+                        $"Are you sure you want to delete {filePath}?",
+                        "Yes", "No"))
+                    return;
+                
                 File.Delete(Path.Combine(repository.Info.WorkingDirectory, filePath));
             }
             else
             {
+                if (!EditorUtility.DisplayDialog(
+                        "Are you sure?",
+                        $"Are you sure you want to restore {filePath}?",
+                        "Yes", "No"))
+                    return;
+                
                 var options = new CheckoutOptions
                 {
                     CheckoutModifiers = CheckoutModifiers.Force
