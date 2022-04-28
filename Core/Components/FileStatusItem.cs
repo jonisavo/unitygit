@@ -1,5 +1,6 @@
 ﻿using LibGit2Sharp;
 using UIComponents.Core;
+using UnityEngine;
 using UnityEngine.UIElements;
 using UnityGit.GUI.Services;
 
@@ -9,6 +10,7 @@ namespace UnityGit.GUI.Components
     [Stylesheet("FileStatusItem/FileStatusItem.style.uss")]
     [InjectDependency(typeof(ICommitService), provider: typeof(CommitService))]
     [InjectDependency(typeof(IRestoreService), provider: typeof(RestoreService))]
+    [InjectDependency(typeof(IDiffService), provider: typeof(DiffService))]
     public class FileStatusItem : UIComponent
     {
         private readonly IRepository _repository;
@@ -21,12 +23,14 @@ namespace UnityGit.GUI.Components
         
         private readonly ICommitService _commitService;
         private readonly IRestoreService _restoreService;
+        private readonly IDiffService _diffService;
 
         public FileStatusItem(IRepository repository)
         {
             _repository = repository;
             _commitService = Provide<ICommitService>();
             _restoreService = Provide<IRestoreService>();
+            _diffService = Provide<IDiffService>();
             _commitService.FileSelectionChanged += OnFileSelectionChanged;
             _stateLabel = this.Q<Label>("changed-file-state");
             _filenameLabel = this.Q<Label>("changed-file-filename");
@@ -38,6 +42,7 @@ namespace UnityGit.GUI.Components
         ~FileStatusItem()
         {
             _commitService.FileSelectionChanged -= OnFileSelectionChanged;
+            _selectionToggle.UnregisterValueChangedCallback(OnToggleClick);
         }
 
         private void BuildContextMenu(ContextualMenuPopulateEvent evt)
@@ -49,6 +54,14 @@ namespace UnityGit.GUI.Components
             {
                 _restoreService.RestoreFile(_repository, _statusEntry.FilePath);
             });
+
+            if (_statusEntry.State == FileStatus.ModifiedInIndex || _statusEntry.State == FileStatus.ModifiedInWorkdir)
+            {
+                evt.menu.AppendAction("Diff", (action) =>
+                {
+                    _diffService.DiffFile(_repository, _statusEntry.FilePath);
+                });
+            }
         }
 
         public void SetStatusEntry(StatusEntry statusEntry)
