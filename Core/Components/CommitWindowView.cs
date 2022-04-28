@@ -64,6 +64,13 @@ namespace UnityGit.GUI.Components
             DrawRepositoryViews();
         }
 
+        ~CommitWindowView()
+        {
+            _commitService.CommitCreated -= OnCommitCreated;
+            _commitService.FileSelectionChanged -= OnFileSelectionChanged;
+            _commitButton.clicked -= CommitSelectedFiles;
+        }
+
         private void Refresh()
         {
             _statusContainer.Clear();

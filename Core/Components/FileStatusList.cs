@@ -43,6 +43,13 @@ namespace UnityGit.GUI.Components
                 SetFoldoutEnabled(false);
         }
 
+        ~FileStatusList()
+        {
+            _commitService.FileSelectionChanged -= OnFileSelectionChanged;
+            _selectAllButton.clicked -= SelectAllFiles;
+            _deselectAllButton.clicked -= DeselectAllFiles;
+        }
+
         private void RefreshHeader()
         {
             var selectedFileCount = CountSelectedFiles();

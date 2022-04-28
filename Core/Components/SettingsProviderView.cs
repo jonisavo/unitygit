@@ -12,20 +12,26 @@ namespace UnityGit.GUI.Components
         private readonly IUnityGitStatus _unityGitStatus;
 
         private readonly VisualElement _infoContainer;
+        private readonly Button _refreshRepositoriesButton;
         
         public SettingsProviderView()
         {
             _unityGitStatus = Provide<UnityGitStatus>();
             
-            var refreshRepositoriesButton = this.Q<Button>("settings-provider-refresh-repositories-button");
+            _refreshRepositoriesButton = this.Q<Button>("settings-provider-refresh-repositories-button");
 
-            refreshRepositoriesButton.clicked += RefreshRepositories;
+            _refreshRepositoriesButton.clicked += RefreshRepositories;
             
             AddToClassList("container");
 
             _infoContainer = this.Q<VisualElement>("settings-provider-info-container");
             
             RefreshInfo();
+        }
+
+        ~SettingsProviderView()
+        {
+            _refreshRepositoriesButton.clicked -= RefreshRepositories;
         }
 
         private void RefreshRepositories()

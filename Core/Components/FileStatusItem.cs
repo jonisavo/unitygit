@@ -35,6 +35,11 @@ namespace UnityGit.GUI.Components
             this.AddManipulator(new ContextualMenuManipulator(BuildContextMenu));
         }
 
+        ~FileStatusItem()
+        {
+            _commitService.FileSelectionChanged -= OnFileSelectionChanged;
+        }
+
         private void BuildContextMenu(ContextualMenuPopulateEvent evt)
         {
             if (_statusEntry == null)
