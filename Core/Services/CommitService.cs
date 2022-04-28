@@ -60,13 +60,18 @@ namespace UnityGit.GUI.Services
         private void CommitToRepository(IRepository repository, string message, Signature commitSignature)
         {
             foreach (var filePath in _committedFilesDictionary[repository])
+            {
                 repository.Index.Add(filePath);
+                FileSelectionChanged?.Invoke(repository, filePath, false);
+            }
             
+            _committedFilesDictionary[repository].Clear();
+
             repository.Index.Write();
 
             var commit =
                 repository.Commit(message, commitSignature, commitSignature);
-            
+
             CommitCreated?.Invoke(commit);
         }
     }
