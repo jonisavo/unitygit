@@ -9,9 +9,9 @@ using UnityGit.GUI.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("CommitWindowView/CommitWindowView.uxml", RelativeTo = AssetPaths.Components)]
-    [Stylesheet("CommitWindowView/CommitWindowView.style.uss", RelativeTo = AssetPaths.Components)]
-    [Stylesheet("Dimensions.uss", RelativeTo = AssetPaths.Styles)]
+    [Layout("CommitWindowView/CommitWindowView.uxml")]
+    [Stylesheet("CommitWindowView/CommitWindowView.style.uss")]
+    [Stylesheet("Dimensions.uss")]
     [InjectDependency(typeof(IUnityGitStatus), provider: typeof(UnityGitStatus))]
     [InjectDependency(typeof(ICommitService), provider: typeof(CommitService))]
     public class CommitWindowView : UIComponent
@@ -50,6 +50,13 @@ namespace UnityGit.GUI.Components
             };
             
             AddToClassList("full-height");
+            
+            Add(new Button(() =>
+            {
+                if (_commitService is CommitService service)
+                    service.LogSelectedFiles();
+            }) { text = "Log Selected Files" });
+            
             DrawRepositoryViews();
         }
 

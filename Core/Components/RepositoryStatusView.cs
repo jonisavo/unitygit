@@ -5,8 +5,8 @@ using UnityEngine.UIElements;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("RepositoryStatusView/RepositoryStatusView.uxml", RelativeTo = AssetPaths.Components)]
-    [Stylesheet("RepositoryStatusView/RepositoryStatusView.style.uss", RelativeTo = AssetPaths.Components)]
+    [Layout("RepositoryStatusView/RepositoryStatusView.uxml")]
+    [Stylesheet("RepositoryStatusView/RepositoryStatusView.style.uss")]
     public class RepositoryStatusView : UIComponent
     {
         public RepositoryStatusView(IRepository repository, string name)

@@ -5,8 +5,8 @@ using UnityGit.GUI.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("FileStatusItem/FileStatusItem.uxml", RelativeTo = AssetPaths.Components)]
-    [Stylesheet("FileStatusItem/FileStatusItem.style.uss", RelativeTo = AssetPaths.Components)]
+    [Layout("FileStatusItem/FileStatusItem.uxml")]
+    [Stylesheet("FileStatusItem/FileStatusItem.style.uss")]
     [InjectDependency(typeof(ICommitService), provider: typeof(CommitService))]
     public class FileStatusItem : UIComponent
     {
