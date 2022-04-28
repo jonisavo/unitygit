@@ -1,4 +1,4 @@
-﻿namespace UnityGit.GUI.Components
+﻿namespace UnityGit.GUI.Constants
 {
     public static class AssetPaths
     {
