@@ -1,0 +1,25 @@
+﻿using LibGit2Sharp;
+
+namespace UnityGit.GUI.Services
+{
+    public interface ICommitService
+    {
+        public delegate void CommitCreatedDelegate(Commit commit);
+
+        public event CommitCreatedDelegate CommitCreated;
+        
+        public delegate void FileSelectionChangedDelegate(IRepository repository, string filePath, bool selected);
+
+        public event FileSelectionChangedDelegate FileSelectionChanged;
+
+        public void SelectFile(IRepository repository, string filePath);
+
+        public void LogSelectedFiles();
+
+        public void DeselectFile(IRepository repository, string filePath);
+
+        public bool IsFileSelected(IRepository repository, string filePath);
+
+        public void CommitSelected(string message, Signature commitSignature);
+    }
+}

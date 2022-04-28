@@ -1,35 +1,67 @@
 ﻿using LibGit2Sharp;
 using UIComponents.Core;
 using UnityEngine.UIElements;
+using UnityGit.GUI.Services;
 
 namespace UnityGit.GUI.Components
 {
     [Layout("FileStatusItem/FileStatusItem.uxml", RelativeTo = AssetPaths.Components)]
     [Stylesheet("FileStatusItem/FileStatusItem.style.uss", RelativeTo = AssetPaths.Components)]
+    [InjectDependency(typeof(ICommitService), provider: typeof(CommitService))]
     public class FileStatusItem : UIComponent
     {
+        private readonly IRepository _repository;
         private StatusEntry _statusEntry;
         private bool _ignored;
         
         private readonly Label _stateLabel;
         private readonly Label _filenameLabel;
+        private readonly Toggle _selectionToggle;
+        
+        private readonly ICommitService _commitService;
 
-        public FileStatusItem()
+        public FileStatusItem(IRepository repository)
         {
+            _repository = repository;
+            _commitService = Provide<ICommitService>();
+            _commitService.FileSelectionChanged += OnFileSelectionChanged;
             _stateLabel = this.Q<Label>("changed-file-state");
             _filenameLabel = this.Q<Label>("changed-file-filename");
+            _selectionToggle = this.Q<Toggle>("changed-file-toggle");
         }
 
         public void SetStatusEntry(StatusEntry statusEntry)
         {
             _statusEntry = statusEntry;
             _ignored = _statusEntry.State.HasFlag(FileStatus.Ignored);
+
             _filenameLabel.text = _statusEntry.FilePath;
+
+            var isSelected = _commitService.IsFileSelected(_repository, _statusEntry.FilePath);
+            
+            _selectionToggle.SetValueWithoutNotify(isSelected);
 
             var stateLabelOptions = GetStateLabelOptions();
 
             _stateLabel.text = stateLabelOptions.Text;
             _stateLabel.AddToClassList(stateLabelOptions.USSClass);
+
+            _selectionToggle.UnregisterValueChangedCallback(OnToggleClick);
+            _selectionToggle.RegisterValueChangedCallback(OnToggleClick);
+        }
+
+        private void OnToggleClick(ChangeEvent<bool> evt)
+        {
+            if (evt.newValue)
+                _commitService.SelectFile(_repository, _statusEntry.FilePath);
+            else
+                _commitService.DeselectFile(_repository, _statusEntry.FilePath);
+        }
+
+        private void OnFileSelectionChanged(IRepository repository, string filePath, bool selected)
+        {
+            if (_repository.Info.Path == repository.Info.Path && _statusEntry.FilePath == filePath)
+                _selectionToggle.SetValueWithoutNotify(selected);
         }
 
         private readonly struct StateLabelOptions

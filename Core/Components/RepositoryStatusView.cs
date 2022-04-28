@@ -31,8 +31,8 @@ namespace UnityGit.GUI.Components
                 items.Where(item => !item.State.HasFlag(FileStatus.NewInWorkdir))
                     .ToList();
             
-            Add(new FileStatusList(trackedItems, "Tracked"));
-            Add(new FileStatusList(untrackedItems, "Untracked"));
+            Add(new FileStatusList(repository, trackedItems, "Tracked"));
+            Add(new FileStatusList(repository, untrackedItems, "Untracked"));
         }
     }
 }

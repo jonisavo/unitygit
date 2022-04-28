@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityGit.Core;
-using UnityGit.Core.Utilities;
 using UnityGit.GUI.Components;
 
 namespace UnityGit.GUI
@@ -29,36 +28,23 @@ namespace UnityGit.GUI
 
         private void OnFileChanged(string path)
         {
-            Refresh();
+            CreateGUI();
         }
 
         private void OnBecameVisible()
         {
-            Refresh();
+            CreateGUI();
         }
 
         public void CreateGUI()
         {
-            var status = UnityGitStatus.Global;
             var container = new VisualElement();
             container.style.height = Length.Percent(100);
             container.style.flexGrow = 1;
             rootVisualElement.Clear();
             rootVisualElement.Add(container);
 
-            var button = new Button(Refresh)
-            {
-                text = "Refresh"
-            };
-            container.Add(button);
-
-            container.Add(new CommitWindowView(status));
-        }
-
-        private void Refresh()
-        {
-            UnityGitStatus.Global.PopulateRepositories();
-            CreateGUI();
+            container.Add(new CommitWindowView());
         }
     }
 }
