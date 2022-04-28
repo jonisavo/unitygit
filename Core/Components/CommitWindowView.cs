@@ -33,9 +33,21 @@ namespace UnityGit.GUI.Components
             _commitService.CommitCreated += OnCommitCreated;
             _commitService.FileSelectionChanged += OnFileSelectionChanged;
             _statusContainer = this.Q<ScrollView>("commit-window-view-status-container");
+
+            var signature = _status.GetSignature();
+            
             _commitAuthorNameTextField = this.Q<TextField>("commit-window-view-author-name-textfield");
+
+            if (signature != null && !string.IsNullOrEmpty(signature.Name))
+                _commitAuthorNameTextField.value = signature.Name;
+            
             _commitAuthorEmailField = this.Q<TextField>("commit-window-view-author-email-textfield");
+
+            if (signature != null && !string.IsNullOrEmpty(signature.Email))
+                _commitAuthorEmailField.value = signature.Email;
+            
             _commitMessageTextField = this.Q<TextField>("commit-window-view-message-textfield");
+            
             _commitMessageTextField.RegisterCallback(new EventCallback<InputEvent>(OnMessageInputChange));            
             _commitButton = this.Q<Button>("commit-window-view-commit-button");
             RefreshCommitButton(_commitMessageTextField.value);
