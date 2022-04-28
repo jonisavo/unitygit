@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using LibGit2Sharp;
-using UnityEditor;
 using UnityEngine;
+using UnityGit.GUI.Internal;
 
 namespace UnityGit.GUI.Services
 {
@@ -83,11 +83,11 @@ namespace UnityGit.GUI.Services
 
             repository.Index.Write();
 
-            var progressId = Progress.Start(
+            var progressId = ProgressWrapper.Start(
                 $"Committing {selectedCount} files",
-                $"Creating commit to {_committedFilesDictionary.Keys.Count} repositories",
-                Progress.Options.Indefinite | Progress.Options.Synchronous);
-            
+                $"Creating commit to {_committedFilesDictionary.Keys.Count} repositories"
+            );
+
             try
             {
                 var commit = repository.Commit(
@@ -95,18 +95,15 @@ namespace UnityGit.GUI.Services
 
                 CommitCreated?.Invoke(commit);
                 
-                Progress.Report(progressId, 1, 1);
-                Progress.Finish(progressId, Progress.Status.Succeeded);
+                ProgressWrapper.FinishWithSuccess(progressId);
             }
             catch (EmptyCommitException)
             {
-                Progress.SetDescription(progressId, "Can not create empty commit");
-                Progress.Finish(progressId, Progress.Status.Failed);
+                ProgressWrapper.FinishWithError(progressId, "Can not create empty commit");
             }
             catch (Exception exception)
-            {
-               Progress.SetDescription(progressId, $"Commit failed with message {exception.Message}");
-               Progress.Finish(progressId, Progress.Status.Failed);
+            { 
+                ProgressWrapper.FinishWithError(progressId, $"Commit failed with message {exception.Message}");
             }
         }
     }
