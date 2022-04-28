@@ -8,6 +8,8 @@ namespace UnityGit.GUI
 {
     public class TestWindow : EditorWindow
     {
+        private bool _shouldRedraw;
+        
         [MenuItem("Window/Test Window")]
         public static void ShowWindow()
         {
@@ -19,25 +21,42 @@ namespace UnityGit.GUI
         private void OnEnable()
         {
             GitAssetModificationProcessor.FileChanged += OnFileChanged;
+            GitAssetPostprocessor.OnAssetsProcessed += RequestRedraw;
+            EditorApplication.update += RedrawIfRequested;
         }
 
         private void OnDisable()
         {
             GitAssetModificationProcessor.FileChanged -= OnFileChanged;
+            GitAssetPostprocessor.OnAssetsProcessed -= RequestRedraw;
+            EditorApplication.update -= RedrawIfRequested;
+        }
+
+        private void RequestRedraw()
+        {
+            _shouldRedraw = true;
+        }
+
+        private void RedrawIfRequested()
+        {
+            if (_shouldRedraw)
+                CreateGUI();
+        }
+
+        private void OnProjectChange()
+        {
+            RequestRedraw();
         }
 
         private void OnFileChanged(string path)
         {
-            CreateGUI();
-        }
-
-        private void OnBecameVisible()
-        {
-            CreateGUI();
+            RequestRedraw();
         }
 
         public void CreateGUI()
         {
+            _shouldRedraw = false;
+            
             var container = new VisualElement();
             container.style.height = Length.Percent(100);
             container.style.flexGrow = 1;
