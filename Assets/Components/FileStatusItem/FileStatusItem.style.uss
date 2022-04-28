@@ -8,6 +8,7 @@
 }
 
 #changed-file-description-container {
+    margin-left: 2px;
     flex-direction: row;
     flex-wrap: nowrap;
 }
