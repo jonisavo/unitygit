@@ -41,14 +41,6 @@ namespace UnityGit.GUI.Components
             RefreshCommitButton(_commitMessageTextField.value);
             _commitButton.clicked += CommitSelectedFiles;
 
-            _refreshButton = this.Q<Button>("commit-window-view-refresh-button");
-            
-            _refreshButton.clicked += () =>
-            {
-                _status.PopulateRepositories();
-                Refresh();
-            };
-            
             AddToClassList("full-height");
             
             Add(new Button(() =>

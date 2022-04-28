@@ -9,20 +9,31 @@ namespace UnityGit.GUI.Components
     [Stylesheet("RepositoryStatusView/RepositoryStatusView.style.uss")]
     public class RepositoryStatusView : UIComponent
     {
+        private readonly IRepository _repository;
+
+        private FileStatusList _trackedList;
+        private FileStatusList _untrackedList;
+        
         public RepositoryStatusView(IRepository repository, string name)
         {
-            var repositoryPath = repository.Info.Path;
+            _repository = repository;
 
             this.Q<Label>("repository-status-name-label").text = name;
-            this.Q<Label>("repository-status-path-label").text = repositoryPath;
-            
+            this.Q<Label>("repository-status-path-label").text = _repository.Info.Path;
+            this.Q<Button>("repository-status-refresh-button").clicked += RefreshLists;
+
+            RefreshLists();
+        }
+
+        private void RefreshLists()
+        {
             var statusOptions = new StatusOptions
             {
                 ExcludeSubmodules = true,
                 IncludeIgnored = false,
                 IncludeUnaltered = false
             };
-            var items = repository.RetrieveStatus(statusOptions);
+            var items = _repository.RetrieveStatus(statusOptions);
             var untrackedItems =
                 items.Untracked.Where(item => !item.State.HasFlag(FileStatus.Nonexistent))
                     .ToList();
@@ -31,8 +42,16 @@ namespace UnityGit.GUI.Components
                 items.Where(item => !item.State.HasFlag(FileStatus.NewInWorkdir))
                     .ToList();
             
-            Add(new FileStatusList(repository, trackedItems, "Tracked"));
-            Add(new FileStatusList(repository, untrackedItems, "Untracked"));
+            if (_trackedList != null)
+                Remove(_trackedList);
+            if (_untrackedList != null)
+                Remove(_untrackedList);
+
+            _trackedList = new FileStatusList(_repository, trackedItems, "Tracked");
+            _untrackedList = new FileStatusList(_repository, untrackedItems, "Untracked");
+            
+            Add(_trackedList);
+            Add(_untrackedList);
         }
     }
 }

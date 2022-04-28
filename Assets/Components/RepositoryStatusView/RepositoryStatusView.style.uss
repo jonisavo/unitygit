@@ -1,4 +1,13 @@
-﻿#repository-status-name-label {
+﻿#repository-status-container {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#repository-status-labels {
+    flex-direction: column;
+}
+
+#repository-status-name-label {
     -unity-font-style: bold;
     font-size: 14px;
 }

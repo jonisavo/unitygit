@@ -1,5 +1,4 @@
 ﻿<UXML xmlns:ui="UnityEngine.UIElements">
-    <ui:Button name="commit-window-view-refresh-button" text="Refresh" />
     <ui:VisualElement name="commit-window-view-container">
         <ui:ScrollView name="commit-window-view-status-container" />
         <ui:Foldout name="commit-window-view-message-container" text="Commit..." value="false">
