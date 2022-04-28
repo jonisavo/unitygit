@@ -2,27 +2,47 @@
 using LibGit2Sharp;
 using UIComponents.Core;
 using UnityEngine.UIElements;
+using UnityGit.GUI.Services;
 
 namespace UnityGit.GUI.Components
 {
     [Layout("RepositoryStatusView/RepositoryStatusView.uxml")]
     [Stylesheet("RepositoryStatusView/RepositoryStatusView.style.uss")]
+    [InjectDependency(typeof(IRestoreService), provider: typeof(RestoreService))]
     public class RepositoryStatusView : UIComponent
     {
         private readonly IRepository _repository;
 
+        private readonly IRestoreService _restoreService;
+
+        private readonly Button _refreshButton;
         private FileStatusList _trackedList;
         private FileStatusList _untrackedList;
         
         public RepositoryStatusView(IRepository repository, string name)
         {
             _repository = repository;
+            _restoreService = Provide<IRestoreService>();
+            _restoreService.FileRestored += OnFileRestored;
 
             this.Q<Label>("repository-status-name-label").text = name;
             this.Q<Label>("repository-status-path-label").text = _repository.Info.Path;
-            this.Q<Button>("repository-status-refresh-button").clicked += RefreshLists;
+            _refreshButton = this.Q<Button>("repository-status-refresh-button");
+            _refreshButton.clicked += RefreshLists;
 
             RefreshLists();
+        }
+
+        ~RepositoryStatusView()
+        {
+            _restoreService.FileRestored -= OnFileRestored;
+            _refreshButton.clicked -= RefreshLists;
+        }
+
+        private void OnFileRestored(IRepository repository, string filePath)
+        {
+            if (_repository.Info.Path == repository.Info.Path)
+                RefreshLists();
         }
 
         private void RefreshLists()

@@ -8,6 +8,7 @@ namespace UnityGit.GUI.Components
     [Layout("FileStatusItem/FileStatusItem.uxml")]
     [Stylesheet("FileStatusItem/FileStatusItem.style.uss")]
     [InjectDependency(typeof(ICommitService), provider: typeof(CommitService))]
+    [InjectDependency(typeof(IRestoreService), provider: typeof(RestoreService))]
     public class FileStatusItem : UIComponent
     {
         private readonly IRepository _repository;
@@ -19,15 +20,30 @@ namespace UnityGit.GUI.Components
         private readonly Toggle _selectionToggle;
         
         private readonly ICommitService _commitService;
+        private readonly IRestoreService _restoreService;
 
         public FileStatusItem(IRepository repository)
         {
             _repository = repository;
             _commitService = Provide<ICommitService>();
+            _restoreService = Provide<IRestoreService>();
             _commitService.FileSelectionChanged += OnFileSelectionChanged;
             _stateLabel = this.Q<Label>("changed-file-state");
             _filenameLabel = this.Q<Label>("changed-file-filename");
             _selectionToggle = this.Q<Toggle>("changed-file-toggle");
+            
+            this.AddManipulator(new ContextualMenuManipulator(BuildContextMenu));
+        }
+
+        private void BuildContextMenu(ContextualMenuPopulateEvent evt)
+        {
+            if (_statusEntry == null)
+                return;
+            
+            evt.menu.AppendAction("Restore", (action) =>
+            {
+                _restoreService.RestoreFile(_repository, _statusEntry.FilePath);
+            });
         }
 
         public void SetStatusEntry(StatusEntry statusEntry)
