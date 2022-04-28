@@ -1,0 +1,14 @@
+﻿.container {
+    width: 80%;
+    margin: auto;
+}
+
+#settings-provider-info-container {
+    margin-bottom: 16px;
+}
+
+#settings-provider-unitygit-label {
+    -unity-font-style: bold;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
