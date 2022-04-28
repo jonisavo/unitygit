@@ -93,6 +93,7 @@ namespace UnityGit.GUI.Components
 
         private void OnCommitCreated(Commit commit)
         {
+            RefreshCommitButton(_commitMessageTextField.value);
             Refresh();
         }
 
