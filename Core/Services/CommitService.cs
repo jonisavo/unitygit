@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LibGit2Sharp;
+using UnityEditor;
+using UnityEngine;
 
 namespace UnityGit.GUI.Services
 {
@@ -57,8 +60,19 @@ namespace UnityGit.GUI.Services
             return count;
         }
 
+        public void LogSelectedFiles()
+        {
+            foreach (var files in _committedFilesDictionary.Values)
+                foreach (var file in files)
+                    Debug.Log(file);
+            
+            Debug.Log(GetSelectedCount());
+        }
+
         private void CommitToRepository(IRepository repository, string message, Signature commitSignature)
         {
+            var selectedCount = GetSelectedCount();
+            
             foreach (var filePath in _committedFilesDictionary[repository])
             {
                 repository.Index.Add(filePath);
@@ -69,10 +83,31 @@ namespace UnityGit.GUI.Services
 
             repository.Index.Write();
 
-            var commit =
-                repository.Commit(message, commitSignature, commitSignature);
+            var progressId = Progress.Start(
+                $"Committing {selectedCount} files",
+                $"Creating commit to {_committedFilesDictionary.Keys.Count} repositories",
+                Progress.Options.Indefinite | Progress.Options.Synchronous);
+            
+            try
+            {
+                var commit = repository.Commit(
+                    message, commitSignature, commitSignature);
 
-            CommitCreated?.Invoke(commit);
+                CommitCreated?.Invoke(commit);
+                
+                Progress.Report(progressId, 1, 1);
+                Progress.Finish(progressId, Progress.Status.Succeeded);
+            }
+            catch (EmptyCommitException)
+            {
+                Progress.SetDescription(progressId, "Can not create empty commit");
+                Progress.Finish(progressId, Progress.Status.Failed);
+            }
+            catch (Exception exception)
+            {
+               Progress.SetDescription(progressId, $"Commit failed with message {exception.Message}");
+               Progress.Finish(progressId, Progress.Status.Failed);
+            }
         }
     }
 }
