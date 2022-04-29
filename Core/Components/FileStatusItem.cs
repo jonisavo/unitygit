@@ -1,6 +1,5 @@
 ﻿using LibGit2Sharp;
 using UIComponents.Core;
-using UnityEngine;
 using UnityEngine.UIElements;
 using UnityGit.GUI.Services;
 
@@ -8,9 +7,9 @@ namespace UnityGit.GUI.Components
 {
     [Layout("FileStatusItem/FileStatusItem.uxml")]
     [Stylesheet("FileStatusItem/FileStatusItem.style.uss")]
-    [InjectDependency(typeof(ICommitService), provider: typeof(CommitService))]
-    [InjectDependency(typeof(IRestoreService), provider: typeof(RestoreService))]
-    [InjectDependency(typeof(IDiffService), provider: typeof(DiffService))]
+    [Dependency(typeof(ICommitService), provide: typeof(CommitService))]
+    [Dependency(typeof(IRestoreService), provide: typeof(RestoreService))]
+    [Dependency(typeof(IDiffService), provide: typeof(DiffService))]
     public class FileStatusItem : UIComponent
     {
         private readonly IRepository _repository;

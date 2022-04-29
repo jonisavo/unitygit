@@ -8,7 +8,7 @@ namespace UnityGit.GUI.Components
 {
     [Layout("FileStatusList/FileStatusList.uxml")]
     [Stylesheet("FileStatusList/FileStatusList.style.uss")]
-    [InjectDependency(typeof(ICommitService), provider: typeof(CommitService))]
+    [Dependency(typeof(ICommitService), provide: typeof(CommitService))]
     public class FileStatusList : UIList<StatusEntry, FileStatusItem>
     {
         private readonly IRepository _repository;

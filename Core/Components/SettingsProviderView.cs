@@ -6,7 +6,7 @@ namespace UnityGit.GUI.Components
 {
     [Layout("SettingsProviderView/SettingsProviderView.uxml")]
     [Stylesheet("SettingsProviderView/SettingsProviderView.style.uss")]
-    [InjectDependency(typeof(IUnityGitStatus), provider: typeof(UnityGitStatus))]
+    [Dependency(typeof(IUnityGitStatus), provide: typeof(UnityGitStatus))]
     public class SettingsProviderView : UIComponent
     {
         private readonly IUnityGitStatus _unityGitStatus;
@@ -16,7 +16,7 @@ namespace UnityGit.GUI.Components
         
         public SettingsProviderView()
         {
-            _unityGitStatus = Provide<UnityGitStatus>();
+            _unityGitStatus = Provide<IUnityGitStatus>();
             
             _refreshRepositoriesButton = this.Q<Button>("settings-provider-refresh-repositories-button");
 
