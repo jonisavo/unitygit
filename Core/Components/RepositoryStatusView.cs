@@ -9,7 +9,7 @@ namespace UnityGit.GUI.Components
     [Layout("RepositoryStatusView/RepositoryStatusView.uxml")]
     [Stylesheet("RepositoryStatusView/RepositoryStatusView.style.uss")]
     [Dependency(typeof(IRestoreService), provide: typeof(RestoreService))]
-    public class RepositoryStatusView : UIComponent
+    public class RepositoryStatusView : UnityGitUIComponent
     {
         private readonly IRepository _repository;
 

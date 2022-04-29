@@ -14,7 +14,7 @@ namespace UnityGit.GUI.Components
     [Stylesheet("Dimensions.uss")]
     [Dependency(typeof(IUnityGitStatus), provide: typeof(UnityGitStatus))]
     [Dependency(typeof(ICommitService), provide: typeof(CommitService))]
-    public class CommitWindowView : UIComponent
+    public class CommitWindowView : UnityGitUIComponent
     {
         private readonly IUnityGitStatus _status;
         private readonly ICommitService _commitService;

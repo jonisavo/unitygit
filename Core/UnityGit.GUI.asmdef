@@ -3,7 +3,8 @@
     "rootNamespace": "UnityGit.GUI",
     "references": [
         "GUID:637d729f7da2eb44bba25a707c4e54bd",
-        "GUID:d593635333b4cae48bac5b5f0b596e90"
+        "GUID:d593635333b4cae48bac5b5f0b596e90",
+        "GUID:7282a494dd2226f45a32fcf2256d7c89"
     ],
     "includePlatforms": [
         "Editor"

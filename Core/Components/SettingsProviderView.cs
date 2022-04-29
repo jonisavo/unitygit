@@ -7,7 +7,7 @@ namespace UnityGit.GUI.Components
     [Layout("SettingsProviderView/SettingsProviderView.uxml")]
     [Stylesheet("SettingsProviderView/SettingsProviderView.style.uss")]
     [Dependency(typeof(IUnityGitStatus), provide: typeof(UnityGitStatus))]
-    public class SettingsProviderView : UIComponent
+    public class SettingsProviderView : UnityGitUIComponent
     {
         private readonly IUnityGitStatus _unityGitStatus;
 

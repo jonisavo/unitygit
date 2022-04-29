@@ -10,7 +10,7 @@ namespace UnityGit.GUI.Components
     [Dependency(typeof(ICommitService), provide: typeof(CommitService))]
     [Dependency(typeof(IRestoreService), provide: typeof(RestoreService))]
     [Dependency(typeof(IDiffService), provide: typeof(DiffService))]
-    public class FileStatusItem : UIComponent
+    public class FileStatusItem : UnityGitUIComponent
     {
         private readonly IRepository _repository;
         private StatusEntry _statusEntry;
