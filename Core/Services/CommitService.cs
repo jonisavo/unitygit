@@ -75,14 +75,12 @@ namespace UnityGit.GUI.Services
             
             foreach (var filePath in _committedFilesDictionary[repository])
             {
-                repository.Index.Add(filePath);
+                Commands.Stage(repository, filePath);
                 FileSelectionChanged?.Invoke(repository, filePath, false);
             }
             
             _committedFilesDictionary[repository].Clear();
-
-            repository.Index.Write();
-
+            
             var progressId = ProgressWrapper.Start(
                 $"Committing {selectedCount} files",
                 $"Creating commit to {_committedFilesDictionary.Keys.Count} repositories"
