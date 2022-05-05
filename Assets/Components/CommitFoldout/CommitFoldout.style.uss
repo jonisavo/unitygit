@@ -1,0 +1,12 @@
+﻿#commit-foldout-message-author-container {
+    flex-direction: row;
+}
+
+.author-field {
+    width: 50%;
+}
+
+#commit-foldout-message-textfield {
+    max-height: 60%;
+    -unity-text-align: upper-left;
+}

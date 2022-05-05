@@ -1,20 +1,6 @@
-﻿<UXML xmlns:ui="UnityEngine.UIElements">
+﻿<UXML xmlns:ui="UnityEngine.UIElements" xmlns:ugit="UnityGit.GUI.Components">
     <ui:VisualElement name="commit-window-view-container">
         <ui:ScrollView name="commit-window-view-status-container" />
-        <ui:Foldout name="commit-window-view-message-container" text="Commit..." value="false">
-            <ui:VisualElement name="commit-window-message-author-container">
-                <ui:VisualElement class="author-field">
-                    <ui:Label text="Author name" />
-                    <ui:TextField name="commit-window-view-author-name-textfield" />
-                </ui:VisualElement>
-                <ui:VisualElement class="author-field">
-                    <ui:Label text="Author e-mail" />
-                    <ui:TextField name="commit-window-view-author-email-textfield" />
-                </ui:VisualElement>
-            </ui:VisualElement>
-            <ui:Label text="Commit message" />
-            <ui:TextField name="commit-window-view-message-textfield" multiline="true" />
-            <ui:Button name="commit-window-view-commit-button" text="Commit" />
-        </ui:Foldout>
+        <ugit:CommitFoldout name="commit-window-view-commit-foldout" />
     </ui:VisualElement>
 </UXML>

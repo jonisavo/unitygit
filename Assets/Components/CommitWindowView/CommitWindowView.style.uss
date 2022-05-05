@@ -11,7 +11,7 @@
     max-height: 80%;
 }
 
-#commit-window-view-message-container {
+#commit-window-view-commit-foldout {
     position: absolute;
     bottom: 12px;
     left: 0;
@@ -23,17 +23,4 @@
     border-color: #555;
     padding: 6px;
     width: 100%;
-}
-
-#commit-window-message-author-container {
-    flex-direction: row;
-}
-
-.author-field {
-    width: 50%;
-}
-
-#commit-window-view-message-textfield {
-    max-height: 60%;
-    -unity-text-align: upper-left;
 }
