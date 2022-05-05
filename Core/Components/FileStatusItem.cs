@@ -49,11 +49,6 @@ namespace UnityGit.GUI.Components
             if (_statusEntry == null)
                 return;
             
-            evt.menu.AppendAction("Restore", (action) =>
-            {
-                _restoreService.RestoreFile(_repository, _statusEntry.FilePath);
-            });
-
             if (_statusEntry.State == FileStatus.ModifiedInIndex || _statusEntry.State == FileStatus.ModifiedInWorkdir)
             {
                 evt.menu.AppendAction("Diff", (action) =>
@@ -61,6 +56,11 @@ namespace UnityGit.GUI.Components
                     _diffService.DiffFile(_repository, _statusEntry.FilePath);
                 });
             }
+            
+            evt.menu.AppendAction("Restore", (action) =>
+            {
+                _restoreService.RestoreFile(_repository, _statusEntry.FilePath);
+            });
         }
 
         public void SetStatusEntry(StatusEntry statusEntry)
