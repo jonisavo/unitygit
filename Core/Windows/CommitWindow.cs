@@ -15,6 +15,7 @@ namespace UnityGit.GUI
         {
             var window = GetWindow<TestWindow>();
             window.position = new Rect(0, 0, 300, 600);
+            window.minSize = new Vector2(250, 350);
             window.titleContent = new GUIContent("Test Window");
         }
 

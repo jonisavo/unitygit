@@ -56,8 +56,15 @@ namespace UnityGit.GUI.Components
                     _diffService.DiffFile(_repository, _statusEntry.FilePath);
                 });
             }
+
+            string restoreName;
+
+            if (_statusEntry.State == FileStatus.NewInIndex || _statusEntry.State == FileStatus.NewInWorkdir)
+                restoreName = "Delete";
+            else
+                restoreName = "Restore";
             
-            evt.menu.AppendAction("Restore", (action) =>
+            evt.menu.AppendAction(restoreName, (action) =>
             {
                 _restoreService.RestoreFile(_repository, _statusEntry.FilePath);
             });
