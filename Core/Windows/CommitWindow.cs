@@ -6,17 +6,17 @@ using UnityGit.GUI.Components;
 
 namespace UnityGit.GUI
 {
-    public class TestWindow : EditorWindow
+    public class CommitWindow : EditorWindow
     {
         private bool _shouldRedraw;
         
-        [MenuItem("Window/Test Window")]
+        [MenuItem("Git/Commit")]
         public static void ShowWindow()
         {
-            var window = GetWindow<TestWindow>();
+            var window = GetWindow<CommitWindow>();
             window.position = new Rect(0, 0, 300, 600);
             window.minSize = new Vector2(250, 350);
-            window.titleContent = new GUIContent("Test Window");
+            window.titleContent = new GUIContent("Commit");
         }
 
         private void OnEnable()
