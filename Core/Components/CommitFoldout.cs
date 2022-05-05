@@ -14,7 +14,8 @@ namespace UnityGit.GUI.Components
     public class CommitFoldout : UnityGitUIComponent
     {
         private readonly ICommitService _commitService;
-        
+
+        private readonly Foldout _foldout;
         private readonly TextField _commitAuthorNameTextField;
         private readonly TextField _commitAuthorEmailField;
         private readonly TextField _commitMessageTextField;
@@ -29,7 +30,8 @@ namespace UnityGit.GUI.Components
             _commitService.FileSelectionChanged += OnFileSelectionChanged;
             
             var signature = Provide<IUnityGitStatus>().GetSignature();
-            
+
+            _foldout = this.Q<Foldout>("commit-foldout-foldout");
             _commitAuthorNameTextField = this.Q<TextField>("commit-foldout-author-name-textfield");
 
             if (signature != null && !string.IsNullOrEmpty(signature.Name))
@@ -44,8 +46,10 @@ namespace UnityGit.GUI.Components
             
             _commitMessageTextField.RegisterCallback(new EventCallback<InputEvent>(OnMessageInputChange));            
             _commitButton = this.Q<Button>("commit-foldout-commit-button");
-            RefreshCommitButton(_commitMessageTextField.value);
             _commitButton.clicked += CommitSelectedFiles;
+            
+            RefreshFoldoutText();
+            RefreshCommitButton(_commitMessageTextField.value);
         }
         
         ~CommitFoldout()
@@ -53,6 +57,16 @@ namespace UnityGit.GUI.Components
             _commitService.CommitCreated -= OnCommitCreated;
             _commitService.FileSelectionChanged -= OnFileSelectionChanged;
             _commitButton.clicked -= CommitSelectedFiles;
+        }
+
+        private void RefreshFoldoutText()
+        {
+            var selectedFileCountForCommit = _commitService.GetSelectedCount();
+
+            if (selectedFileCountForCommit == 0)
+                _foldout.text = "Commit...";
+            else
+                _foldout.text = $"Commit {selectedFileCountForCommit} files...";
         }
 
         private void RefreshCommitButton(string commitMessage)
@@ -73,11 +87,13 @@ namespace UnityGit.GUI.Components
 
         private void OnFileSelectionChanged(IRepository repository, string filePath, bool selected)
         {
+            RefreshFoldoutText();
             RefreshCommitButton(_commitMessageTextField.value);
         }
         
         private void OnCommitCreated(Commit commit)
         {
+            RefreshFoldoutText();
             RefreshCommitButton(_commitMessageTextField.value);
         }
         

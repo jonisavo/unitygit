@@ -1,5 +1,5 @@
 ﻿<UXML xmlns:ui="UnityEngine.UIElements">
-    <ui:Foldout text="Commit..." value="false">
+    <ui:Foldout name="commit-foldout-foldout" text="Commit..." value="false">
         <ui:VisualElement name="commit-foldout-message-author-container">
             <ui:VisualElement class="author-field">
                 <ui:Label text="Author name" />
