@@ -1,6 +1,6 @@
 ﻿using System;
 using LibGit2Sharp;
-using UIComponents.Core;
+using UIComponents;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityGit.Core;

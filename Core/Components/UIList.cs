@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UIComponents.Core;
 using UnityEngine.UIElements;
 
 namespace UnityGit.GUI.Components
