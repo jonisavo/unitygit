@@ -72,6 +72,9 @@ namespace UnityGit.GUI.Services
         private void CommitToRepository(IRepository repository, string message, Signature commitSignature)
         {
             var selectedCount = GetSelectedCount();
+
+            if (_committedFilesDictionary.Count == 0)
+                return;
             
             foreach (var filePath in _committedFilesDictionary[repository])
             {
