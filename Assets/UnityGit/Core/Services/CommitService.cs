@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using LibGit2Sharp;
-using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityGit.GUI.Internal;
+using UnityGit.Core.Internal;
 
-namespace UnityGit.GUI.Services
+namespace UnityGit.Core.Services
 {
     public class CommitService : ICommitService
     {

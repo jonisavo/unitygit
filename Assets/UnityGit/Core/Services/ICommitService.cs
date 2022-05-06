@@ -1,6 +1,6 @@
 ﻿using LibGit2Sharp;
 
-namespace UnityGit.GUI.Services
+namespace UnityGit.Core.Services
 {
     public interface ICommitService
     {

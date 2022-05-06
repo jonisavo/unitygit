@@ -1,9 +1,8 @@
 ﻿using System.IO;
 using LibGit2Sharp;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 
-namespace UnityGit.GUI.Services
+namespace UnityGit.Core.Services
 {
     public class RestoreService : IRestoreService
     {

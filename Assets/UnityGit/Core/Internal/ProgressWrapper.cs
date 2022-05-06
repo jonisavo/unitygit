@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 
-namespace UnityGit.GUI.Internal
+namespace UnityGit.Core.Internal
 {
     internal static class ProgressWrapper
     {

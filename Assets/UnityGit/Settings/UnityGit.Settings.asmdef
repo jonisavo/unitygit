@@ -1,0 +1,17 @@
+{
+    "name": "UnityGit.Settings",
+    "rootNamespace": "UnityGit",
+    "references": [
+        "GUID:e1b557935d693684a82f921027bc2bc2",
+        "GUID:d593635333b4cae48bac5b5f0b596e90"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

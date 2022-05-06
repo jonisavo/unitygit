@@ -1,5 +1,4 @@
 ﻿using UIComponents;
-using UIComponents.Editor;
 using UnityGit.GUI.Constants;
 
 namespace UnityGit.GUI.Components

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityGit.Core;
 using UnityGit.Core.Utilities;
-using UnityGit.GUI.Services;
+using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {

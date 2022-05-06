@@ -1,7 +1,7 @@
 ﻿using LibGit2Sharp;
 using UIComponents;
 using UnityEngine.UIElements;
-using UnityGit.GUI.Services;
+using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {

@@ -4,7 +4,7 @@ using LibGit2Sharp;
 using UnityEditor;
 using UnityEngine;
 
-namespace UnityGit.GUI.Services
+namespace UnityGit.Core.Services
 {
     public class DiffService : IDiffService
     {
