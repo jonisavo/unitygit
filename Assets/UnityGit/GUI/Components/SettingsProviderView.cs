@@ -1,22 +1,22 @@
 ﻿using UIComponents;
 using UnityEngine.UIElements;
-using UnityGit.Core;
+using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
     [Layout("SettingsProviderView/SettingsProviderView")]
     [Stylesheet("SettingsProviderView/SettingsProviderView.style")]
-    [Dependency(typeof(IUnityGitStatus), provide: typeof(UnityGitStatus))]
+    [Dependency(typeof(IStatusService), provide: typeof(StatusService))]
     public class SettingsProviderView : UnityGitUIComponent
     {
-        private readonly IUnityGitStatus _unityGitStatus;
+        private readonly IStatusService _statusService;
 
         private readonly VisualElement _infoContainer;
         private readonly Button _refreshRepositoriesButton;
         
         public SettingsProviderView()
         {
-            _unityGitStatus = Provide<IUnityGitStatus>();
+            _statusService = Provide<IStatusService>();
             
             _refreshRepositoriesButton = this.Q<Button>("settings-provider-refresh-repositories-button");
 
@@ -36,7 +36,7 @@ namespace UnityGit.GUI.Components
 
         private void RefreshRepositories()
         {
-            _unityGitStatus.PopulateRepositories();
+            _statusService.PopulateRepositories();
             RefreshInfo();
         }
 
@@ -44,13 +44,13 @@ namespace UnityGit.GUI.Components
         {
             _infoContainer.Clear();
             
-            if (_unityGitStatus.HasProjectRepository())
+            if (_statusService.HasProjectRepository())
                 _infoContainer.Add(new Label("Project repository found."));
             else
                 _infoContainer.Add(new Label("Project repository not found."));
 
-            if (_unityGitStatus.HasPackageRepositories())
-                _infoContainer.Add(new Label($"{_unityGitStatus.PackageRepositories.Count} package repositories found."));
+            if (_statusService.HasPackageRepositories())
+                _infoContainer.Add(new Label($"{_statusService.PackageRepositories.Count} package repositories found."));
             else
                 _infoContainer.Add(new Label("No package repositories found."));
         }

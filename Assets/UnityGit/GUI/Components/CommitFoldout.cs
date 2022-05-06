@@ -2,14 +2,13 @@
 using LibGit2Sharp;
 using UIComponents;
 using UnityEngine.UIElements;
-using UnityGit.Core;
 using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
     [Layout("CommitFoldout/CommitFoldout")]
     [Stylesheet("CommitFoldout/CommitFoldout.style")]
-    [Dependency(typeof(IUnityGitStatus), provide: typeof(UnityGitStatus))]
+    [Dependency(typeof(IStatusService), provide: typeof(StatusService))]
     [Dependency(typeof(ICommitService), provide: typeof(CommitService))]
     public class CommitFoldout : UnityGitUIComponent
     {
@@ -29,7 +28,7 @@ namespace UnityGit.GUI.Components
             _commitService.CommitCreated += OnCommitCreated;
             _commitService.FileSelectionChanged += OnFileSelectionChanged;
             
-            var signature = Provide<IUnityGitStatus>().GetSignature();
+            var signature = Provide<IStatusService>().GetSignature();
 
             _foldout = this.Q<Foldout>("commit-foldout-foldout");
             _commitAuthorNameTextField = this.Q<TextField>("commit-foldout-author-name-textfield");

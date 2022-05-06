@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using LibGit2Sharp;
 
-namespace UnityGit.Core
+namespace UnityGit.Core.Services
 {
-    public interface IUnityGitStatus
+    public interface IStatusService
     {
         public Repository ProjectRepository { get; }
 

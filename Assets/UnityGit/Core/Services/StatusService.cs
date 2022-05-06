@@ -5,9 +5,9 @@ using JetBrains.Annotations;
 using LibGit2Sharp;
 using UnityGit.Core.Utilities;
 
-namespace UnityGit.Core
+namespace UnityGit.Core.Services
 {
-    public class UnityGitStatus : IUnityGitStatus
+    public class StatusService : IStatusService
     {
         public Repository ProjectRepository { get; private set; }
 
@@ -15,7 +15,7 @@ namespace UnityGit.Core
 
         private readonly List<Repository> _packageRepositories = new List<Repository>();
 
-        public UnityGitStatus()
+        public StatusService()
         {
            PopulateRepositories();
 #if UNITY_EDITOR
@@ -23,7 +23,7 @@ namespace UnityGit.Core
 #endif
         }
 
-        ~UnityGitStatus()
+        ~StatusService()
         {
 #if UNITY_EDITOR
             UnityEditor.AssemblyReloadEvents.beforeAssemblyReload -= Clear;
