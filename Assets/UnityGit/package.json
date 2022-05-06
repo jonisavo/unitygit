@@ -1,0 +1,15 @@
+{
+  "name": "io.savolainen.unitygit",
+  "version": "0.0.1",
+  "displayName": "UnityGit",
+  "description": "Offers a graphical user interface for Git operations inside the Unity Editor.",
+  "unity": "2019.3",
+  "author": {
+    "name": "Joni Savolainen",
+    "email": "joni@savolainen.io",
+    "url": "https://savolainen.io"
+  },
+  "dependencies": {
+    "io.savolainen.uicomponents": "0.6.0"
+  }
+}
