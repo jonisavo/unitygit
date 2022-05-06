@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityGit.GUI.Components;
 
-namespace UnityGit.Core.Settings
+namespace UnityGit.Editor
 {
     public static class UnityGitSettingsProviderRegister
     {

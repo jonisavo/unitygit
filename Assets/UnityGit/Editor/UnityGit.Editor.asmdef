@@ -1,11 +1,14 @@
 {
-    "name": "UnityGit.Settings",
+    "name": "UnityGit.Editor",
     "rootNamespace": "UnityGit",
     "references": [
+        "GUID:637d729f7da2eb44bba25a707c4e54bd",
         "GUID:e1b557935d693684a82f921027bc2bc2",
         "GUID:d593635333b4cae48bac5b5f0b596e90"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

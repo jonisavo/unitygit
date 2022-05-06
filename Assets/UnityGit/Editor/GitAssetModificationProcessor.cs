@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEditor.VersionControl;
 
-namespace UnityGit.Core
+namespace UnityGit.Editor
 {
     public class GitAssetModificationProcessor : UnityEditor.AssetModificationProcessor
     {

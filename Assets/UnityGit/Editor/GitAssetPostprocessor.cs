@@ -1,6 +1,6 @@
 ﻿using UnityEditor;
 
-namespace UnityGit.Core
+namespace UnityGit.Editor
 {
     public class GitAssetPostprocessor : AssetPostprocessor
     {

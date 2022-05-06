@@ -1,10 +1,9 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityGit.Core;
 using UnityGit.GUI.Components;
 
-namespace UnityGit.GUI
+namespace UnityGit.Editor
 {
     public class CommitWindow : EditorWindow
     {
