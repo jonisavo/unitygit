@@ -10,6 +10,6 @@
     "url": "https://savolainen.io"
   },
   "dependencies": {
-    "io.savolainen.uicomponents": "0.6.0"
+    "io.savolainen.uicomponents": "0.10.0"
   }
 }
