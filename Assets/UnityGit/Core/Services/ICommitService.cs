@@ -4,22 +4,22 @@ namespace UnityGit.Core.Services
 {
     public interface ICommitService
     {
-        public delegate void CommitCreatedDelegate(Commit commit);
+        delegate void CommitCreatedDelegate(Commit commit);
 
-        public event CommitCreatedDelegate CommitCreated;
+        event CommitCreatedDelegate CommitCreated;
         
-        public delegate void FileSelectionChangedDelegate(IRepository repository, string filePath, bool selected);
+        delegate void FileSelectionChangedDelegate(IRepository repository, string filePath, bool selected);
 
-        public event FileSelectionChangedDelegate FileSelectionChanged;
+        event FileSelectionChangedDelegate FileSelectionChanged;
 
-        public void SelectFile(IRepository repository, string filePath);
+        void SelectFile(IRepository repository, string filePath);
 
-        public void DeselectFile(IRepository repository, string filePath);
+        void DeselectFile(IRepository repository, string filePath);
 
-        public bool IsFileSelected(IRepository repository, string filePath);
+        bool IsFileSelected(IRepository repository, string filePath);
 
-        public int GetSelectedCount();
+        int GetSelectedCount();
 
-        public void CommitSelected(string message, Signature commitSignature);
+        void CommitSelected(string message, Signature commitSignature);
     }
 }

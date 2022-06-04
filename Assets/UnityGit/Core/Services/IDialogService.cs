@@ -2,8 +2,8 @@
 {
     public interface IDialogService
     {
-        public bool Confirm(string message);
+        bool Confirm(string message);
 
-        public bool Error(string message);
+        bool Error(string message);
     }
 }
