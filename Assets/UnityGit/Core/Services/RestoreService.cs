@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using LibGit2Sharp;
 using UnityEditor;
+using UnityGit.Core.Utilities;
 
 namespace UnityGit.Core.Services
 {
@@ -15,7 +16,7 @@ namespace UnityGit.Core.Services
             if (status == FileStatus.Nonexistent)
                 return;
             
-            if (status == FileStatus.NewInIndex || status == FileStatus.NewInWorkdir)
+            if (FileStatusUtilities.IsNew(status))
             {
                 if (!EditorUtility.DisplayDialog(
                         "Are you sure?",

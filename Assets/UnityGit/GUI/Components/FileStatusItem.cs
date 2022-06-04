@@ -2,6 +2,7 @@
 using UIComponents;
 using UnityEngine.UIElements;
 using UnityGit.Core.Services;
+using UnityGit.Core.Utilities;
 
 namespace UnityGit.GUI.Components
 {
@@ -49,7 +50,7 @@ namespace UnityGit.GUI.Components
             if (_statusEntry == null)
                 return;
             
-            if (_statusEntry.State == FileStatus.ModifiedInIndex || _statusEntry.State == FileStatus.ModifiedInWorkdir)
+            if (FileStatusUtilities.IsModified(_statusEntry))
             {
                 evt.menu.AppendAction("Diff", (action) =>
                 {
@@ -59,7 +60,7 @@ namespace UnityGit.GUI.Components
 
             string restoreName;
 
-            if (_statusEntry.State == FileStatus.NewInIndex || _statusEntry.State == FileStatus.NewInWorkdir)
+            if (FileStatusUtilities.IsNew(_statusEntry))
                 restoreName = "Delete";
             else
                 restoreName = "Restore";
@@ -141,16 +142,16 @@ namespace UnityGit.GUI.Components
             if (_ignored)
                 return IgnoredStateOptions;
 
-            if (state.HasFlag(FileStatus.NewInIndex) || state.HasFlag(FileStatus.NewInWorkdir))
+            if (FileStatusUtilities.IsNew(state))
                 return AddedStateOptions;
 
-            if (state.HasFlag(FileStatus.RenamedInIndex) || state.HasFlag(FileStatus.RenamedInWorkdir))
+            if (FileStatusUtilities.IsRenamed(state))
                 return RenamedStateOptions;
 
-            if (state.HasFlag(FileStatus.ModifiedInIndex) || state.HasFlag(FileStatus.ModifiedInWorkdir))
+            if (FileStatusUtilities.IsModified(state))
                 return ModifiedStateOptions;
 
-            if (state.HasFlag(FileStatus.DeletedFromIndex) || state.HasFlag(FileStatus.DeletedFromWorkdir))
+            if (FileStatusUtilities.IsDeleted(state))
                 return RemovedStateOptions;
 
             return UnknownStateOptions;
