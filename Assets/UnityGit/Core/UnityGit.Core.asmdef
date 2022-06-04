@@ -1,7 +1,9 @@
 {
     "name": "UnityGit.Core",
     "rootNamespace": "UnityGit",
-    "references": [],
+    "references": [
+        "GUID:d593635333b4cae48bac5b5f0b596e90"
+    ],
     "includePlatforms": [
         "Editor"
     ],
