@@ -33,5 +33,18 @@ namespace UnityGit.Core.Utilities
         {
             return (status & (FileStatus.DeletedFromIndex | FileStatus.DeletedFromWorkdir)) != 0;
         }
+
+        public static bool Exists(FileStatus status)
+        {
+            const FileStatus doesNotExistFlags =
+                FileStatus.Nonexistent | FileStatus.DeletedFromIndex | FileStatus.DeletedFromWorkdir;
+            
+            return (status & doesNotExistFlags) == 0;
+        }
+        
+        public static bool Exists(StatusEntry statusEntry)
+        {
+            return Exists(statusEntry.State);
+        }
     }
 }

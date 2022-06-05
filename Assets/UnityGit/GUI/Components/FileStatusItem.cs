@@ -1,5 +1,6 @@
 ﻿using LibGit2Sharp;
 using UIComponents;
+using UnityEditor;
 using UnityEngine.UIElements;
 using UnityGit.Core.Services;
 using UnityGit.Core.Utilities;
@@ -49,6 +50,14 @@ namespace UnityGit.GUI.Components
         {
             if (_statusEntry == null)
                 return;
+
+            if (FileStatusUtilities.Exists(_statusEntry))
+            {
+                evt.menu.AppendAction("View", (action) =>
+                {
+                    EditorUtility.OpenWithDefaultApp(_statusEntry.FilePath);
+                });
+            }
             
             if (FileStatusUtilities.IsModified(_statusEntry))
             {
