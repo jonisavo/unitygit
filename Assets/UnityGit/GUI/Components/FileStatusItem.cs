@@ -1,5 +1,6 @@
 ﻿using LibGit2Sharp;
 using UIComponents;
+using UIComponents.Experimental;
 using UnityEditor;
 using UnityEngine.UIElements;
 using UnityGit.Core.Services;
@@ -18,8 +19,11 @@ namespace UnityGit.GUI.Components
         private StatusEntry _statusEntry;
         private bool _ignored;
         
+        [Query("changed-file-state")]
         private readonly Label _stateLabel;
+        [Query("changed-file-filename")]
         private readonly Label _filenameLabel;
+        [Query("changed-file-toggle")]
         private readonly Toggle _selectionToggle;
         
         private readonly ICommitService _commitService;
@@ -33,10 +37,7 @@ namespace UnityGit.GUI.Components
             _restoreService = Provide<IRestoreService>();
             _diffService = Provide<IDiffService>();
             _commitService.FileSelectionChanged += OnFileSelectionChanged;
-            _stateLabel = this.Q<Label>("changed-file-state");
-            _filenameLabel = this.Q<Label>("changed-file-filename");
-            _selectionToggle = this.Q<Toggle>("changed-file-toggle");
-            
+
             this.AddManipulator(new ContextualMenuManipulator(BuildContextMenu));
         }
 

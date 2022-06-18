@@ -1,5 +1,6 @@
 ﻿using LibGit2Sharp;
 using UIComponents;
+using UIComponents.Experimental;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityGit.Core.Utilities;
@@ -17,6 +18,7 @@ namespace UnityGit.GUI.Components
         private readonly IStatusService _statusService;
         private readonly ICommitService _commitService;
         
+        [Query("commit-window-view-status-container")]
         private readonly ScrollView _statusContainer;
 
         public CommitWindowView()
@@ -24,7 +26,6 @@ namespace UnityGit.GUI.Components
             _statusService = Provide<IStatusService>();
             _commitService = Provide<ICommitService>();
             _commitService.CommitCreated += OnCommitCreated;
-            _statusContainer = this.Q<ScrollView>("commit-window-view-status-container");
 
             AddToClassList("full-height");
             

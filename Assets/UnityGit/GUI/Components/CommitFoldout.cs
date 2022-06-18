@@ -1,6 +1,7 @@
 ﻿using System;
 using LibGit2Sharp;
 using UIComponents;
+using UIComponents.Experimental;
 using UnityEngine.UIElements;
 using UnityGit.Core.Services;
 
@@ -14,10 +15,15 @@ namespace UnityGit.GUI.Components
     {
         private readonly ICommitService _commitService;
 
+        [Query("commit-foldout-foldout")]
         private readonly Foldout _foldout;
+        [Query("commit-foldout-author-name-textfield")]
         private readonly TextField _commitAuthorNameTextField;
+        [Query("commit-foldout-author-email-textfield")]
         private readonly TextField _commitAuthorEmailField;
+        [Query("commit-foldout-message-textfield")]
         private readonly TextField _commitMessageTextField;
+        [Query("commit-foldout-commit-button")]
         private readonly Button _commitButton;
         
         public new class UxmlFactory : UxmlFactory<CommitFoldout> {}
@@ -30,21 +36,13 @@ namespace UnityGit.GUI.Components
             
             var signature = Provide<IStatusService>().GetSignature();
 
-            _foldout = this.Q<Foldout>("commit-foldout-foldout");
-            _commitAuthorNameTextField = this.Q<TextField>("commit-foldout-author-name-textfield");
-
             if (signature != null && !string.IsNullOrEmpty(signature.Name))
                 _commitAuthorNameTextField.value = signature.Name;
-            
-            _commitAuthorEmailField = this.Q<TextField>("commit-foldout-author-email-textfield");
 
             if (signature != null && !string.IsNullOrEmpty(signature.Email))
                 _commitAuthorEmailField.value = signature.Email;
-            
-            _commitMessageTextField = this.Q<TextField>("commit-foldout-message-textfield");
-            
-            _commitMessageTextField.RegisterCallback(new EventCallback<InputEvent>(OnMessageInputChange));            
-            _commitButton = this.Q<Button>("commit-foldout-commit-button");
+
+            _commitMessageTextField.RegisterCallback(new EventCallback<InputEvent>(OnMessageInputChange));
             _commitButton.clicked += CommitSelectedFiles;
             
             RefreshFoldoutText();
@@ -65,7 +63,7 @@ namespace UnityGit.GUI.Components
             if (selectedFileCountForCommit == 0)
                 _foldout.text = "Commit...";
             else
-                _foldout.text = $"Commit {selectedFileCountForCommit} files...";
+                _foldout.text = $"Commit {selectedFileCountForCommit.ToString()} files...";
         }
 
         private void RefreshCommitButton(string commitMessage)

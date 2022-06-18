@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using LibGit2Sharp;
 using UIComponents;
+using UIComponents.Experimental;
 using UnityEngine.UIElements;
 using UnityGit.Core.Services;
 
@@ -15,7 +16,9 @@ namespace UnityGit.GUI.Components
         private readonly ICommitService _commitService;
         private readonly string _header;
         private readonly Foldout _foldout;
+        [Query("file-status-list-select-all-button")]
         private readonly Button _selectAllButton;
+        [Query("file-status-list-deselect-all-button")]
         private readonly Button _deselectAllButton;
 
         private readonly List<StatusEntry> _statusEntries;
@@ -26,10 +29,10 @@ namespace UnityGit.GUI.Components
             _commitService = Provide<ICommitService>();
             _commitService.FileSelectionChanged += OnFileSelectionChanged;
             _header = header;
-            _selectAllButton = this.Q<Button>("file-status-list-select-all-button");
+            
             _selectAllButton.clicked += SelectAllFiles;
-            _deselectAllButton = this.Q<Button>("file-status-list-deselect-all-button");
             _deselectAllButton.clicked += DeselectAllFiles;
+            
             _statusEntries = statusEntries;
 
             var listView = this.Q<ListView>("file-status-list-listview");

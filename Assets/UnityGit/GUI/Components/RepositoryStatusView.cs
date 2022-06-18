@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using LibGit2Sharp;
 using UIComponents;
+using UIComponents.Experimental;
 using UnityEngine.UIElements;
 using UnityGit.Core.Services;
 
@@ -15,7 +16,9 @@ namespace UnityGit.GUI.Components
 
         private readonly IRestoreService _restoreService;
 
+        [Query("repository-status-refresh-button")]
         private readonly Button _refreshButton;
+        
         private FileStatusList _trackedList;
         private FileStatusList _untrackedList;
         
@@ -27,7 +30,6 @@ namespace UnityGit.GUI.Components
 
             this.Q<Label>("repository-status-name-label").text = name;
             this.Q<Label>("repository-status-path-label").text = _repository.Info.Path;
-            _refreshButton = this.Q<Button>("repository-status-refresh-button");
             _refreshButton.clicked += RefreshLists;
 
             RefreshLists();

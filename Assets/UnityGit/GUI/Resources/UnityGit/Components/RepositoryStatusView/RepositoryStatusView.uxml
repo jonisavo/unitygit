@@ -5,5 +5,5 @@
             <ui:Label name="repository-status-path-label" class="label" />
         </ui:VisualElement>
         <ui:Button name="repository-status-refresh-button" text="Refresh" />
-    </ui:VisualElement> 
+    </ui:VisualElement>
 </UXML>
