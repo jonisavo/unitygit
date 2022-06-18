@@ -115,7 +115,7 @@
       "dependencies": {}
     },
     "io.savolainen.uicomponents": {
-      "version": "0.10.0",
+      "version": "0.15.0",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
