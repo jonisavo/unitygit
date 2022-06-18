@@ -17,3 +17,7 @@ UnityGit is powered by
 - [LibGit2Sharp](https://github.com/libgit2/libgit2sharp)
 - [libgit2](http://libgit2.github.com/)
 - [UIComponents](https://github.com/jonisavo/uicomponents).
+
+Icons
+
+<a target="_blank" href="https://icons8.com/icon/120699/merge-git">Merge Git</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
