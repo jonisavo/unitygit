@@ -1,0 +1,9 @@
+﻿<UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement name="repository-header-container">
+        <ui:VisualElement name="repository-header-labels">
+            <ui:Label name="repository-header-name-label" class="label" />
+            <ui:Label name="repository-header-path-label" class="label" />
+        </ui:VisualElement>
+        <ui:Button name="repository-header-refresh-button" text="Refresh" />
+    </ui:VisualElement>
+</UXML>

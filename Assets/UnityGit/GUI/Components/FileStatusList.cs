@@ -15,6 +15,8 @@ namespace UnityGit.GUI.Components
         private readonly IRepository _repository;
         private readonly ICommitService _commitService;
         private readonly string _header;
+        
+        [Query("file-status-list-foldout")]
         private readonly Foldout _foldout;
         [Query("file-status-list-select-all-button")]
         private readonly Button _selectAllButton;
@@ -37,9 +39,7 @@ namespace UnityGit.GUI.Components
 
             var listView = this.Q<ListView>("file-status-list-listview");
             SetUpListView(listView, _statusEntries, 32);
-            
-            _foldout = this.Q<Foldout>("file-status-list-foldout");
-            
+
             RefreshHeader();
 
             if (_statusEntries.Count == 0)
