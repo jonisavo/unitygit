@@ -7,6 +7,11 @@ namespace UnityGit.GUI.Components
     {
         protected readonly List<TItem> Items;
 
+        protected UIList()
+        {
+            Items = new List<TItem>();
+        }
+
         protected UIList(List<TItem> items)
         {
             Items = items;
@@ -19,6 +24,12 @@ namespace UnityGit.GUI.Components
         private void BindItemInternal(VisualElement element, int index)
         {
             BindItem(element as TElement, index);
+        }
+
+        public virtual void SetItems(IEnumerable<TItem> items)
+        {
+            Items.Clear();
+            Items.AddRange(items);
         }
 
         protected void SetUpListView(ListView listView, List<TItem> items, int itemHeight)

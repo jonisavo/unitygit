@@ -1,0 +1,18 @@
+﻿#branch-list-item-container {
+    flex-direction: row;
+    align-items: center;
+}
+
+#branch-list-item-image {
+    width: 25px;
+    height: 25px;
+}
+
+#branch-list-item-name-label {
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.branch-list-item-current-branch {
+    -unity-font-style: bold;
+}

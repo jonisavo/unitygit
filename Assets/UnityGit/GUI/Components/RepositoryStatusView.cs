@@ -21,13 +21,13 @@ namespace UnityGit.GUI.Components
         private FileStatusList _trackedList;
         private FileStatusList _untrackedList;
         
-        public RepositoryStatusView(IRepository repository, string name)
+        public RepositoryStatusView(IRepository repository)
         {
             _repository = repository;
             _restoreService = Provide<IRestoreService>();
             _restoreService.FileRestored += OnFileRestored;
             
-            _header.SetRepositoryAndName(repository, name);
+            _header.SetRepository(repository);
             _header.RefreshButtonClicked += RefreshLists;
 
             RefreshLists();

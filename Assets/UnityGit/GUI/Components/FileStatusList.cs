@@ -23,8 +23,6 @@ namespace UnityGit.GUI.Components
         [Query("file-status-list-deselect-all-button")]
         private readonly Button _deselectAllButton;
 
-        private readonly List<StatusEntry> _statusEntries;
-
         public FileStatusList(IRepository repository, List<StatusEntry> statusEntries, string header) : base(statusEntries)
         {
             _repository = repository;
@@ -34,15 +32,13 @@ namespace UnityGit.GUI.Components
             
             _selectAllButton.clicked += SelectAllFiles;
             _deselectAllButton.clicked += DeselectAllFiles;
-            
-            _statusEntries = statusEntries;
 
             var listView = this.Q<ListView>("file-status-list-listview");
-            SetUpListView(listView, _statusEntries, 32);
+            SetUpListView(listView, Items, 32);
 
             RefreshHeader();
 
-            if (_statusEntries.Count == 0)
+            if (Items.Count == 0)
                 SetFoldoutEnabled(false);
         }
 
@@ -58,9 +54,9 @@ namespace UnityGit.GUI.Components
             var selectedFileCount = CountSelectedFiles();
             
             if (selectedFileCount == 0)
-                _foldout.text = $"{_header} ({_statusEntries.Count} files)";
+                _foldout.text = $"{_header} ({Items.Count} files)";
             else
-                _foldout.text = $"{_header} ({_statusEntries.Count} files, {selectedFileCount} selected)";
+                _foldout.text = $"{_header} ({Items.Count} files, {selectedFileCount} selected)";
         }
 
         private void SetFoldoutEnabled(bool value)
@@ -73,7 +69,7 @@ namespace UnityGit.GUI.Components
         {
             var count = 0;
             
-            foreach (var entry in _statusEntries)
+            foreach (var entry in Items)
                 if (_commitService.IsFileSelected(_repository, entry.FilePath))
                     count++;
 
@@ -82,13 +78,13 @@ namespace UnityGit.GUI.Components
 
         private void SelectAllFiles()
         {
-            foreach (var entry in _statusEntries)
+            foreach (var entry in Items)
                 _commitService.SelectFile(_repository, entry.FilePath);
         }
         
         private void DeselectAllFiles()
         {
-            foreach (var entry in _statusEntries)
+            foreach (var entry in Items)
                 _commitService.DeselectFile(_repository, entry.FilePath);
         }
         

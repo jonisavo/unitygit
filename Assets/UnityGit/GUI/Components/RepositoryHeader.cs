@@ -2,11 +2,13 @@
 using UIComponents;
 using UIComponents.Experimental;
 using UnityEngine.UIElements;
+using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
     [Layout("RepositoryHeader/RepositoryHeader")]
     [Stylesheet("RepositoryHeader/RepositoryHeader.style")]
+    [Dependency(typeof(IRepositoryService), provide: typeof(RepositoryService))]
     public class RepositoryHeader : UnityGitUIComponent
     {
         public new class UxmlFactory : UxmlFactory<RepositoryHeader> {}
@@ -17,6 +19,8 @@ namespace UnityGit.GUI.Components
         private readonly Label _repositoryPathLabel;
         [Query("repository-header-refresh-button")]
         private readonly Button _refreshButton;
+
+        private readonly IRepositoryService _repositoryService;
         
         public delegate void RefreshButtonClickedDelegate();
         
@@ -24,6 +28,7 @@ namespace UnityGit.GUI.Components
 
         public RepositoryHeader()
         {
+            _repositoryService = Provide<IRepositoryService>();
             _refreshButton.clicked += NotifyRefreshButtonClicked;
         }
         
@@ -37,9 +42,13 @@ namespace UnityGit.GUI.Components
             RefreshButtonClicked?.Invoke();
         }
         
-        public void SetRepositoryAndName(IRepository repository, string repoName)
+        public void SetRepository(IRepository repository)
         {
-            _repositoryNameLabel.text = repoName;
+            if (_repositoryService.IsProjectRepository(repository))
+                _repositoryNameLabel.text = _repositoryService.GetProjectRepositoryName();
+            else
+                _repositoryNameLabel.text = _repositoryService.GetRepositoryName(repository);
+
             _repositoryPathLabel.text = repository.Info.Path;
         }
     }

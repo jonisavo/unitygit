@@ -5,16 +5,16 @@ namespace UnityGit.Core.Services
 {
     public interface IStatusService
     {
-        Repository ProjectRepository { get; }
+        IRepository ProjectRepository { get; }
 
-        IReadOnlyList<Repository> PackageRepositories { get; }
+        IReadOnlyList<IRepository> PackageRepositories { get; }
 
         void Clear();
 
         bool HasProjectRepository();
 
         bool HasPackageRepositories();
-
+        
         void PopulateRepositories();
 
         Signature GetSignature();

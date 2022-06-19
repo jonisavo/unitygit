@@ -1,5 +1,5 @@
 ﻿<UXML xmlns:ui="UnityEngine.UIElements" xmlns:ugit="UnityGit.GUI.Components">
-    <ui:VisualElement name="commit-window-view-container">
+    <ui:VisualElement name="commit-window-view-container" class="ugit-window-container">
         <ui:ScrollView name="commit-window-view-status-container" />
         <ugit:CommitFoldout name="commit-window-view-commit-foldout" />
     </ui:VisualElement>

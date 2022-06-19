@@ -1,9 +1,7 @@
 ﻿using LibGit2Sharp;
 using UIComponents;
 using UIComponents.Experimental;
-using UnityEngine;
 using UnityEngine.UIElements;
-using UnityGit.Core.Utilities;
 using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
@@ -11,6 +9,7 @@ namespace UnityGit.GUI.Components
     [Layout("CommitWindowView/CommitWindowView")]
     [Stylesheet("CommitWindowView/CommitWindowView.style")]
     [Stylesheet("Dimensions")]
+    [Stylesheet("Windows")]
     [Dependency(typeof(IStatusService), provide: typeof(StatusService))]
     [Dependency(typeof(ICommitService), provide: typeof(CommitService))]
     public class CommitWindowView : UnityGitUIComponent
@@ -27,7 +26,7 @@ namespace UnityGit.GUI.Components
             _commitService = Provide<ICommitService>();
             _commitService.CommitCreated += OnCommitCreated;
 
-            AddToClassList("full-height");
+            AddToClassList("ugit-full-height");
             
             Add(new Button(() =>
             {
@@ -65,7 +64,7 @@ namespace UnityGit.GUI.Components
             if (!_statusService.HasProjectRepository())
                 _statusContainer.Add(new Label("Project repository is not valid."));
             else
-                _statusContainer.Add(new RepositoryStatusView(_statusService.ProjectRepository, Application.productName));
+                _statusContainer.Add(new RepositoryStatusView(_statusService.ProjectRepository));
         }
 
         private void AddPackageRepositoryViews()
@@ -77,10 +76,7 @@ namespace UnityGit.GUI.Components
             }
             
             foreach (var packageRepo in _statusService.PackageRepositories)
-            {
-                var packageName = RepositoryUtilities.GetRepositoryName(packageRepo);
-                _statusContainer.Add(new RepositoryStatusView(packageRepo, packageName));
-            }
+                _statusContainer.Add(new RepositoryStatusView(packageRepo));
         }
     }
 }

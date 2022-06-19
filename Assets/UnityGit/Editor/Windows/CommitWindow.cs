@@ -9,7 +9,7 @@ namespace UnityGit.Editor
     {
         private bool _shouldRedraw;
         
-        [MenuItem("Git/Commit")]
+        [MenuItem("Git/Commit", priority = 10)]
         public static void ShowWindow()
         {
             var window = GetWindow<CommitWindow>();

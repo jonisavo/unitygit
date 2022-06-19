@@ -11,6 +11,7 @@ namespace UnityGit.Editor.Toolbar
     [InitializeOnLoad]
     [Dependency(typeof(IStatusService), provide: typeof(StatusService))]
     [Dependency(typeof(ICheckoutService), provide: typeof(CheckoutService))]
+    [Dependency(typeof(IBranchService), provide: typeof(BranchService))]
     public static class BranchToolbarButton
     {
         private static class Styles
@@ -33,22 +34,17 @@ namespace UnityGit.Editor.Toolbar
         
         private static readonly IStatusService StatusService;
         private static readonly ICheckoutService CheckoutService;
+        private static readonly IBranchService BranchService;
 
         private static readonly GUIContent BranchButtonContent;
 
-        private static readonly GUILayoutOption[] BranchButtonOptions = new []
-        {
-            GUILayout.MaxWidth(100)
-        };
-        
-        private const string IconName = "UnityGit/Icons/icons8-merge-git-24";
-        
         static BranchToolbarButton()
         {
             ToolbarExtender.LeftToolbarGUI.Add(DoBranchToolbarItem);
             var dependencyInjector = DependencyInjector.GetInjector(typeof(BranchToolbarButton));
             StatusService = dependencyInjector.Provide<IStatusService>();
             CheckoutService = dependencyInjector.Provide<ICheckoutService>();
+            BranchService = dependencyInjector.Provide<IBranchService>();
             
             var texture = Icons.GetIcon(Icons.Name.Merge);
             
@@ -57,22 +53,26 @@ namespace UnityGit.Editor.Toolbar
 
         private static void DoBranchToolbarItem()
         {
-            string title;
+            BranchButtonContent.text = GetToolbarButtonText();
+
+            GUILayout.Space(6);
+
+            using (new EditorGUI.DisabledScope(!StatusService.HasProjectRepository()))
+                DoBranchToolbarButton();
+        }
+
+        private static string GetToolbarButtonText()
+        {
+            string text;
 
             var hasRepo = StatusService.HasProjectRepository();
-
+            
             if (!hasRepo)
-                title = "No repository";
+                text = "No repository";
             else
-                title = StatusService.ProjectRepository.Head.FriendlyName;
+                text = BranchService.GetBranchName(StatusService.ProjectRepository.Head);
 
-            BranchButtonContent.text = title;
-
-            if (BranchButtonContent.image == null)
-                BranchButtonContent.image = Icons.GetIcon(Icons.Name.Merge);
-
-            using (new EditorGUI.DisabledScope(!hasRepo))
-                DoBranchToolbarButton();
+            return text;
         }
 
         private static void DoBranchToolbarButton()
@@ -97,11 +97,15 @@ namespace UnityGit.Editor.Toolbar
                     CheckoutService.CheckoutBranch(StatusService.ProjectRepository, itemAsBranch);
 ;               }, branch);
             }
+            
+            menu.AddSeparator("");
+            
+            menu.AddItem(new GUIContent("Open window..."), false, BranchesWindow.ShowWindow);
 
             var rect = GUILayoutUtility.GetLastRect();
-            
-            rect.y += rect.height;
-            
+
+            rect.y += 24f;
+
             menu.DropDown(rect);
         }
     }

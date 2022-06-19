@@ -3,13 +3,14 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using LibGit2Sharp;
+using UnityEngine;
 
-namespace UnityGit.Core.Utilities
+namespace UnityGit.Core.Services
 {
-    public static class RepositoryUtilities
+    public class RepositoryService : IRepositoryService
     {
         [CanBeNull]
-        public static Repository GetProjectRepository()
+        public IRepository GetProjectRepository()
         {
             var projectFullPath = Directory.GetCurrentDirectory();
             var gitRepositoryPath = Path.Combine(projectFullPath, ".git");
@@ -23,9 +24,9 @@ namespace UnityGit.Core.Utilities
             return new Repository(gitRepositoryPath);
         }
         
-        public static List<Repository> GetPackageRepositories()
+        public List<IRepository> GetPackageRepositories()
         {
-            var repositories = new List<Repository>();
+            var repositories = new List<IRepository>();
             var packagesFullPath = Path.GetFullPath("Packages");
             var packagesDirectoryInfo = new DirectoryInfo(packagesFullPath);
 
@@ -33,9 +34,14 @@ namespace UnityGit.Core.Utilities
 
             return repositories;
         }
-
-        public static void AddRepositoriesInDirectory(DirectoryInfo directoryInfo,
-            List<Repository> repositories)
+        
+        public bool IsProjectRepository(IRepository repository)
+        {
+            return AreRepositoriesEqual(GetProjectRepository(), repository);
+        }
+        
+        private static void AddRepositoriesInDirectory(DirectoryInfo directoryInfo,
+            ICollection<IRepository> repositories)
         {
             var gitDirectories =
                 directoryInfo.GetDirectories(".git", SearchOption.AllDirectories);
@@ -52,8 +58,13 @@ namespace UnityGit.Core.Utilities
                     repositories.Add(new Repository(directory.FullName));
             }
         }
+        
+        public string GetProjectRepositoryName()
+        {
+            return Application.productName;
+        }
 
-        public static string GetRepositoryName(Repository repository)
+        public string GetRepositoryName(IRepository repository)
         {
             var packagePath = repository.Info.Path;
             
@@ -69,7 +80,7 @@ namespace UnityGit.Core.Utilities
             return packagePathParts[packageNameIndex];
         }
 
-        public static bool AreRepositoriesEqual(Repository repositoryOne, Repository repositoryTwo)
+        public bool AreRepositoriesEqual(IRepository repositoryOne, IRepository repositoryTwo)
         {
             if (repositoryOne == null || repositoryTwo == null)
                 return false;

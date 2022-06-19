@@ -3,21 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using LibGit2Sharp;
-using UnityGit.Core.Utilities;
+using UIComponents;
 
 namespace UnityGit.Core.Services
 {
-    public class StatusService : IStatusService
+    [Dependency(typeof(IRepositoryService), provide: typeof(RepositoryService))]
+    public class StatusService : Service, IStatusService
     {
-        public Repository ProjectRepository { get; private set; }
+        public IRepository ProjectRepository { get; private set; }
 
-        public IReadOnlyList<Repository> PackageRepositories => _packageRepositories;
+        public IReadOnlyList<IRepository> PackageRepositories => _packageRepositories;
 
-        private readonly List<Repository> _packageRepositories = new List<Repository>();
+        private readonly List<IRepository> _packageRepositories = new List<IRepository>();
+
+        private readonly IRepositoryService _repositoryService;
 
         public StatusService()
         {
-           PopulateRepositories();
+            _repositoryService = Provide<IRepositoryService>();
+            PopulateRepositories();
 #if UNITY_EDITOR
             UnityEditor.AssemblyReloadEvents.beforeAssemblyReload += Clear;
 #endif
@@ -57,23 +61,23 @@ namespace UnityGit.Core.Services
             if (HasProjectRepository())
                 ProjectRepository.Dispose();
             
-            ProjectRepository = RepositoryUtilities.GetProjectRepository();
+            ProjectRepository = _repositoryService.GetProjectRepository();
 
             RemoveInvalidRepositories(_packageRepositories);
 
-            var packageRepositories = RepositoryUtilities.GetPackageRepositories();
+            var packageRepositories = _repositoryService.GetPackageRepositories();
             
             foreach (var packageRepository in packageRepositories)
             {
                 var alreadyExists = _packageRepositories.Any(storedRepository =>
-                    RepositoryUtilities.AreRepositoriesEqual(storedRepository, packageRepository));
+                    _repositoryService.AreRepositoriesEqual(storedRepository, packageRepository));
 
                 if (!alreadyExists)
                     _packageRepositories.Add(packageRepository);
             }
         }
 
-        private void RemoveInvalidRepositories(IList<Repository> repositories)
+        private void RemoveInvalidRepositories(IList<IRepository> repositories)
         {
             var indexesToRemove = new List<int>(repositories.Count);
             

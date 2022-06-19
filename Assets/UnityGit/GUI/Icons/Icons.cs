@@ -10,7 +10,8 @@ namespace UnityGit.GUI
     {
         public enum Name
         {
-            Merge
+            Merge,
+            Branch
         }
 
         private static readonly Dictionary<string, Texture2D> IconCache;

@@ -1,0 +1,6 @@
+﻿<UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement name="branch-list-item-container">
+        <ui:Image name="branch-list-item-image" />
+        <ui:Label name="branch-list-item-name-label" />
+    </ui:VisualElement>
+</UXML>
