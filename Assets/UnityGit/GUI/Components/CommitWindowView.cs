@@ -27,13 +27,7 @@ namespace UnityGit.GUI.Components
             _commitService.CommitCreated += OnCommitCreated;
 
             AddToClassList("ugit-full-height");
-            
-            Add(new Button(() =>
-            {
-                if (_commitService is CommitService service)
-                    service.LogSelectedFiles();
-            }) { text = "Log Selected Files" });
-            
+
             DrawRepositoryViews();
         }
 

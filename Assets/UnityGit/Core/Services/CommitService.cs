@@ -60,15 +60,6 @@ namespace UnityGit.Core.Services
             return count;
         }
 
-        public void LogSelectedFiles()
-        {
-            foreach (var files in _committedFilesDictionary.Values)
-                foreach (var file in files)
-                    Debug.Log(file);
-            
-            Debug.Log(GetSelectedCount());
-        }
-
         private void CommitToRepository(IRepository repository, string message, Signature commitSignature)
         {
             var selectedCount = GetSelectedCount();
