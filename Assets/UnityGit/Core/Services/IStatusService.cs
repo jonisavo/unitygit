@@ -16,7 +16,5 @@ namespace UnityGit.Core.Services
         bool HasPackageRepositories();
         
         void PopulateRepositories();
-
-        Signature GetSignature();
     }
 }

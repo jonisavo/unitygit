@@ -1,6 +1,16 @@
 ﻿<UXML xmlns:ui="UnityEngine.UIElements">
-    <ui:VisualElement name="branch-list-item-container">
-        <ui:Image name="branch-list-item-image" />
-        <ui:Label name="branch-list-item-name-label" />
+    <ui:VisualElement name="branch-list-item-container" class="container">
+        <ui:VisualElement class="container">
+            <ui:Image name="branch-list-item-image" />
+            <ui:Label name="branch-list-item-name-label" />
+        </ui:VisualElement>
+        <ui:VisualElement class="container">
+            <ui:Button name="branch-list-item-pull-button" tooltip="Pull" class="disabled-button">
+                <ui:Image name="branch-list-item-pull-button-image" />
+            </ui:Button>
+            <ui:Button name="branch-list-item-push-button" tooltip="Push" class="disabled-button">
+                <ui:Image name="branch-list-item-push-button-image" />
+            </ui:Button>
+        </ui:VisualElement>
     </ui:VisualElement>
 </UXML>

@@ -14,6 +14,9 @@ namespace UnityGit.GUI.Components
 
         [Query("settings-provider-info-container")]
         private readonly VisualElement _infoContainer;
+
+        [Query("settings-provider-credentials-container")]
+        private readonly VisualElement _credentialsContainer;
         
         [Query("settings-provider-refresh-repositories-button")]
         private readonly Button _refreshRepositoriesButton;
@@ -27,6 +30,8 @@ namespace UnityGit.GUI.Components
             AddToClassList("container");
             
             RefreshInfo();
+            
+            RefreshCredentialsContainer();
         }
 
         ~SettingsProviderView()
@@ -38,6 +43,7 @@ namespace UnityGit.GUI.Components
         {
             _statusService.PopulateRepositories();
             RefreshInfo();
+            RefreshCredentialsContainer();
         }
 
         private void RefreshInfo()
@@ -53,6 +59,19 @@ namespace UnityGit.GUI.Components
                 _infoContainer.Add(new Label($"{_statusService.PackageRepositories.Count} package repositories found."));
             else
                 _infoContainer.Add(new Label("No package repositories found."));
+        }
+
+        private void RefreshCredentialsContainer()
+        {
+            _credentialsContainer.Clear();
+            
+            _credentialsContainer.Add(new Label("Credentials") { name = "settings-provider-credentials-title" });
+            
+            if (_statusService.HasProjectRepository())
+                _credentialsContainer.Add(new RepositoryCredentialsListItem(_statusService.ProjectRepository));
+            
+            foreach (var repository in _statusService.PackageRepositories)
+                _credentialsContainer.Add(new RepositoryCredentialsListItem(repository));
         }
     }
 }

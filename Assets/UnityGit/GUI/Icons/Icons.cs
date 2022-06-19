@@ -11,7 +11,9 @@ namespace UnityGit.GUI
         {
             Merge,
             Branch,
-            Refresh
+            Refresh,
+            Push,
+            Pull
         }
 
         private static readonly Dictionary<string, Texture2D> IconCache;

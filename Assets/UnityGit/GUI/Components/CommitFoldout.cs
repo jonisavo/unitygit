@@ -9,7 +9,7 @@ namespace UnityGit.GUI.Components
 {
     [Layout("CommitFoldout/CommitFoldout")]
     [Stylesheet("CommitFoldout/CommitFoldout.style")]
-    [Dependency(typeof(IStatusService), provide: typeof(StatusService))]
+    [Dependency(typeof(ISignatureService), provide: typeof(SignatureService))]
     [Dependency(typeof(ICommitService), provide: typeof(CommitService))]
     public class CommitFoldout : UnityGitUIComponent
     {
@@ -34,7 +34,7 @@ namespace UnityGit.GUI.Components
             _commitService.CommitCreated += OnCommitCreated;
             _commitService.FileSelectionChanged += OnFileSelectionChanged;
             
-            var signature = Provide<IStatusService>().GetSignature();
+            var signature = Provide<ISignatureService>().GetSignature();
 
             if (signature != null && !string.IsNullOrEmpty(signature.Name))
                 _commitAuthorNameTextField.value = signature.Name;

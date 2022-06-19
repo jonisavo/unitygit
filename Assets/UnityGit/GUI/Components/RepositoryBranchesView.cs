@@ -19,8 +19,8 @@ namespace UnityGit.GUI.Components
         public RepositoryBranchesView(IRepository repository)
         {
             _header.SetRepository(repository);
-            _localBranchList.SetItems(repository.Branches.Where(b => !b.IsRemote));
-            _remoteBranchList.SetItems(repository.Branches.Where(b => b.IsRemote));
+            _localBranchList.Initialize(repository, repository.Branches.Where(b => !b.IsRemote));
+            _remoteBranchList.Initialize(repository, repository.Branches.Where(b => b.IsRemote));
         }
     }
 }

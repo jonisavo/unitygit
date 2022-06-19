@@ -12,3 +12,7 @@
     font-size: 18px;
     margin-bottom: 20px;
 }
+
+#settings-provider-credentials-title {
+    font-size: 16px;
+}

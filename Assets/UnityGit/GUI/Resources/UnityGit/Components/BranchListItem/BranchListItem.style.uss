@@ -1,4 +1,8 @@
 ﻿#branch-list-item-container {
+    justify-content: space-between;
+}
+
+.container {
     flex-direction: row;
     align-items: center;
 }
@@ -11,6 +15,10 @@
 #branch-list-item-name-label {
     margin-left: 10px;
     font-size: 14px;
+}
+
+.disabled-button {
+    display: none;
 }
 
 .branch-list-item-current-branch {

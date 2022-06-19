@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using LibGit2Sharp;
 using UIComponents;
 
@@ -91,33 +89,6 @@ namespace UnityGit.Core.Services
             
             foreach (var index in indexesToRemove)
                 repositories.RemoveAt(index);
-        }
-
-        [CanBeNull]
-        public Signature GetSignature()
-        {
-            var hasProjectRepository = HasProjectRepository();
-
-            if (!hasProjectRepository && !HasPackageRepositories())
-                return null;
-            
-            if (hasProjectRepository)
-            {
-                var projectSignature = ProjectRepository.Config.BuildSignature(DateTimeOffset.Now);
-
-                if (projectSignature != null)
-                    return projectSignature;
-            }
-
-            foreach (var repository in PackageRepositories)
-            {
-                var packageRepoSignature = repository.Config.BuildSignature(DateTimeOffset.Now);
-
-                if (packageRepoSignature != null)
-                    return packageRepoSignature;
-            }
-
-            return null;
         }
     }
 }

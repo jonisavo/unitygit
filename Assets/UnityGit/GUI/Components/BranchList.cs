@@ -36,9 +36,13 @@ namespace UnityGit.GUI.Components
         [Query("branch-list-listview")]
         private readonly ListView _listView;
 
-        public override void SetItems(IEnumerable<Branch> items)
+        private IRepository _repository;
+
+        public void Initialize(IRepository repository, IEnumerable<Branch> branches)
         {
-            base.SetItems(items);
+            _repository = repository;
+
+            base.SetItems(branches);
             
             _countLabel.text = $"{Items.Count.ToString()} branches";
             SetUpListView(_listView, Items, 32);
@@ -46,7 +50,7 @@ namespace UnityGit.GUI.Components
 
         public override BranchListItem MakeItem()
         {
-            return new BranchListItem();
+            return new BranchListItem(_repository);
         }
 
         public override void BindItem(BranchListItem item, int index)
