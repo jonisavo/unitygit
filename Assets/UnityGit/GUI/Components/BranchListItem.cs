@@ -11,6 +11,7 @@ namespace UnityGit.GUI.Components
     [Dependency(typeof(IBranchService), provide: typeof(BranchService))]
     [Dependency(typeof(IPushService), provide: typeof(PushService))]
     [Dependency(typeof(IPullService), provide: typeof(PullService))]
+    [Dependency(typeof(ICommitService), provide: typeof(CommitService))]
     public class BranchListItem : UnityGitUIComponent, IOnAttachToPanel
     {
         [Query("branch-list-item-image")]
@@ -30,6 +31,7 @@ namespace UnityGit.GUI.Components
         private readonly IBranchService _branchService;
         private readonly PushService _pushService;
         private readonly IPullService _pullService;
+        private readonly ICommitService _commitService;
 
         private readonly IRepository _repository;
         private Branch _branch;
@@ -42,14 +44,23 @@ namespace UnityGit.GUI.Components
             _pushService = Provide<IPushService>() as PushService;
             _pushService.PushStarted += OnPushStarted;
             _pushService.PushFinished += OnPushFinished;
+            
+            _commitService = Provide<ICommitService>();
+            _commitService.CommitCreated += OnCommitCreated;
+            
             _pullService = Provide<IPullService>();
 
             _pullButton.clicked += OnPullButtonClicked;
             _pushButton.clicked += OnPushButtonClicked;
+            
+            _icon.image = Icons.GetIcon(Icons.Name.Branch);
+            _pullButtonImage.image = Icons.GetIcon(Icons.Name.Pull);
+            _pushButtonImage.image = Icons.GetIcon(Icons.Name.Push);
         }
         
         ~BranchListItem()
         {
+            _commitService.CommitCreated -= OnCommitCreated;
             _pushService.PushStarted -= OnPushStarted;
             _pushService.PushFinished -= OnPushFinished;
             _pullButton.clicked -= OnPullButtonClicked;
@@ -58,19 +69,23 @@ namespace UnityGit.GUI.Components
 
         public void OnAttachToPanel(AttachToPanelEvent evt)
         {
-            _icon.image = Icons.GetIcon(Icons.Name.Branch);
-            _pullButtonImage.image = Icons.GetIcon(Icons.Name.Pull);
-            _pushButtonImage.image = Icons.GetIcon(Icons.Name.Push);
+            UpdateUpdateButtons();
         }
 
         private void OnPushStarted()
         {
-            _pushButton.SetEnabled(false);
+            UpdateUpdateButtons();
         }
 
         private void OnPushFinished(bool success)
         {
-            _pushButton.SetEnabled(true);
+            UpdateUpdateButtons();
+        }
+
+        private void OnCommitCreated(Commit commit)
+        {
+            if (_branch.Tip == commit)
+                UpdateUpdateButtons();
         }
         
         private void UpdateLabel()
@@ -97,6 +112,8 @@ namespace UnityGit.GUI.Components
                 _pushButton.RemoveFromClassList("disabled-button");
             else
                 _pushButton.AddToClassList("disabled-button");
+            
+            _pushButton.SetEnabled(!_pushService.IsPushing);
         }
 
         public void SetBranch(Branch branch)

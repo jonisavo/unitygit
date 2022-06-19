@@ -3,6 +3,7 @@ using System.Diagnostics;
 using LibGit2Sharp;
 using UIComponents;
 using UnityGit.Core.Internal;
+using Debug = UnityEngine.Debug;
 
 namespace UnityGit.Core.Services
 {
@@ -51,26 +52,41 @@ namespace UnityGit.Core.Services
             
             PushProcessStartInfo.Arguments = $"push {branch.RemoteName} {branch.FriendlyName}";
 
-            _progressId = 
-                ProgressWrapper.Start("Pushing...", $"Pushing {branch.FriendlyName} to {branch.RemoteName}");
+            _progressId = ProgressWrapper.Start(
+                "Pushing...",
+                $"Pushing {branch.FriendlyName} to {branch.RemoteName}"
+            );
             
-            _pushProcess = Process.Start(PushProcessStartInfo);
-            
-            if (_pushProcess == null)
-            {
-                ProgressWrapper.FinishWithError(_progressId, "Failed to start git push");
-                PushFinished?.Invoke(false);
-                return;
-            }
-
+            _pushProcess = new Process();
+            _pushProcess.StartInfo = PushProcessStartInfo;
+            _pushProcess.StartInfo.WorkingDirectory = repository.Info.WorkingDirectory;
+            _pushProcess.EnableRaisingEvents = true;
             _pushProcess.Exited += OnPushFinished;
+
+            try
+            {
+                _pushProcess.Start();
+            } 
+            catch (Exception e)
+            {
+                HandleError($"Failed to start git push: {e.Message}");
+            }
+        }
+
+        private void HandleError(string message)
+        {
+            _pushProcess.Exited -= OnPushFinished;
+            ProgressWrapper.FinishWithError(_progressId, message);
+            Debug.LogError(message);
+            IsPushing = false;
+            PushFinished?.Invoke(false);
         }
         
         private void OnPushFinished(object sender, EventArgs e)
         {
             _pushProcess.Exited -= OnPushFinished;
             IsPushing = false;
-            
+
             var isSuccessful = _pushProcess.ExitCode == 0;
 
             if (isSuccessful)

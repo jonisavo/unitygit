@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using LibGit2Sharp;
-using UnityEngine;
+using UnityEditor;
 using UnityGit.Core.Internal;
 
 namespace UnityGit.Core.Services
@@ -77,7 +77,8 @@ namespace UnityGit.Core.Services
             
             var progressId = ProgressWrapper.Start(
                 $"Committing {selectedCount} files",
-                $"Creating commit to {_committedFilesDictionary.Keys.Count} repositories"
+                $"Creating commit to {_committedFilesDictionary.Keys.Count} repositories",
+                Progress.Options.Synchronous
             );
 
             try

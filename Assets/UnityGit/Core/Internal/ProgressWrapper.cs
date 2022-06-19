@@ -4,11 +4,10 @@ namespace UnityGit.Core.Internal
 {
     internal static class ProgressWrapper
     {
-        public static int Start(string name, string description)
+        public static int Start(string name, string description, Progress.Options options = Progress.Options.None)
         {
 #if UNITY_2020_3_OR_NEWER
-            return Progress.Start(name, description,
-                Progress.Options.Indefinite | Progress.Options.Synchronous);
+            return Progress.Start(name, description, Progress.Options.Indefinite | options);
 #else
             return -1;
 #endif

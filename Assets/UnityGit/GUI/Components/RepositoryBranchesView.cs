@@ -16,11 +16,30 @@ namespace UnityGit.GUI.Components
         [Query("repository-branches-remote-list")]
         private readonly BranchList _remoteBranchList;
 
+        private readonly IRepository _repository;
+
         public RepositoryBranchesView(IRepository repository)
         {
+            _repository = repository;
             _header.SetRepository(repository);
-            _localBranchList.Initialize(repository, repository.Branches.Where(b => !b.IsRemote));
-            _remoteBranchList.Initialize(repository, repository.Branches.Where(b => b.IsRemote));
+            _header.RefreshButtonClicked += OnRefreshButtonClicked;
+            InitializeLists();
+        }
+
+        ~RepositoryBranchesView()
+        {
+            _header.RefreshButtonClicked -= OnRefreshButtonClicked;
+        }
+
+        private void InitializeLists()
+        {
+            _localBranchList.Initialize(_repository, _repository.Branches.Where(b => !b.IsRemote));
+            _remoteBranchList.Initialize(_repository, _repository.Branches.Where(b => b.IsRemote));
+        }
+
+        private void OnRefreshButtonClicked()
+        {
+            InitializeLists();
         }
     }
 }
