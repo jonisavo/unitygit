@@ -28,7 +28,7 @@ namespace UnityGit.GUI.Components
         private readonly Image _pushButtonImage;
 
         private readonly IBranchService _branchService;
-        private readonly IPushService _pushService;
+        private readonly PushService _pushService;
         private readonly IPullService _pullService;
 
         private readonly IRepository _repository;
@@ -39,7 +39,9 @@ namespace UnityGit.GUI.Components
             _repository = repository;
             
             _branchService = Provide<IBranchService>();
-            _pushService = Provide<IPushService>();
+            _pushService = Provide<IPushService>() as PushService;
+            _pushService.PushStarted += OnPushStarted;
+            _pushService.PushFinished += OnPushFinished;
             _pullService = Provide<IPullService>();
 
             _pullButton.clicked += OnPullButtonClicked;
@@ -48,6 +50,8 @@ namespace UnityGit.GUI.Components
         
         ~BranchListItem()
         {
+            _pushService.PushStarted -= OnPushStarted;
+            _pushService.PushFinished -= OnPushFinished;
             _pullButton.clicked -= OnPullButtonClicked;
             _pushButton.clicked -= OnPushButtonClicked;
         }
@@ -57,6 +61,16 @@ namespace UnityGit.GUI.Components
             _icon.image = Icons.GetIcon(Icons.Name.Branch);
             _pullButtonImage.image = Icons.GetIcon(Icons.Name.Pull);
             _pushButtonImage.image = Icons.GetIcon(Icons.Name.Push);
+        }
+
+        private void OnPushStarted()
+        {
+            _pushButton.SetEnabled(false);
+        }
+
+        private void OnPushFinished(bool success)
+        {
+            _pushButton.SetEnabled(true);
         }
         
         private void UpdateLabel()
