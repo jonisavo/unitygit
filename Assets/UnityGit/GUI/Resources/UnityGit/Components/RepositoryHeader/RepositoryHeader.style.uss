@@ -22,3 +22,8 @@
     font-size: 10px;
     -unity-text-overflow-position: start;
 }
+
+#repository-header-refresh-button-image {
+    width: 24px;
+    height: 24px;
+}

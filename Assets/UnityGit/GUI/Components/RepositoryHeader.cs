@@ -9,7 +9,7 @@ namespace UnityGit.GUI.Components
     [Layout("RepositoryHeader/RepositoryHeader")]
     [Stylesheet("RepositoryHeader/RepositoryHeader.style")]
     [Dependency(typeof(IRepositoryService), provide: typeof(RepositoryService))]
-    public class RepositoryHeader : UnityGitUIComponent
+    public class RepositoryHeader : UnityGitUIComponent, IOnAttachToPanel
     {
         public new class UxmlFactory : UxmlFactory<RepositoryHeader> {}
         
@@ -19,7 +19,9 @@ namespace UnityGit.GUI.Components
         private readonly Label _repositoryPathLabel;
         [Query("repository-header-refresh-button")]
         private readonly Button _refreshButton;
-
+        [Query("repository-header-refresh-button-image")]
+        private readonly Image _refreshButtonImage;
+        
         private readonly IRepositoryService _repositoryService;
         
         public delegate void RefreshButtonClickedDelegate();
@@ -31,7 +33,12 @@ namespace UnityGit.GUI.Components
             _repositoryService = Provide<IRepositoryService>();
             _refreshButton.clicked += NotifyRefreshButtonClicked;
         }
-        
+
+        public void OnAttachToPanel(AttachToPanelEvent evt)
+        {
+            _refreshButtonImage.image = Icons.GetIcon(Icons.Name.Refresh);
+        }
+
         ~RepositoryHeader()
         {
             _refreshButton.clicked -= NotifyRefreshButtonClicked;

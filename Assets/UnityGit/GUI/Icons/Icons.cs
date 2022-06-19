@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.IO;
 using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
@@ -11,7 +10,8 @@ namespace UnityGit.GUI
         public enum Name
         {
             Merge,
-            Branch
+            Branch,
+            Refresh
         }
 
         private static readonly Dictionary<string, Texture2D> IconCache;
@@ -59,8 +59,10 @@ namespace UnityGit.GUI
         {
             var normalizedName = name.ToLowerInvariant();
             
-            if (EditorGUIUtility.isProSkin)
-                normalizedName = $"d_{normalizedName}";
+            var proSkinName = $"d_{normalizedName}";
+            
+            if (EditorGUIUtility.isProSkin && IconCache.ContainsKey(proSkinName))
+                normalizedName = proSkinName;
             
             return normalizedName;
         }

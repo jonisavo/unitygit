@@ -4,6 +4,8 @@
             <ui:Label name="repository-header-name-label" class="label" />
             <ui:Label name="repository-header-path-label" class="label" />
         </ui:VisualElement>
-        <ui:Button name="repository-header-refresh-button" text="Refresh" />
+        <ui:Button name="repository-header-refresh-button" tooltip="Refresh">
+            <ui:Image name="repository-header-refresh-button-image" />
+        </ui:Button>
     </ui:VisualElement>
 </UXML>
