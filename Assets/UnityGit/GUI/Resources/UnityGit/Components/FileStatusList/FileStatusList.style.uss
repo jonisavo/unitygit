@@ -11,6 +11,7 @@
 #file-status-list-options-container {
     min-width: 30%;
     flex-direction: row-reverse;
+    margin-bottom: 4px;
 }
 
 #file-status-list-listview {
