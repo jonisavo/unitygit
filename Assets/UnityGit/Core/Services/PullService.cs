@@ -1,8 +1,7 @@
 ﻿using LibGit2Sharp;
 using UIComponents;
-using UnityGit.Core.Services;
 
-namespace UnityGit.GUI.Components
+namespace UnityGit.Core.Services
 {
     [Dependency(typeof(ICredentialsService), provide: typeof(CredentialsService))]
     [Dependency(typeof(ISignatureService), provide: typeof(SignatureService))]

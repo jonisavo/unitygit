@@ -13,6 +13,7 @@ namespace UnityGit.GUI.Components
     [Dependency(typeof(ICommitService), provide: typeof(CommitService))]
     public class CommitFoldout : UnityGitUIComponent
     {
+        [Provide]
         private readonly ICommitService _commitService;
 
         [Query("commit-foldout-foldout")]
@@ -30,7 +31,6 @@ namespace UnityGit.GUI.Components
         
         public CommitFoldout()
         {
-            _commitService = Provide<ICommitService>();
             _commitService.CommitCreated += OnCommitCreated;
             _commitService.FileSelectionChanged += OnFileSelectionChanged;
             

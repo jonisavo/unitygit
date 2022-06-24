@@ -13,6 +13,7 @@ namespace UnityGit.GUI.Components
     {
         private readonly IRepository _repository;
 
+        [Provide]
         private readonly IRestoreService _restoreService;
 
         [Query("repository-status-header")]
@@ -24,7 +25,6 @@ namespace UnityGit.GUI.Components
         public RepositoryStatusView(IRepository repository)
         {
             _repository = repository;
-            _restoreService = Provide<IRestoreService>();
             _restoreService.FileRestored += OnFileRestored;
             
             _header.SetRepository(repository);

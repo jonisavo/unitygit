@@ -20,17 +20,17 @@ namespace UnityGit.GUI.Components
         [Query("credentials-list-item-password-input")]
         private readonly TextField _passwordInputField;
 
-        private readonly IRepository _repository;
+        [Provide]
         private readonly IRepositoryService _repositoryService;
+        [Provide]
         private readonly ICredentialsService _credentialsService;
 
+        private readonly IRepository _repository;
         private Credentials _credentials;
 
         public RepositoryCredentialsListItem(IRepository repository)
         {
             _repository = repository;
-            _repositoryService = Provide<IRepositoryService>();
-            _credentialsService = Provide<ICredentialsService>();
 
             if (_repositoryService.IsProjectRepository(repository))
                 _repositoryNameLabel.text = _repositoryService.GetProjectRepositoryName();

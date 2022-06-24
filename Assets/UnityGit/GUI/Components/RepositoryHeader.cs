@@ -22,6 +22,7 @@ namespace UnityGit.GUI.Components
         [Query("repository-header-refresh-button-image")]
         private readonly Image _refreshButtonImage;
         
+        [Provide]
         private readonly IRepositoryService _repositoryService;
         
         public delegate void RefreshButtonClickedDelegate();
@@ -30,7 +31,6 @@ namespace UnityGit.GUI.Components
 
         public RepositoryHeader()
         {
-            _repositoryService = Provide<IRepositoryService>();
             _refreshButton.clicked += NotifyRefreshButtonClicked;
         }
 

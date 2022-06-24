@@ -13,7 +13,6 @@ namespace UnityGit.GUI.Components
     public class FileStatusList : UIList<StatusEntry, FileStatusItem>
     {
         private readonly IRepository _repository;
-        private readonly ICommitService _commitService;
         private readonly string _header;
         
         [Query("file-status-list-foldout")]
@@ -22,11 +21,13 @@ namespace UnityGit.GUI.Components
         private readonly Button _selectAllButton;
         [Query("file-status-list-deselect-all-button")]
         private readonly Button _deselectAllButton;
+        
+        [Provide]
+        private readonly ICommitService _commitService;
 
         public FileStatusList(IRepository repository, List<StatusEntry> statusEntries, string header) : base(statusEntries)
         {
             _repository = repository;
-            _commitService = Provide<ICommitService>();
             _commitService.FileSelectionChanged += OnFileSelectionChanged;
             _header = header;
             

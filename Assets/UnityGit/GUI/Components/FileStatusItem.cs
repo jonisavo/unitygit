@@ -26,16 +26,16 @@ namespace UnityGit.GUI.Components
         [Query("changed-file-toggle")]
         private readonly Toggle _selectionToggle;
         
+        [Provide]
         private readonly ICommitService _commitService;
+        [Provide]
         private readonly IRestoreService _restoreService;
+        [Provide]
         private readonly IDiffService _diffService;
 
         public FileStatusItem(IRepository repository)
         {
             _repository = repository;
-            _commitService = Provide<ICommitService>();
-            _restoreService = Provide<IRestoreService>();
-            _diffService = Provide<IDiffService>();
             _commitService.FileSelectionChanged += OnFileSelectionChanged;
 
             this.AddManipulator(new ContextualMenuManipulator(BuildContextMenu));

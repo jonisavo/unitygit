@@ -10,11 +10,14 @@ namespace UnityGit.GUI.Components
     [Stylesheet("CommitWindowView/CommitWindowView.style")]
     [Stylesheet("Dimensions")]
     [Stylesheet("Windows")]
+    [RootClass("ugit-full-height")]
     [Dependency(typeof(IStatusService), provide: typeof(StatusService))]
     [Dependency(typeof(ICommitService), provide: typeof(CommitService))]
     public class CommitWindowView : UnityGitUIComponent
     {
+        [Provide]
         private readonly IStatusService _statusService;
+        [Provide]
         private readonly ICommitService _commitService;
         
         [Query("commit-window-view-status-container")]
@@ -22,11 +25,7 @@ namespace UnityGit.GUI.Components
 
         public CommitWindowView()
         {
-            _statusService = Provide<IStatusService>();
-            _commitService = Provide<ICommitService>();
             _commitService.CommitCreated += OnCommitCreated;
-
-            AddToClassList("ugit-full-height");
 
             DrawRepositoryViews();
         }

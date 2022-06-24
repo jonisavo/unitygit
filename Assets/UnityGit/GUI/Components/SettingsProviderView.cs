@@ -7,9 +7,11 @@ namespace UnityGit.GUI.Components
 {
     [Layout("SettingsProviderView/SettingsProviderView")]
     [Stylesheet("SettingsProviderView/SettingsProviderView.style")]
+    [RootClass("container")]
     [Dependency(typeof(IStatusService), provide: typeof(StatusService))]
     public class SettingsProviderView : UnityGitUIComponent
     {
+        [Provide]
         private readonly IStatusService _statusService;
 
         [Query("settings-provider-info-container")]
@@ -23,12 +25,8 @@ namespace UnityGit.GUI.Components
         
         public SettingsProviderView()
         {
-            _statusService = Provide<IStatusService>();
-
             _refreshRepositoriesButton.clicked += RefreshRepositories;
-            
-            AddToClassList("container");
-            
+
             RefreshInfo();
             
             RefreshCredentialsContainer();

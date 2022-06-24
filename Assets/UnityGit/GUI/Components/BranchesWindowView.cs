@@ -14,16 +14,14 @@ namespace UnityGit.GUI.Components
         [Query("branches-window-view-scroll-view")]
         private readonly ScrollView _scrollView;
 
-        private readonly IStatusService _statusService;
-        
         public BranchesWindowView()
         {
-            _statusService = Provide<IStatusService>();
+            var statusService = Provide<IStatusService>();
             
-            if (_statusService.HasProjectRepository())
-                _scrollView.Add(new RepositoryBranchesView(_statusService.ProjectRepository));
+            if (statusService.HasProjectRepository())
+                _scrollView.Add(new RepositoryBranchesView(statusService.ProjectRepository));
 
-            foreach (var repository in _statusService.PackageRepositories)
+            foreach (var repository in statusService.PackageRepositories)
                 _scrollView.Add(new RepositoryBranchesView(repository));
         }
     }

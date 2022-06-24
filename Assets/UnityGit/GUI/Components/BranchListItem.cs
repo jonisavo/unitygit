@@ -28,11 +28,16 @@ namespace UnityGit.GUI.Components
         [Query("branch-list-item-push-button-image")]
         private readonly Image _pushButtonImage;
 
+        [Provide]
         private readonly IBranchService _branchService;
-        private readonly PushService _pushService;
+        [Provide]
         private readonly IPullService _pullService;
+        [Provide]
         private readonly ICommitService _commitService;
-
+        
+        // Not declared as an interface, since we need to use events.
+        private readonly PushService _pushService;
+        
         private readonly IRepository _repository;
         private Branch _branch;
 
@@ -40,15 +45,11 @@ namespace UnityGit.GUI.Components
         {
             _repository = repository;
             
-            _branchService = Provide<IBranchService>();
             _pushService = Provide<IPushService>() as PushService;
             _pushService.PushStarted += OnPushStarted;
             _pushService.PushFinished += OnPushFinished;
             
-            _commitService = Provide<ICommitService>();
             _commitService.CommitCreated += OnCommitCreated;
-            
-            _pullService = Provide<IPullService>();
 
             _pullButton.clicked += OnPullButtonClicked;
             _pushButton.clicked += OnPushButtonClicked;
