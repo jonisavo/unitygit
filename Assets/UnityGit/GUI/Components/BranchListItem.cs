@@ -12,6 +12,7 @@ namespace UnityGit.GUI.Components
     [Dependency(typeof(IPushService), provide: typeof(PushService))]
     [Dependency(typeof(IPullService), provide: typeof(PullService))]
     [Dependency(typeof(ICommitService), provide: typeof(CommitService))]
+    [Dependency(typeof(IGitCommandService), provide: typeof(GitCommandService))]
     public class BranchListItem : UnityGitUIComponent, IOnAttachToPanel
     {
         [Query("branch-list-item-image")]
@@ -34,9 +35,10 @@ namespace UnityGit.GUI.Components
         private readonly IPullService _pullService;
         [Provide]
         private readonly ICommitService _commitService;
-        
+        [Provide]
+        private readonly IPushService _pushService;
         // Not declared as an interface, since we need to use events.
-        private readonly PushService _pushService;
+        private readonly GitCommandService _gitCommandService;
         
         private readonly IRepository _repository;
         private Branch _branch;
@@ -45,9 +47,9 @@ namespace UnityGit.GUI.Components
         {
             _repository = repository;
             
-            _pushService = Provide<IPushService>() as PushService;
-            _pushService.PushStarted += OnPushStarted;
-            _pushService.PushFinished += OnPushFinished;
+            _gitCommandService = Provide<IGitCommandService>() as GitCommandService;
+            _gitCommandService.CommandStarted += OnGitCommandStarted;
+            _gitCommandService.CommandFinished += OnGitCommandFinished;
             
             _commitService.CommitCreated += OnCommitCreated;
 
@@ -62,8 +64,8 @@ namespace UnityGit.GUI.Components
         ~BranchListItem()
         {
             _commitService.CommitCreated -= OnCommitCreated;
-            _pushService.PushStarted -= OnPushStarted;
-            _pushService.PushFinished -= OnPushFinished;
+            _gitCommandService.CommandStarted -= OnGitCommandStarted;
+            _gitCommandService.CommandFinished -= OnGitCommandFinished;
             _pullButton.clicked -= OnPullButtonClicked;
             _pushButton.clicked -= OnPushButtonClicked;
         }
@@ -73,12 +75,12 @@ namespace UnityGit.GUI.Components
             UpdateUpdateButtons();
         }
 
-        private void OnPushStarted()
+        private void OnGitCommandStarted()
         {
             UpdateUpdateButtons();
         }
 
-        private void OnPushFinished(bool success)
+        private void OnGitCommandFinished()
         {
             UpdateUpdateButtons();
         }
@@ -114,7 +116,7 @@ namespace UnityGit.GUI.Components
             else
                 _pushButton.AddToClassList("disabled-button");
             
-            _pushButton.SetEnabled(!_pushService.IsPushing);
+            _pushButton.SetEnabled(!_gitCommandService.IsRunning);
         }
 
         public void SetBranch(Branch branch)
