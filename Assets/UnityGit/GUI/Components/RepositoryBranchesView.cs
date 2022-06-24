@@ -2,11 +2,14 @@
 using LibGit2Sharp;
 using UIComponents;
 using UIComponents.Experimental;
+using UnityEngine;
+using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
     [Layout("RepositoryBranchesView/RepositoryBranchesView")]
     [Stylesheet("RepositoryBranchesView/RepositoryBranchesView.style")]
+    [Dependency(typeof(IGitCommandService), provide: typeof(GitCommandService))]
     public class RepositoryBranchesView : UnityGitUIComponent
     {
         [Query("repository-branches-header")]
@@ -18,8 +21,13 @@ namespace UnityGit.GUI.Components
 
         private readonly IRepository _repository;
 
+        private readonly GitCommandService _gitCommandService;
+
         public RepositoryBranchesView(IRepository repository)
         {
+            _gitCommandService = Provide<IGitCommandService>() as GitCommandService;
+            _gitCommandService.CommandFinished += InitializeLists;
+
             _repository = repository;
             _header.SetRepository(repository);
             _header.RefreshButtonClicked += OnRefreshButtonClicked;
@@ -28,6 +36,7 @@ namespace UnityGit.GUI.Components
 
         ~RepositoryBranchesView()
         {
+            _gitCommandService.CommandFinished -= InitializeLists;
             _header.RefreshButtonClicked -= OnRefreshButtonClicked;
         }
 

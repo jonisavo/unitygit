@@ -46,6 +46,8 @@ namespace UnityGit.GUI.Components
             
             _countLabel.text = $"{Items.Count.ToString()} branches";
             SetUpListView(_listView, Items, 32);
+            
+            _listView.Refresh();
         }
 
         public override BranchListItem MakeItem()
