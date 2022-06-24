@@ -92,10 +92,7 @@ namespace UnityGit.GUI.Components
             
             _selectionToggle.SetValueWithoutNotify(isSelected);
 
-            var stateLabelOptions = GetStateLabelOptions();
-
-            _stateLabel.text = stateLabelOptions.Text;
-            _stateLabel.AddToClassList(stateLabelOptions.USSClass);
+            ApplyCurrentState();
 
             _selectionToggle.UnregisterValueChangedCallback(OnToggleClick);
             _selectionToggle.RegisterValueChangedCallback(OnToggleClick);
@@ -145,6 +142,11 @@ namespace UnityGit.GUI.Components
         private static readonly StateLabelOptions UnknownStateOptions =
             new StateLabelOptions("state-unknown", "?");
 
+        private static readonly string[] StateClassNames = new[]
+        {
+            "state-added", "state-modified", "state-removed", "state-renamed", "state-ignored", "state-unknown"
+        };
+
         private StateLabelOptions GetStateLabelOptions()
         {
             var state = _statusEntry.State;
@@ -165,6 +167,18 @@ namespace UnityGit.GUI.Components
                 return RemovedStateOptions;
 
             return UnknownStateOptions;
+        }
+        
+        private void ApplyCurrentState()
+        {
+            var stateLabelOptions = GetStateLabelOptions();
+
+            _stateLabel.text = stateLabelOptions.Text;
+            
+            foreach (var className in StateClassNames)
+                _stateLabel.RemoveFromClassList(className);
+
+            _stateLabel.AddToClassList(stateLabelOptions.USSClass);
         }
     }
 }
