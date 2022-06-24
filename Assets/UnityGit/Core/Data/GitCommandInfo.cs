@@ -22,7 +22,7 @@ namespace UnityGit.UnityGit.Core.Data
 
         public override string ToString()
         {
-            return $"{ProgressDescription} (git ${Arguments})";
+            return $"{ProgressDescription} (git {Arguments})";
         }
     }
 }
