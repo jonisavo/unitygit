@@ -19,5 +19,10 @@ namespace UnityGit.UnityGit.Core.Data
             ProgressDescription = progressDescription;
             Repository = repository;
         }
+
+        public override string ToString()
+        {
+            return $"{ProgressDescription} (git ${Arguments})";
+        }
     }
 }
