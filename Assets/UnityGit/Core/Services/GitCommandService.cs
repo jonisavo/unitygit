@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Diagnostics;
 using JetBrains.Annotations;
+using UIComponents;
+using UIComponents.Experimental;
 using UnityGit.Core.Internal;
 using UnityGit.UnityGit.Core.Data;
+using Debug = UnityEngine.Debug;
 
 namespace UnityGit.Core.Services
 {
+    [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
     public class GitCommandService : IGitCommandService
     {
         public bool IsRunning { get; private set; }
@@ -17,6 +21,9 @@ namespace UnityGit.Core.Services
         public delegate void CommandFinishedDelegate();
         
         public event CommandFinishedDelegate CommandFinished;
+
+        [Provide]
+        private readonly ILogService _logService;
 
         private Process _currentProcess;
         
@@ -62,14 +69,28 @@ namespace UnityGit.Core.Services
             process.StartInfo.RedirectStandardError = true;
             process.StartInfo.CreateNoWindow = true;
             process.EnableRaisingEvents = true;
+            process.OutputDataReceived += OnOutputDataReceived;
+            process.ErrorDataReceived += OnErrorDataReceived;
             process.Exited += OnProcessExited;
             return process;
         }
         
+        private void OnOutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            _logService.LogMessage(e.Data);
+        }
+        
+        private void OnErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            _logService.LogError(e.Data);
+        }
+
         private void OnProcessExited(object sender, EventArgs e)
         {
             _currentProcess.Exited -= OnProcessExited;
             IsRunning = false;
+            
+            _logService.LogMessage($"Process exited with exit code {_currentProcess.ExitCode}");
             
             var isSuccessful = _currentProcess.ExitCode == 0;
             

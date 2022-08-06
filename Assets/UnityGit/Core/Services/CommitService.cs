@@ -1,16 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using LibGit2Sharp;
+using UIComponents;
+using UIComponents.Experimental;
 using UnityEditor;
 using UnityGit.Core.Internal;
 
 namespace UnityGit.Core.Services
 {
-    public class CommitService : ICommitService
+    [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
+    public class CommitService : Service, ICommitService
     {
         public event ICommitService.CommitCreatedDelegate CommitCreated;
 
         public event ICommitService.FileSelectionChangedDelegate FileSelectionChanged;
+        
+        [Provide]
+        private readonly ILogService _logService;
 
         private readonly Dictionary<IRepository, HashSet<string>>
             _committedFilesDictionary = new Dictionary<IRepository, HashSet<string>>();
@@ -80,6 +86,8 @@ namespace UnityGit.Core.Services
                 $"Creating commit to {_committedFilesDictionary.Keys.Count} repositories",
                 Progress.Options.Synchronous
             );
+            
+            _logService.LogMessage($"Committing {selectedCount} files...");
 
             try
             {
@@ -89,14 +97,19 @@ namespace UnityGit.Core.Services
                 CommitCreated?.Invoke(commit);
                 
                 ProgressWrapper.FinishWithSuccess(progressId);
+                
+                _logService.LogMessage("Commit created:");
+                _logService.LogMessage(message);
             }
             catch (EmptyCommitException)
             {
                 ProgressWrapper.FinishWithError(progressId, "Can not create empty commit");
+                _logService.LogError("Can not create empty commit.");
             }
             catch (Exception exception)
             { 
                 ProgressWrapper.FinishWithError(progressId, $"Commit failed with message {exception.Message}");
+                _logService.LogException(exception);
             }
         }
     }

@@ -2,24 +2,24 @@
 using System.IO;
 using LibGit2Sharp;
 using UIComponents;
+using UIComponents.Experimental;
 using UnityGit.Core.Utilities;
 
 namespace UnityGit.Core.Services
 {
     [Dependency(typeof(IDialogService), provide: typeof(DialogService))]
     [Dependency(typeof(ICheckoutService), provide: typeof(CheckoutService))]
+    [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
     public class RestoreService : Service, IRestoreService
     {
         public event IRestoreService.FileRestoredDelegate FileRestored;
 
+        [Provide]
         private readonly IDialogService _dialogService;
+        [Provide]
         private readonly ICheckoutService _checkoutService;
-
-        public RestoreService()
-        {
-            _dialogService = Provide<IDialogService>();
-            _checkoutService = Provide<ICheckoutService>();
-        }
+        [Provide]
+        private readonly ILogService _logService;
 
         public void RestoreFile(IRepository repository, string filePath)
         {
@@ -48,15 +48,19 @@ namespace UnityGit.Core.Services
                 return false;
 
             var success = false;
-
+            
+            var path = Path.Combine(repository.Info.WorkingDirectory, filePath);
+            _logService.LogMessage($"Deleting file {path}...");
+            
             try
             {
-                var path = Path.Combine(repository.Info.WorkingDirectory, filePath);
                 File.Delete(path);
                 success = true;
-            } catch (Exception)
+                _logService.LogMessage("File deleted.");
+            } catch (Exception exception)
             {
                 _dialogService.Error($"Failed to delete {filePath}.");
+                _logService.LogException(exception);
             }
 
             return success;
@@ -68,15 +72,19 @@ namespace UnityGit.Core.Services
                 return false;
                 
             var success = false;
+            
+            _logService.LogMessage($"Restoring file {filePath}...");
 
             try
             {
                 _checkoutService.ForceCheckoutPaths(repository, new[] {filePath});
                 success = true;
+                _logService.LogMessage("File restored.");
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 _dialogService.Error($"Failed to restore file {filePath}.");
+                _logService.LogException(exception);
             }
 
             return success;

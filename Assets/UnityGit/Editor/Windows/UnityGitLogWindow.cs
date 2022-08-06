@@ -5,15 +5,15 @@ using UnityGit.GUI.Components;
 
 namespace UnityGit.Editor
 {
-    public class BranchesWindow : EditorWindow
+    public class UnityGitLogWindow : EditorWindow
     {
-        [MenuItem("Git/Branches", priority = 20)]
+        [MenuItem("Git/UnityGit Log")]
         public static void ShowWindow()
         {
-            var window = GetWindow<BranchesWindow>();
+            var window = GetWindow<UnityGitLogWindow>();
             window.position = new Rect(0, 0, 300, 600);
             window.minSize = new Vector2(250, 350);
-            window.titleContent = new GUIContent("Branches");
+            window.titleContent = new GUIContent("UnityGit Log");
         }
         
         public void CreateGUI()
@@ -24,7 +24,7 @@ namespace UnityGit.Editor
             rootVisualElement.Clear();
             rootVisualElement.Add(container);
 
-            container.Add(new BranchesWindowView());
+            container.Add(new UnityGitLog());
         }
     }
 }
