@@ -11,6 +11,7 @@ using UnityGit.UnityGit.Core.Data;
 
 namespace UnityGit.Core.Services
 {
+    [Dependency(typeof(IProgressService), provide: typeof(ProgressService))]
     [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
     public class GitCommandService : Service, IGitCommandService
     {
@@ -27,6 +28,9 @@ namespace UnityGit.Core.Services
         [Provide]
         private readonly ILogService _logService;
 
+        [Provide]
+        private readonly IProgressService _progressService;
+
         private GitProcess _currentProcess;
         
         private int _progressId;
@@ -41,8 +45,10 @@ namespace UnityGit.Core.Services
 
             IsRunning = true;
             
-            _progressId = ProgressWrapper.Start(
-                info.ProgressName, info.ProgressDescription, Progress.Options.Sticky
+            _progressId = _progressService.Start(
+                info.ProgressName,
+                info.ProgressDescription,
+                new ProgressOptions { Sticky = true }
             );
 
             _currentProcess = CreateGitProcess(info);
@@ -57,7 +63,7 @@ namespace UnityGit.Core.Services
             catch (Exception exception)
             {
                 CommandFinished?.Invoke();
-                ProgressWrapper.FinishWithError(_progressId, "Could not start process");
+                _progressService.FinishWithError(_progressId, "Could not start process");
                 _logService.LogException(exception);
                 IsRunning = false;
             }
@@ -84,7 +90,7 @@ namespace UnityGit.Core.Services
         {
             if (result.ExitCode == 0)
             {
-                ProgressWrapper.FinishWithSuccess(_progressId);
+                _progressService.FinishWithSuccess(_progressId);
                 return;
             }
 
@@ -97,7 +103,7 @@ namespace UnityGit.Core.Services
             else
                 errorMessage = $"Failed with exit code {result.ExitCode}";
             
-            ProgressWrapper.FinishWithError(_progressId, errorMessage);
+            _progressService.FinishWithError(_progressId, errorMessage);
         }
 
         private void OnProcessExited(GitProcessResult result)

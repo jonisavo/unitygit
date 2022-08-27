@@ -8,6 +8,7 @@ using UnityGit.Core.Internal;
 
 namespace UnityGit.Core.Services
 {
+    [Dependency(typeof(IProgressService), provide: typeof(ProgressService))]
     [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
     public class CommitService : Service, ICommitService
     {
@@ -17,6 +18,9 @@ namespace UnityGit.Core.Services
         
         [Provide]
         private readonly ILogService _logService;
+
+        [Provide]
+        private readonly IProgressService _progressService;
 
         private readonly Dictionary<IRepository, HashSet<string>>
             _committedFilesDictionary = new Dictionary<IRepository, HashSet<string>>();
@@ -81,10 +85,10 @@ namespace UnityGit.Core.Services
             
             _committedFilesDictionary[repository].Clear();
             
-            var progressId = ProgressWrapper.Start(
+            var progressId = _progressService.Start(
                 $"Committing {selectedCount} files",
                 $"Creating commit to {_committedFilesDictionary.Keys.Count} repositories",
-                Progress.Options.Synchronous
+                new ProgressOptions { Synchronous = true }
             );
             
             _logService.LogMessage($"Committing {selectedCount} files...");
@@ -96,19 +100,19 @@ namespace UnityGit.Core.Services
 
                 CommitCreated?.Invoke(commit);
                 
-                ProgressWrapper.FinishWithSuccess(progressId);
+                _progressService.FinishWithSuccess(progressId);
                 
                 _logService.LogMessage("Commit created:");
                 _logService.LogMessage(message);
             }
             catch (EmptyCommitException)
             {
-                ProgressWrapper.FinishWithError(progressId, "Can not create empty commit");
+                _progressService.FinishWithError(progressId, "Can not create empty commit");
                 _logService.LogError("Can not create empty commit.");
             }
             catch (Exception exception)
             { 
-                ProgressWrapper.FinishWithError(progressId, $"Commit failed with message {exception.Message}");
+                _progressService.FinishWithError(progressId, $"Commit failed with message {exception.Message}");
                 _logService.LogException(exception);
             }
         }
