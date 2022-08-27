@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UIComponents;
 using UIComponents.Cache;
+using UIComponents.DependencyInjection;
 using UnityEngine;
 
 namespace UnityGit.Core.Services
@@ -16,8 +17,8 @@ namespace UnityGit.Core.Services
         protected Service()
         {
             var type = GetType();
-            
-            _dependencyInjector = DependencyInjector.GetInjector(type);
+
+            _dependencyInjector = DiContext.Current.GetInjector(type);
             
             if (!FieldCaches.ContainsKey(type))
                 FieldCaches.Add(type, new FieldCache(type));

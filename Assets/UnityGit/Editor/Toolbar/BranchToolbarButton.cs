@@ -1,5 +1,6 @@
 ﻿using LibGit2Sharp;
 using UIComponents;
+using UIComponents.DependencyInjection;
 using UnityEditor;
 using UnityEngine;
 using UnityGit.Core.Services;
@@ -41,7 +42,7 @@ namespace UnityGit.Editor.Toolbar
         static BranchToolbarButton()
         {
             ToolbarExtender.LeftToolbarGUI.Add(DoBranchToolbarItem);
-            var dependencyInjector = DependencyInjector.GetInjector(typeof(BranchToolbarButton));
+            var dependencyInjector = DiContext.Current.GetInjector(typeof(BranchToolbarButton));
             StatusService = dependencyInjector.Provide<IStatusService>();
             CheckoutService = dependencyInjector.Provide<ICheckoutService>();
             BranchService = dependencyInjector.Provide<IBranchService>();
