@@ -18,13 +18,8 @@ namespace UnityGit.Editor
         
         public void CreateGUI()
         {
-            var container = new VisualElement();
-            container.style.height = Length.Percent(100);
-            container.style.flexGrow = 1;
             rootVisualElement.Clear();
-            rootVisualElement.Add(container);
-
-            container.Add(new UnityGitLog());
+            rootVisualElement.Add(new UnityGitLogWindowView());
         }
     }
 }

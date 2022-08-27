@@ -1,6 +1,7 @@
 ﻿using UIComponents;
 using UIComponents.Experimental;
 using UnityEngine.UIElements;
+using UnityGit.Core.Data;
 using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
@@ -9,7 +10,7 @@ namespace UnityGit.GUI.Components
     [Stylesheet("UnityGitLog/UnityGitLog.style")]
     [RootClass("ugit-full-height")]
     [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
-    public class UnityGitLog : UnityGitUIComponent
+    public class UnityGitLog : UnityGitUIComponent, IOnAttachToPanel, IOnDetachFromPanel
     {
         public new class UxmlFactory : UxmlFactory<UnityGitLog> {}
         
@@ -21,26 +22,40 @@ namespace UnityGit.GUI.Components
         public UnityGitLog()
         {
             _logService = Provide<ILogService>() as UnityGitLogService;
+        }
 
+        public void Redraw()
+        {
+            _scrollView.Clear();
+            
             foreach (var line in _logService.GetOutputLines())
                 AddLogLine(line);
+        }
 
+        public void OnAttachToPanel(AttachToPanelEvent evt)
+        {
+            foreach (var line in _logService.GetOutputLines())
+                AddLogLine(line);
+            
             _logService.OutputReceived += AddLogLine;
         }
-        
-        ~UnityGitLog()
+
+        public void OnDetachFromPanel(DetachFromPanelEvent evt)
         {
+            _scrollView.Clear();
+            
             _logService.OutputReceived -= AddLogLine;
         }
 
-        private void AddLogLine(ILogService.OutputLine line)
+        private void AddLogLine(OutputLine line)
         {
-            var label = new Label(line.Text);
-            
+            var text = new Label(line.Text);
+
             if (line.IsError)
-                label.AddToClassList("error");
+                text.AddToClassList("error");
             
-            _scrollView.Add(label);
+            _scrollView.Add(text);
+            _scrollView.ScrollTo(text);
         }
     }
 }

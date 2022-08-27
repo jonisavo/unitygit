@@ -1,0 +1,7 @@
+﻿<UXML xmlns:ui="UnityEngine.UIElements" xmlns:ugit="UnityGit.GUI.Components">
+    <ui:VisualElement name="run-container">
+        <ui:TextField name="test-textfield" label="Run with arguments" />
+        <ui:Button name="test-run-button" text="Run" />
+    </ui:VisualElement>
+    <ugit:UnityGitLog />
+</UXML>

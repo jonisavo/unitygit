@@ -11,13 +11,16 @@ namespace UnityGit.UnityGit.Core.Data
         public readonly string ProgressDescription;
 
         public readonly IRepository Repository;
+
+        public readonly int TimeoutMs;
         
-        public GitCommandInfo(string arguments, string progressName, string progressDescription, IRepository repository)
+        public GitCommandInfo(string arguments, string progressName, string progressDescription, IRepository repository, int timeoutMs = 0)
         {
             Arguments = arguments;
             ProgressName = progressName;
             ProgressDescription = progressDescription;
             Repository = repository;
+            TimeoutMs = timeoutMs;
         }
 
         public override string ToString()

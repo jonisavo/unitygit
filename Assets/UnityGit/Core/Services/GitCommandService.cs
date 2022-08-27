@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using UIComponents;
 using UIComponents.Experimental;
+using UnityEditor;
+using UnityGit.Core.Data;
 using UnityGit.Core.Internal;
 using UnityGit.UnityGit.Core.Data;
-using Debug = UnityEngine.Debug;
 
 namespace UnityGit.Core.Services
 {
     [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
-    public class GitCommandService : IGitCommandService
+    public class GitCommandService : Service, IGitCommandService
     {
         public bool IsRunning { get; private set; }
 
@@ -25,81 +27,89 @@ namespace UnityGit.Core.Services
         [Provide]
         private readonly ILogService _logService;
 
-        private Process _currentProcess;
+        private GitProcess _currentProcess;
         
         private int _progressId;
         
         [CanBeNull]
-        public Process Run(GitCommandInfo info)
+        public async Task<GitProcessResult> Run(GitCommandInfo info)
         {
+            var result = new GitProcessResult();
+            
             if (IsRunning)
-                return null;
+                return result;
 
             IsRunning = true;
             
             _progressId = ProgressWrapper.Start(
-                info.ProgressName, info.ProgressDescription
+                info.ProgressName, info.ProgressDescription, Progress.Options.Sticky
             );
-            
-            _currentProcess = CreateProcess(info);
+
+            _currentProcess = CreateGitProcess(info);
 
             try
             {
-                _currentProcess.Start();
+                _logService.LogMessage($"Running {_currentProcess}");
                 CommandStarted?.Invoke();
+                result = await _currentProcess.RunAsync();
+                OnProcessExited(result);
             }
-            catch
+            catch (Exception exception)
             {
-                _currentProcess.Exited -= OnProcessExited;
+                CommandFinished?.Invoke();
                 ProgressWrapper.FinishWithError(_progressId, "Could not start process");
+                _logService.LogException(exception);
                 IsRunning = false;
             }
             
-            return _currentProcess;
+            return result;
         }
 
-        private Process CreateProcess(GitCommandInfo info)
+        private GitProcess CreateGitProcess(GitCommandInfo info)
         {
             var process = new Process();
             process.StartInfo.FileName = "git";
             process.StartInfo.Arguments = info.Arguments;
             process.StartInfo.WorkingDirectory = info.Repository.Info.WorkingDirectory;
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true;
-            process.StartInfo.CreateNoWindow = true;
-            process.EnableRaisingEvents = true;
-            process.OutputDataReceived += OnOutputDataReceived;
-            process.ErrorDataReceived += OnErrorDataReceived;
-            process.Exited += OnProcessExited;
-            return process;
-        }
-        
-        private void OnOutputDataReceived(object sender, DataReceivedEventArgs e)
-        {
-            _logService.LogMessage(e.Data);
-        }
-        
-        private void OnErrorDataReceived(object sender, DataReceivedEventArgs e)
-        {
-            _logService.LogError(e.Data);
+
+            var gitProcess = new GitProcess(process);
+            
+            if (info.TimeoutMs > 0)
+                gitProcess.SetTimeout(info.TimeoutMs);
+
+            return gitProcess;
         }
 
-        private void OnProcessExited(object sender, EventArgs e)
+        private void FinishProcessProgress(GitProcessResult result)
         {
-            _currentProcess.Exited -= OnProcessExited;
+            if (result.ExitCode == 0)
+            {
+                ProgressWrapper.FinishWithSuccess(_progressId);
+                return;
+            }
+
+            string errorMessage;
+
+            if (!result.Started)
+                errorMessage = "Process could not be started";
+            else if (result.Timeout)
+                errorMessage = "Process timed out";
+            else
+                errorMessage = $"Failed with exit code {result.ExitCode}";
+            
+            ProgressWrapper.FinishWithError(_progressId, errorMessage);
+        }
+
+        private void OnProcessExited(GitProcessResult result)
+        {
             IsRunning = false;
-            
-            _logService.LogMessage($"Process exited with exit code {_currentProcess.ExitCode}");
-            
-            var isSuccessful = _currentProcess.ExitCode == 0;
-            
+
             CommandFinished?.Invoke();
 
-            if (isSuccessful)
-                ProgressWrapper.FinishWithSuccess(_progressId);
-            else
-                ProgressWrapper.FinishWithError(_progressId, $"Failed with exit code {_currentProcess.ExitCode}");
+            FinishProcessProgress(result);
+            
+            foreach (var line in result.Output)
+                _logService.LogOutputLine(line);
         }
     }
 }

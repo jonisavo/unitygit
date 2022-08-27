@@ -115,7 +115,7 @@ namespace UnityGit.GUI.Components
                 _pushButton.RemoveFromClassList("disabled-button");
             else
                 _pushButton.AddToClassList("disabled-button");
-            
+
             _pushButton.SetEnabled(!_gitCommandService.IsRunning);
         }
 

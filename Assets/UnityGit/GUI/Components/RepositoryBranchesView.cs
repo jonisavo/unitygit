@@ -2,7 +2,7 @@
 using LibGit2Sharp;
 using UIComponents;
 using UIComponents.Experimental;
-using UnityEngine;
+using UnityEngine.UIElements;
 using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
@@ -10,7 +10,7 @@ namespace UnityGit.GUI.Components
     [Layout("RepositoryBranchesView/RepositoryBranchesView")]
     [Stylesheet("RepositoryBranchesView/RepositoryBranchesView.style")]
     [Dependency(typeof(IGitCommandService), provide: typeof(GitCommandService))]
-    public class RepositoryBranchesView : UnityGitUIComponent
+    public class RepositoryBranchesView : UnityGitUIComponent, IOnAttachToPanel
     {
         [Query("repository-branches-header")]
         private readonly RepositoryHeader _header;
@@ -31,6 +31,10 @@ namespace UnityGit.GUI.Components
             _repository = repository;
             _header.SetRepository(repository);
             _header.RefreshButtonClicked += OnRefreshButtonClicked;
+        }
+
+        public void OnAttachToPanel(AttachToPanelEvent evt)
+        {
             InitializeLists();
         }
 
