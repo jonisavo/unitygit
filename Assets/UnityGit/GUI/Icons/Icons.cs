@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace UnityGit.GUI
 {
-    public static class Icons
+    internal static class Icons
     {
         public enum Name
         {
@@ -18,11 +18,23 @@ namespace UnityGit.GUI
 
         private static readonly Dictionary<string, Texture2D> IconCache;
 
+        private static bool _initialized;
+
         static Icons()
         {
-            var textures = AssetDatabase.FindAssets("t:texture2D");
-            
             IconCache = new Dictionary<string, Texture2D>();
+            
+            RefreshCache();
+        }
+
+        public static void RefreshCache()
+        {
+            IconCache.Clear();
+            
+            var textures = AssetDatabase.FindAssets("t:texture2D");
+
+            if (textures.Length == 0)
+                return;
             
             foreach (var guid in textures)
             {
@@ -44,11 +56,17 @@ namespace UnityGit.GUI
 
                 IconCache.Add(name, texture);
             }
+
+            if (IconCache.Keys.Count > 0)
+                _initialized = true;
         }
         
         [CanBeNull]
         public static Texture2D GetIcon(Name name)
         {
+            if (!_initialized)
+                RefreshCache();
+            
             var keyName = NormalizeIconName(name.ToString());
             
             if (IconCache.ContainsKey(keyName))
