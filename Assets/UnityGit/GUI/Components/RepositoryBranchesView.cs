@@ -33,6 +33,7 @@ namespace UnityGit.GUI.Components
             _gitCommandService.CommandFinished += InitializeLists;
             await _header.SetRepository(_repository);
             _header.RefreshButtonClicked += OnRefreshButtonClicked;
+            InitializeLists();
         }
 
         public void OnAttachToPanel(AttachToPanelEvent evt)
