@@ -1,6 +1,5 @@
 ﻿using LibGit2Sharp;
 using UIComponents;
-using UIComponents.Experimental;
 using UnityEngine.UIElements;
 using UnityGit.Core.Services;
 
@@ -37,7 +36,7 @@ namespace UnityGit.GUI.Components
         private readonly ICommitService _commitService;
         [Provide]
         private readonly IPushService _pushService;
-        // Not declared as an interface, since we need to use events.
+        [Provide(CastFrom = typeof(IGitCommandService))]
         private readonly GitCommandService _gitCommandService;
         
         private readonly IRepository _repository;
@@ -46,13 +45,14 @@ namespace UnityGit.GUI.Components
         public BranchListItem(IRepository repository)
         {
             _repository = repository;
-            
-            _gitCommandService = Provide<IGitCommandService>() as GitCommandService;
+        }
+
+        public override void OnInit()
+        {
             _gitCommandService.CommandStarted += OnGitCommandStarted;
             _gitCommandService.CommandFinished += OnGitCommandFinished;
-            
             _commitService.CommitCreated += OnCommitCreated;
-
+            
             _pullButton.clicked += OnPullButtonClicked;
             _pushButton.clicked += OnPushButtonClicked;
             
@@ -60,7 +60,7 @@ namespace UnityGit.GUI.Components
             _pullButtonImage.image = Icons.GetIcon(Icons.Name.Pull);
             _pushButtonImage.image = Icons.GetIcon(Icons.Name.Push);
         }
-        
+
         ~BranchListItem()
         {
             _commitService.CommitCreated -= OnCommitCreated;
@@ -119,9 +119,12 @@ namespace UnityGit.GUI.Components
             _pushButton.SetEnabled(!_gitCommandService.IsRunning);
         }
 
-        public void SetBranch(Branch branch)
+        public async void SetBranch(Branch branch)
         {
             _branch = branch;
+
+            await WaitForInitialization();
+            
             UpdateLabel();
             UpdateUpdateButtons();
         }

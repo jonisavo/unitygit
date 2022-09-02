@@ -1,7 +1,6 @@
 ﻿using System;
 using LibGit2Sharp;
 using UIComponents;
-using UIComponents.Experimental;
 using UnityEngine.UIElements;
 using UnityGit.Core.Services;
 
@@ -28,12 +27,12 @@ namespace UnityGit.GUI.Components
         private readonly Button _commitButton;
         
         public new class UxmlFactory : UxmlFactory<CommitFoldout> {}
-        
-        public CommitFoldout()
+
+        public override void OnInit()
         {
             _commitService.CommitCreated += OnCommitCreated;
             _commitService.FileSelectionChanged += OnFileSelectionChanged;
-            
+
             var signature = Provide<ISignatureService>().GetSignature();
 
             if (signature != null && !string.IsNullOrEmpty(signature.Name))
@@ -48,7 +47,7 @@ namespace UnityGit.GUI.Components
             RefreshFoldoutText();
             RefreshCommitButton(_commitMessageTextField.value);
         }
-        
+
         ~CommitFoldout()
         {
             _commitService.CommitCreated -= OnCommitCreated;

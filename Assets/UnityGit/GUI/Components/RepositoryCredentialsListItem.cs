@@ -1,6 +1,5 @@
 ﻿using LibGit2Sharp;
 using UIComponents;
-using UIComponents.Experimental;
 using UnityEngine.UIElements;
 using UnityGit.Core.Services;
 using Credentials = UnityGit.UnityGit.Core.Data.Credentials;
@@ -31,11 +30,14 @@ namespace UnityGit.GUI.Components
         public RepositoryCredentialsListItem(IRepository repository)
         {
             _repository = repository;
+        }
 
-            if (_repositoryService.IsProjectRepository(repository))
+        public override void OnInit()
+        {
+            if (_repositoryService.IsProjectRepository(_repository))
                 _repositoryNameLabel.text = _repositoryService.GetProjectRepositoryName();
             else
-                _repositoryNameLabel.text = _repositoryService.GetRepositoryName(repository);
+                _repositoryNameLabel.text = _repositoryService.GetRepositoryName(_repository);
             
             _credentials = _credentialsService.GetCredentialsForRepository(_repository);
             

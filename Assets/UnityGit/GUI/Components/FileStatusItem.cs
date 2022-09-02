@@ -1,6 +1,6 @@
-﻿using LibGit2Sharp;
+﻿using System.Threading.Tasks;
+using LibGit2Sharp;
 using UIComponents;
-using UIComponents.Experimental;
 using UnityEditor;
 using UnityEngine.UIElements;
 using UnityGit.Core.Services;
@@ -15,10 +15,6 @@ namespace UnityGit.GUI.Components
     [Dependency(typeof(IDiffService), provide: typeof(DiffService))]
     public class FileStatusItem : UnityGitUIComponent
     {
-        private readonly IRepository _repository;
-        private StatusEntry _statusEntry;
-        private bool _ignored;
-        
         [Query("changed-file-state")]
         private readonly Label _stateLabel;
         [Query("changed-file-filename")]
@@ -32,10 +28,18 @@ namespace UnityGit.GUI.Components
         private readonly IRestoreService _restoreService;
         [Provide]
         private readonly IDiffService _diffService;
+        
+        private readonly IRepository _repository;
+        private StatusEntry _statusEntry;
+        private bool _ignored;
 
         public FileStatusItem(IRepository repository)
         {
             _repository = repository;
+        }
+
+        public override void OnInit()
+        {
             _commitService.FileSelectionChanged += OnFileSelectionChanged;
 
             this.AddManipulator(new ContextualMenuManipulator(BuildContextMenu));
@@ -81,10 +85,12 @@ namespace UnityGit.GUI.Components
             });
         }
 
-        public void SetStatusEntry(StatusEntry statusEntry)
+        public async Task SetStatusEntry(StatusEntry statusEntry)
         {
             _statusEntry = statusEntry;
             _ignored = _statusEntry.State.HasFlag(FileStatus.Ignored);
+
+            await WaitForInitialization();
 
             _filenameLabel.text = _statusEntry.FilePath;
 

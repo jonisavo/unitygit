@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using LibGit2Sharp;
 using UIComponents;
-using UIComponents.Experimental;
 using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
@@ -25,9 +24,13 @@ namespace UnityGit.GUI.Components
         public RepositoryStatusView(IRepository repository)
         {
             _repository = repository;
+        }
+        
+        public override async void OnInit()
+        {
             _restoreService.FileRestored += OnFileRestored;
             
-            _header.SetRepository(repository);
+            await _header.SetRepository(_repository);
             _header.RefreshButtonClicked += RefreshLists;
 
             RefreshLists();

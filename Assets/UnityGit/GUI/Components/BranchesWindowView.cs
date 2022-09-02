@@ -1,5 +1,4 @@
 ﻿using UIComponents;
-using UIComponents.Experimental;
 using UnityEngine.UIElements;
 using UnityGit.Core.Services;
 
@@ -14,7 +13,7 @@ namespace UnityGit.GUI.Components
         [Query("branches-window-view-scroll-view")]
         private readonly ScrollView _scrollView;
 
-        public BranchesWindowView()
+        public override void OnInit()
         {
             var statusService = Provide<IStatusService>();
             

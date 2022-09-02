@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using LibGit2Sharp;
 using UIComponents;
-using UIComponents.Experimental;
 using UnityEngine.UIElements;
 using UnityGit.Core.Services;
 
@@ -28,9 +27,13 @@ namespace UnityGit.GUI.Components
         public FileStatusList(IRepository repository, List<StatusEntry> statusEntries, string header) : base(statusEntries)
         {
             _repository = repository;
-            _commitService.FileSelectionChanged += OnFileSelectionChanged;
             _header = header;
-            
+        }
+
+        public override void OnInit()
+        {
+            _commitService.FileSelectionChanged += OnFileSelectionChanged;
+
             _selectAllButton.clicked += SelectAllFiles;
             _deselectAllButton.clicked += DeselectAllFiles;
 
@@ -99,9 +102,9 @@ namespace UnityGit.GUI.Components
             return new FileStatusItem(_repository);
         }
 
-        public override void BindItem(FileStatusItem item, int index)
+        public override async void BindItem(FileStatusItem item, int index)
         {
-            item.SetStatusEntry(Items[index]);
+            await item.SetStatusEntry(Items[index]);
         }
     }
 }

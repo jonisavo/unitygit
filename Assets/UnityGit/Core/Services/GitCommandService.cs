@@ -3,8 +3,6 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using UIComponents;
-using UIComponents.Experimental;
-using UnityEditor;
 using UnityGit.Core.Data;
 using UnityGit.Core.Internal;
 using UnityGit.UnityGit.Core.Data;

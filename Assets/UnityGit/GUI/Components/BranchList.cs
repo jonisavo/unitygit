@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using LibGit2Sharp;
 using UIComponents;
-using UIComponents.Experimental;
 using UnityEngine.UIElements;
 
 namespace UnityGit.GUI.Components
@@ -22,10 +21,12 @@ namespace UnityGit.GUI.Components
                 get { yield break; }
             }
 
-            public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
+            public override async void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
             {
                 base.Init(ve, bag, cc);
-                ((BranchList)ve)._headerLabel.text = _header.GetValueFromBag(bag, cc);
+                var branchList = (BranchList) ve;
+                await branchList.WaitForInitialization();
+                branchList._headerLabel.text = _header.GetValueFromBag(bag, cc);
             }
         }
         
@@ -38,11 +39,13 @@ namespace UnityGit.GUI.Components
 
         private IRepository _repository;
 
-        public void Initialize(IRepository repository, IEnumerable<Branch> branches)
+        public async void Initialize(IRepository repository, IEnumerable<Branch> branches)
         {
             _repository = repository;
 
             base.SetItems(branches);
+            
+            await WaitForInitialization();
             
             _countLabel.text = $"{Items.Count.ToString()} branches";
             SetUpListView(_listView, Items, 32);

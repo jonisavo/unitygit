@@ -1,6 +1,6 @@
-﻿using LibGit2Sharp;
+﻿using System.Threading.Tasks;
+using LibGit2Sharp;
 using UIComponents;
-using UIComponents.Experimental;
 using UnityEngine.UIElements;
 using UnityGit.Core.Services;
 
@@ -29,19 +29,19 @@ namespace UnityGit.GUI.Components
         
         public event RefreshButtonClickedDelegate RefreshButtonClicked;
 
-        public RepositoryHeader()
+        public override void OnInit()
         {
             _refreshButton.clicked += NotifyRefreshButtonClicked;
-        }
-
-        public void OnAttachToPanel(AttachToPanelEvent evt)
-        {
-            _refreshButtonImage.image = Icons.GetIcon(Icons.Name.Refresh);
         }
 
         ~RepositoryHeader()
         {
             _refreshButton.clicked -= NotifyRefreshButtonClicked;
+        }
+        
+        public void OnAttachToPanel(AttachToPanelEvent evt)
+        {
+            _refreshButtonImage.image = Icons.GetIcon(Icons.Name.Refresh);
         }
 
         private void NotifyRefreshButtonClicked()
@@ -49,8 +49,10 @@ namespace UnityGit.GUI.Components
             RefreshButtonClicked?.Invoke();
         }
         
-        public void SetRepository(IRepository repository)
+        public async Task SetRepository(IRepository repository)
         {
+            await WaitForInitialization();
+            
             if (_repositoryService.IsProjectRepository(repository))
                 _repositoryNameLabel.text = _repositoryService.GetProjectRepositoryName();
             else

@@ -1,5 +1,4 @@
 ﻿using UIComponents;
-using UIComponents.Experimental;
 using UnityEngine.UIElements;
 using UnityGit.Core.Services;
 using UnityGit.UnityGit.Core.Data;
@@ -27,12 +26,12 @@ namespace UnityGit.GUI.Components
 
         [Provide]
         private readonly IRepositoryService _repositoryService;
-
-        public UnityGitLogWindowView()
+        
+        public override void OnInit()
         {
             _runButton.clicked += OnRunButtonClick;
         }
-        
+
         ~UnityGitLogWindowView()
         {
             _runButton.clicked -= OnRunButtonClick;

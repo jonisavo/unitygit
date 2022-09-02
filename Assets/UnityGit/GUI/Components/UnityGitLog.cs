@@ -1,5 +1,4 @@
 ﻿using UIComponents;
-using UIComponents.Experimental;
 using UnityEngine.UIElements;
 using UnityGit.Core.Data;
 using UnityGit.Core.Services;
@@ -17,12 +16,8 @@ namespace UnityGit.GUI.Components
         [Query("output-scroll-view")]
         private readonly ScrollView _scrollView;
         
+        [Provide(CastFrom = typeof(ILogService))]
         private readonly UnityGitLogService _logService;
-
-        public UnityGitLog()
-        {
-            _logService = Provide<ILogService>() as UnityGitLogService;
-        }
 
         public void Redraw()
         {

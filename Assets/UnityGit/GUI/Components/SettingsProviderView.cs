@@ -1,5 +1,4 @@
 ﻿using UIComponents;
-using UIComponents.Experimental;
 using UnityEngine.UIElements;
 using UnityGit.Core.Services;
 
@@ -11,9 +10,6 @@ namespace UnityGit.GUI.Components
     [Dependency(typeof(IStatusService), provide: typeof(StatusService))]
     public class SettingsProviderView : UnityGitUIComponent
     {
-        [Provide]
-        private readonly IStatusService _statusService;
-
         [Query("settings-provider-info-container")]
         private readonly VisualElement _infoContainer;
 
@@ -23,7 +19,10 @@ namespace UnityGit.GUI.Components
         [Query("settings-provider-refresh-repositories-button")]
         private readonly Button _refreshRepositoriesButton;
         
-        public SettingsProviderView()
+        [Provide]
+        private readonly IStatusService _statusService;
+
+        public override void OnInit()
         {
             _refreshRepositoriesButton.clicked += RefreshRepositories;
 

@@ -1,6 +1,5 @@
 ﻿using LibGit2Sharp;
 using UIComponents;
-using UIComponents.Experimental;
 using UnityEngine.UIElements;
 using UnityGit.Core.Services;
 
@@ -23,10 +22,9 @@ namespace UnityGit.GUI.Components
         [Query("commit-window-view-status-container")]
         private readonly ScrollView _statusContainer;
 
-        public CommitWindowView()
+        public override void OnInit()
         {
             _commitService.CommitCreated += OnCommitCreated;
-
             DrawRepositoryViews();
         }
 

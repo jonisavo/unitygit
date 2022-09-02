@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using LibGit2Sharp;
 using UIComponents;
-using UIComponents.Experimental;
 using UnityEngine.UIElements;
 using UnityGit.Core.Services;
 
@@ -21,15 +20,18 @@ namespace UnityGit.GUI.Components
 
         private readonly IRepository _repository;
 
+        [Provide(CastFrom = typeof(IGitCommandService))]
         private readonly GitCommandService _gitCommandService;
 
         public RepositoryBranchesView(IRepository repository)
         {
-            _gitCommandService = Provide<IGitCommandService>() as GitCommandService;
-            _gitCommandService.CommandFinished += InitializeLists;
-
             _repository = repository;
-            _header.SetRepository(repository);
+        }
+
+        public override async void OnInit()
+        {
+            _gitCommandService.CommandFinished += InitializeLists;
+            await _header.SetRepository(_repository);
             _header.RefreshButtonClicked += OnRefreshButtonClicked;
         }
 
