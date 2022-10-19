@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using LibGit2Sharp;
+﻿using LibGit2Sharp;
 using UIComponents;
 using UnityEditor;
 using UnityEngine.UIElements;
@@ -43,6 +42,8 @@ namespace UnityGit.GUI.Components
             _commitService.FileSelectionChanged += OnFileSelectionChanged;
 
             this.AddManipulator(new ContextualMenuManipulator(BuildContextMenu));
+            
+            UpdateStatusEntry();
         }
 
         ~FileStatusItem()
@@ -85,13 +86,17 @@ namespace UnityGit.GUI.Components
             });
         }
 
-        public async Task SetStatusEntry(StatusEntry statusEntry)
+        public void SetStatusEntry(StatusEntry statusEntry)
         {
             _statusEntry = statusEntry;
             _ignored = _statusEntry.State.HasFlag(FileStatus.Ignored);
+            
+            if (Initialized)
+                UpdateStatusEntry();
+        }
 
-            await WaitForInitialization();
-
+        private void UpdateStatusEntry()
+        {
             _filenameLabel.text = _statusEntry.FilePath;
 
             var isSelected = _commitService.IsFileSelected(_repository, _statusEntry.FilePath);

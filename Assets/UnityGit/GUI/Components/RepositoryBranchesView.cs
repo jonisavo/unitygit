@@ -28,10 +28,10 @@ namespace UnityGit.GUI.Components
             _repository = repository;
         }
 
-        public override async void OnInit()
+        public override void OnInit()
         {
             _gitCommandService.CommandFinished += InitializeLists;
-            await _header.SetRepository(_repository);
+            _header.SetRepository(_repository);
             _header.RefreshButtonClicked += OnRefreshButtonClicked;
             InitializeLists();
         }

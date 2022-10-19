@@ -59,6 +59,9 @@ namespace UnityGit.GUI.Components
             _icon.image = Icons.GetIcon(Icons.Name.Branch);
             _pullButtonImage.image = Icons.GetIcon(Icons.Name.Pull);
             _pushButtonImage.image = Icons.GetIcon(Icons.Name.Push);
+            
+            UpdateLabel();
+            UpdateUpdateButtons();
         }
 
         ~BranchListItem()
@@ -119,11 +122,12 @@ namespace UnityGit.GUI.Components
             _pushButton.SetEnabled(!_gitCommandService.IsRunning);
         }
 
-        public async void SetBranch(Branch branch)
+        public void SetBranch(Branch branch)
         {
             _branch = branch;
 
-            await WaitForInitialization();
+            if (!Initialized)
+                return;
             
             UpdateLabel();
             UpdateUpdateButtons();

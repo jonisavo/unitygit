@@ -26,11 +26,11 @@ namespace UnityGit.GUI.Components
             _repository = repository;
         }
         
-        public override async void OnInit()
+        public override void OnInit()
         {
             _restoreService.FileRestored += OnFileRestored;
             
-            await _header.SetRepository(_repository);
+            _header.SetRepository(_repository);
             _header.RefreshButtonClicked += RefreshLists;
 
             RefreshLists();
@@ -62,7 +62,7 @@ namespace UnityGit.GUI.Components
                     .ToList();
 
             var trackedItems =
-                items.Where(item => !item.State.HasFlag(FileStatus.NewInWorkdir))
+	            items.Where(item => !item.State.HasFlag(FileStatus.NewInWorkdir))
                     .ToList();
             
             if (_trackedList != null)

@@ -102,9 +102,9 @@ namespace UnityGit.GUI.Components
             return new FileStatusItem(_repository);
         }
 
-        public override async void BindItem(FileStatusItem item, int index)
+        public override void BindItem(FileStatusItem item, int index)
         {
-            await item.SetStatusEntry(Items[index]);
+            item.SetStatusEntry(Items[index]);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using LibGit2Sharp;
+﻿using LibGit2Sharp;
 using UIComponents;
 using UnityEngine.UIElements;
 using UnityGit.Core.Services;
@@ -45,10 +44,8 @@ namespace UnityGit.GUI.Components
             RefreshButtonClicked?.Invoke();
         }
         
-        public async Task SetRepository(IRepository repository)
+        public void SetRepository(IRepository repository)
         {
-            await WaitForInitialization();
-            
             if (_repositoryService.IsProjectRepository(repository))
                 _repositoryNameLabel.text = _repositoryService.GetProjectRepositoryName();
             else

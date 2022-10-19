@@ -10,7 +10,7 @@
     "url": "https://savolainen.io"
   },
   "dependencies": {
-    "io.savolainen.uicomponents": "0.20.0",
+    "io.savolainen.uicomponents": "0.26.0",
     "com.marijnzwemmer.unity-toolbar-extender": "1.4.2"
   }
 }

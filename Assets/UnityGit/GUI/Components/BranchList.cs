@@ -21,12 +21,11 @@ namespace UnityGit.GUI.Components
                 get { yield break; }
             }
 
-            public override async void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
+            public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
             {
                 base.Init(ve, bag, cc);
                 var branchList = (BranchList) ve;
-                await branchList.WaitForInitialization();
-                branchList._headerLabel.text = _header.GetValueFromBag(bag, cc);
+                branchList._headerText = _header.GetValueFromBag(bag, cc);
             }
         }
         
@@ -37,16 +36,21 @@ namespace UnityGit.GUI.Components
         [Query("branch-list-listview")]
         private readonly ListView _listView;
 
+        private string _headerText;
+
         private IRepository _repository;
 
-        public async void Initialize(IRepository repository, IEnumerable<Branch> branches)
+        public override void OnInit()
+        {
+            _headerLabel.text = _headerText;
+        }
+
+        public void Initialize(IRepository repository, IEnumerable<Branch> branches)
         {
             _repository = repository;
 
             base.SetItems(branches);
-            
-            await WaitForInitialization();
-            
+
             _countLabel.text = $"{Items.Count.ToString()} branches";
             SetUpListView(_listView, Items, 32);
             
