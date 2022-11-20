@@ -9,16 +9,16 @@ namespace UnityGit.Core.Services
     [Dependency(typeof(IDialogService), provide: typeof(DialogService))]
     [Dependency(typeof(ICheckoutService), provide: typeof(CheckoutService))]
     [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
-    public class RestoreService : Service, IRestoreService
+    public partial class RestoreService : Service, IRestoreService
     {
         public event IRestoreService.FileRestoredDelegate FileRestored;
 
         [Provide]
-        private readonly IDialogService _dialogService;
+        private IDialogService _dialogService;
         [Provide]
-        private readonly ICheckoutService _checkoutService;
+        private ICheckoutService _checkoutService;
         [Provide]
-        private readonly ILogService _logService;
+        private ILogService _logService;
 
         public void RestoreFile(IRepository repository, string filePath)
         {

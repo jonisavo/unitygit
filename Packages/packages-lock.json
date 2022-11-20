@@ -48,6 +48,13 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.roslyn": {
+      "version": "0.2.2-preview",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.services.core": {
       "version": "1.0.1",
       "depth": 1,
@@ -148,10 +155,12 @@
       "dependencies": {}
     },
     "io.savolainen.uicomponents": {
-      "version": "0.26.0",
+      "version": "1.0.0-alpha.4",
       "depth": 0,
       "source": "registry",
-      "dependencies": {},
+      "dependencies": {
+        "com.unity.roslyn": "0.2.2-preview"
+      },
       "url": "https://package.openupm.com"
     },
     "com.unity.modules.ai": {

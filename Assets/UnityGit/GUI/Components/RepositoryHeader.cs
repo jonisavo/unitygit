@@ -5,24 +5,24 @@ using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("RepositoryHeader/RepositoryHeader")]
-    [Stylesheet("RepositoryHeader/RepositoryHeader.style")]
+    [Layout("Components/RepositoryHeader/RepositoryHeader")]
+    [Stylesheet("Components/RepositoryHeader/RepositoryHeader.style")]
     [Dependency(typeof(IRepositoryService), provide: typeof(RepositoryService))]
-    public class RepositoryHeader : UnityGitUIComponent
+    public partial class RepositoryHeader : UnityGitUIComponent
     {
         public new class UxmlFactory : UxmlFactory<RepositoryHeader> {}
         
         [Query("repository-header-name-label")]
-        private readonly Label _repositoryNameLabel;
+        private Label _repositoryNameLabel;
         [Query("repository-header-path-label")]
-        private readonly Label _repositoryPathLabel;
+        private Label _repositoryPathLabel;
         [Query("repository-header-refresh-button")]
-        private readonly Button _refreshButton;
+        private Button _refreshButton;
         [Query("repository-header-refresh-button-image")]
-        private readonly Image _refreshButtonImage;
+        private Image _refreshButtonImage;
         
         [Provide]
-        private readonly IRepositoryService _repositoryService;
+        private IRepositoryService _repositoryService;
         
         public delegate void RefreshButtonClickedDelegate();
         

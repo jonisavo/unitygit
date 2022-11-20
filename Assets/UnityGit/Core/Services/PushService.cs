@@ -6,12 +6,12 @@ namespace UnityGit.Core.Services
 {
     [Dependency(typeof(IDialogService), provide: typeof(DialogService))]
     [Dependency(typeof(IGitCommandService), provide: typeof(GitCommandService))]
-    public class PushService : Service, IPushService
+    public partial class PushService : Service, IPushService
     {
         [Provide]
-        private readonly IDialogService _dialogService;
+        private IDialogService _dialogService;
         [Provide]
-        private readonly IGitCommandService _gitCommandService;
+        private IGitCommandService _gitCommandService;
 
         public void Push(IRepository repository, Branch branch)
         {

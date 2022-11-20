@@ -6,23 +6,23 @@ using Credentials = UnityGit.UnityGit.Core.Data.Credentials;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("RepositoryCredentialsListItem/RepositoryCredentialsListItem")]
-    [Stylesheet("RepositoryCredentialsListItem/RepositoryCredentialsListItem.style")]
+    [Layout("Components/RepositoryCredentialsListItem/RepositoryCredentialsListItem")]
+    [Stylesheet("Components/RepositoryCredentialsListItem/RepositoryCredentialsListItem.style")]
     [Dependency(typeof(IRepositoryService), provide: typeof(RepositoryService))]
     [Dependency(typeof(ICredentialsService), provide: typeof(CredentialsService))]
-    public class RepositoryCredentialsListItem : UnityGitUIComponent
+    public partial class RepositoryCredentialsListItem : UnityGitUIComponent
     {
         [Query("credentials-list-item-repository-name-label")]
-        private readonly Label _repositoryNameLabel;
+        private Label _repositoryNameLabel;
         [Query("credentials-list-item-username-input")]
-        private readonly TextField _usernameInputField;
+        private TextField _usernameInputField;
         [Query("credentials-list-item-password-input")]
-        private readonly TextField _passwordInputField;
+        private TextField _passwordInputField;
 
         [Provide]
-        private readonly IRepositoryService _repositoryService;
+        private IRepositoryService _repositoryService;
         [Provide]
-        private readonly ICredentialsService _credentialsService;
+        private ICredentialsService _credentialsService;
 
         private readonly IRepository _repository;
         private Credentials _credentials;

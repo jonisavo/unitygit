@@ -5,39 +5,39 @@ using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("BranchListItem/BranchListItem")]
-    [Stylesheet("BranchListItem/BranchListItem.style")]
+    [Layout("Components/BranchListItem/BranchListItem")]
+    [Stylesheet("Components/BranchListItem/BranchListItem.style")]
     [Dependency(typeof(IBranchService), provide: typeof(BranchService))]
     [Dependency(typeof(IPushService), provide: typeof(PushService))]
     [Dependency(typeof(IPullService), provide: typeof(PullService))]
     [Dependency(typeof(ICommitService), provide: typeof(CommitService))]
     [Dependency(typeof(IGitCommandService), provide: typeof(GitCommandService))]
-    public class BranchListItem : UnityGitUIComponent, IOnAttachToPanel
+    public partial class BranchListItem : UnityGitUIComponent, IOnAttachToPanel
     {
         [Query("branch-list-item-image")]
-        private readonly Image _icon;
+        private Image _icon;
         [Query("branch-list-item-name-label")]
-        private readonly Label _name;
+        private Label _name;
         
         [Query("branch-list-item-pull-button")]
-        private readonly Button _pullButton;
+        private Button _pullButton;
         [Query("branch-list-item-pull-button-image")]
-        private readonly Image _pullButtonImage;
+        private Image _pullButtonImage;
         [Query("branch-list-item-push-button")]
-        private readonly Button _pushButton;
+        private Button _pushButton;
         [Query("branch-list-item-push-button-image")]
-        private readonly Image _pushButtonImage;
+        private Image _pushButtonImage;
 
         [Provide]
-        private readonly IBranchService _branchService;
+        private IBranchService _branchService;
         [Provide]
-        private readonly IPullService _pullService;
+        private IPullService _pullService;
         [Provide]
-        private readonly ICommitService _commitService;
+        private ICommitService _commitService;
         [Provide]
-        private readonly IPushService _pushService;
+        private IPushService _pushService;
         [Provide(CastFrom = typeof(IGitCommandService))]
-        private readonly GitCommandService _gitCommandService;
+        private GitCommandService _gitCommandService;
         
         private readonly IRepository _repository;
         private Branch _branch;

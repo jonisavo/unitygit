@@ -11,7 +11,7 @@ namespace UnityGit.Core.Services
 {
     [Dependency(typeof(IProgressService), provide: typeof(ProgressService))]
     [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
-    public class GitCommandService : Service, IGitCommandService
+    public partial class GitCommandService : Service, IGitCommandService
     {
         public bool IsRunning { get; private set; }
 
@@ -24,10 +24,10 @@ namespace UnityGit.Core.Services
         public event CommandFinishedDelegate CommandFinished;
 
         [Provide]
-        private readonly ILogService _logService;
+        private ILogService _logService;
 
         [Provide]
-        private readonly IProgressService _progressService;
+        private IProgressService _progressService;
 
         private GitProcess _currentProcess;
         

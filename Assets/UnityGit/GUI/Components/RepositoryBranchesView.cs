@@ -6,22 +6,22 @@ using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("RepositoryBranchesView/RepositoryBranchesView")]
-    [Stylesheet("RepositoryBranchesView/RepositoryBranchesView.style")]
+    [Layout("Components/RepositoryBranchesView/RepositoryBranchesView")]
+    [Stylesheet("Components/RepositoryBranchesView/RepositoryBranchesView.style")]
     [Dependency(typeof(IGitCommandService), provide: typeof(GitCommandService))]
-    public class RepositoryBranchesView : UnityGitUIComponent, IOnAttachToPanel
+    public partial class RepositoryBranchesView : UnityGitUIComponent, IOnAttachToPanel
     {
         [Query("repository-branches-header")]
-        private readonly RepositoryHeader _header;
+        private RepositoryHeader _header;
         [Query("repository-branches-local-list")]
-        private readonly BranchList _localBranchList;
+        private BranchList _localBranchList;
         [Query("repository-branches-remote-list")]
-        private readonly BranchList _remoteBranchList;
+        private BranchList _remoteBranchList;
 
         private readonly IRepository _repository;
 
         [Provide(CastFrom = typeof(IGitCommandService))]
-        private readonly GitCommandService _gitCommandService;
+        private GitCommandService _gitCommandService;
 
         public RepositoryBranchesView(IRepository repository)
         {

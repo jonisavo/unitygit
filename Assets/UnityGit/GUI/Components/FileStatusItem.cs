@@ -7,26 +7,26 @@ using UnityGit.Core.Utilities;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("FileStatusItem/FileStatusItem")]
-    [Stylesheet("FileStatusItem/FileStatusItem.style")]
+    [Layout("Components/FileStatusItem/FileStatusItem")]
+    [Stylesheet("Components/FileStatusItem/FileStatusItem.style")]
     [Dependency(typeof(ICommitService), provide: typeof(CommitService))]
     [Dependency(typeof(IRestoreService), provide: typeof(RestoreService))]
     [Dependency(typeof(IDiffService), provide: typeof(DiffService))]
-    public class FileStatusItem : UnityGitUIComponent
+    public partial class FileStatusItem : UnityGitUIComponent
     {
         [Query("changed-file-state")]
-        private readonly Label _stateLabel;
+        private Label _stateLabel;
         [Query("changed-file-filename")]
-        private readonly Label _filenameLabel;
+        private Label _filenameLabel;
         [Query("changed-file-toggle")]
-        private readonly Toggle _selectionToggle;
+        private Toggle _selectionToggle;
         
         [Provide]
-        private readonly ICommitService _commitService;
+        private ICommitService _commitService;
         [Provide]
-        private readonly IRestoreService _restoreService;
+        private IRestoreService _restoreService;
         [Provide]
-        private readonly IDiffService _diffService;
+        private IDiffService _diffService;
         
         private readonly IRepository _repository;
         private StatusEntry _statusEntry;

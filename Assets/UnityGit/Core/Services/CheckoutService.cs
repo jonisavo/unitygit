@@ -5,10 +5,10 @@ using UIComponents;
 namespace UnityGit.Core.Services
 {
     [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
-    public class CheckoutService : Service, ICheckoutService
+    public partial class CheckoutService : Service, ICheckoutService
     {
         [Provide]
-        private readonly ILogService _logService;
+        private ILogService _logService;
         
         public Branch CheckoutBranch(IRepository repository, Branch branch)
         {

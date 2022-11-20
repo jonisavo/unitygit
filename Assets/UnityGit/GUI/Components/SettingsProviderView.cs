@@ -4,23 +4,23 @@ using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("SettingsProviderView/SettingsProviderView")]
-    [Stylesheet("SettingsProviderView/SettingsProviderView.style")]
+    [Layout("Components/SettingsProviderView/SettingsProviderView")]
+    [Stylesheet("Components/SettingsProviderView/SettingsProviderView.style")]
     [RootClass("container")]
     [Dependency(typeof(IStatusService), provide: typeof(StatusService))]
-    public class SettingsProviderView : UnityGitUIComponent
+    public partial class SettingsProviderView : UnityGitUIComponent
     {
         [Query("settings-provider-info-container")]
-        private readonly VisualElement _infoContainer;
+        private VisualElement _infoContainer;
 
         [Query("settings-provider-credentials-container")]
-        private readonly VisualElement _credentialsContainer;
+        private VisualElement _credentialsContainer;
         
         [Query("settings-provider-refresh-repositories-button")]
-        private readonly Button _refreshRepositoriesButton;
+        private Button _refreshRepositoriesButton;
         
         [Provide]
-        private readonly IStatusService _statusService;
+        private IStatusService _statusService;
 
         public override void OnInit()
         {

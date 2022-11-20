@@ -5,19 +5,19 @@ using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("UnityGitLog/UnityGitLog")]
-    [Stylesheet("UnityGitLog/UnityGitLog.style")]
+    [Layout("Components/UnityGitLog/UnityGitLog")]
+    [Stylesheet("Components/UnityGitLog/UnityGitLog.style")]
     [RootClass("ugit-full-height")]
     [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
-    public class UnityGitLog : UnityGitUIComponent, IOnAttachToPanel, IOnDetachFromPanel
+    public partial class UnityGitLog : UnityGitUIComponent, IOnAttachToPanel, IOnDetachFromPanel
     {
         public new class UxmlFactory : UxmlFactory<UnityGitLog> {}
         
         [Query("output-scroll-view")]
-        private readonly ScrollView _scrollView;
+        private ScrollView _scrollView;
         
         [Provide(CastFrom = typeof(ILogService))]
-        private readonly UnityGitLogService _logService;
+        private UnityGitLogService _logService;
 
         public void Redraw()
         {

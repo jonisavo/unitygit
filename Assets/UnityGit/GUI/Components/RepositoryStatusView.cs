@@ -5,18 +5,18 @@ using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("RepositoryStatusView/RepositoryStatusView")]
-    [Stylesheet("RepositoryStatusView/RepositoryStatusView.style")]
+    [Layout("Components/RepositoryStatusView/RepositoryStatusView")]
+    [Stylesheet("Components/RepositoryStatusView/RepositoryStatusView.style")]
     [Dependency(typeof(IRestoreService), provide: typeof(RestoreService))]
-    public class RepositoryStatusView : UnityGitUIComponent
+    public partial class RepositoryStatusView : UnityGitUIComponent
     {
-        private readonly IRepository _repository;
+        private IRepository _repository;
 
         [Provide]
-        private readonly IRestoreService _restoreService;
+        private IRestoreService _restoreService;
 
         [Query("repository-status-header")]
-        private readonly RepositoryHeader _header;
+        private RepositoryHeader _header;
 
         private FileStatusList _trackedList;
         private FileStatusList _untrackedList;

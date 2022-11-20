@@ -5,27 +5,27 @@ using UnityGit.UnityGit.Core.Data;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("UnityGitLogWindowView/UnityGitLogWindowView")]
-    [Stylesheet("UnityGitLogWindowView/UnityGitLogWindowView.style")]
+    [Layout("Components/UnityGitLogWindowView/UnityGitLogWindowView")]
+    [Stylesheet("Components/UnityGitLogWindowView/UnityGitLogWindowView.style")]
     [RootClass("ugit-full-height")]
     [Dependency(typeof(IGitCommandService), provide: typeof(GitCommandService))]
     [Dependency(typeof(IRepositoryService), provide: typeof(RepositoryService))]
-    public class UnityGitLogWindowView : UnityGitUIComponent
+    public partial class UnityGitLogWindowView : UnityGitUIComponent
     {
         [Query("test-textfield")]
-        private readonly TextField _commandTextField;
+        private TextField _commandTextField;
 
         [Query("test-run-button")]
-        private readonly Button _runButton;
+        private Button _runButton;
 
         [Query]
-        private readonly UnityGitLog _unityGitLog;
+        private UnityGitLog _unityGitLog;
 
         [Provide]
-        private readonly IGitCommandService _gitCommandService;
+        private IGitCommandService _gitCommandService;
 
         [Provide]
-        private readonly IRepositoryService _repositoryService;
+        private IRepositoryService _repositoryService;
         
         public override void OnInit()
         {

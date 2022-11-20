@@ -6,25 +6,25 @@ using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("CommitFoldout/CommitFoldout")]
-    [Stylesheet("CommitFoldout/CommitFoldout.style")]
+    [Layout("Components/CommitFoldout/CommitFoldout")]
+    [Stylesheet("Components/CommitFoldout/CommitFoldout.style")]
     [Dependency(typeof(ISignatureService), provide: typeof(SignatureService))]
     [Dependency(typeof(ICommitService), provide: typeof(CommitService))]
-    public class CommitFoldout : UnityGitUIComponent
+    public partial class CommitFoldout : UnityGitUIComponent
     {
         [Provide]
-        private readonly ICommitService _commitService;
+        private ICommitService _commitService;
 
         [Query("commit-foldout-foldout")]
-        private readonly Foldout _foldout;
+        private Foldout _foldout;
         [Query("commit-foldout-author-name-textfield")]
-        private readonly TextField _commitAuthorNameTextField;
+        private TextField _commitAuthorNameTextField;
         [Query("commit-foldout-author-email-textfield")]
-        private readonly TextField _commitAuthorEmailField;
+        private TextField _commitAuthorEmailField;
         [Query("commit-foldout-message-textfield")]
-        private readonly TextField _commitMessageTextField;
+        private TextField _commitMessageTextField;
         [Query("commit-foldout-commit-button")]
-        private readonly Button _commitButton;
+        private Button _commitButton;
         
         public new class UxmlFactory : UxmlFactory<CommitFoldout> {}
 

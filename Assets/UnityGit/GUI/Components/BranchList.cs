@@ -5,44 +5,25 @@ using UnityEngine.UIElements;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("BranchList/BranchList")]
-    [Stylesheet("BranchList/BranchList.style")]
-    public class BranchList : UIList<Branch, BranchListItem>
+    [Layout("Components/BranchList/BranchList")]
+    [Stylesheet("Components/BranchList/BranchList.style")]
+    public partial class BranchList : UIList<Branch, BranchListItem>
     {
-        public new class UxmlFactory : UxmlFactory<BranchList, UxmlTraits> {}
-
-        public new class UxmlTraits : VisualElement.UxmlTraits
-        {
-            private readonly UxmlStringAttributeDescription _header =
-                new UxmlStringAttributeDescription { name = "header" };
-
-            public override IEnumerable<UxmlChildElementDescription> uxmlChildElementsDescription
-            {
-                get { yield break; }
-            }
-
-            public override void Init(VisualElement ve, IUxmlAttributes bag, CreationContext cc)
-            {
-                base.Init(ve, bag, cc);
-                var branchList = (BranchList) ve;
-                branchList._headerText = _header.GetValueFromBag(bag, cc);
-            }
-        }
-        
         [Query("branch-list-header-label")]
-        private readonly Label _headerLabel;
+        private Label _headerLabel;
         [Query("branch-list-header-count-label")]
-        private readonly Label _countLabel;
+        private Label _countLabel;
         [Query("branch-list-listview")]
-        private readonly ListView _listView;
+        private ListView _listView;
 
-        private string _headerText;
+        [UxmlTrait(Name = "header")]
+        public string HeaderText;
 
         private IRepository _repository;
 
         public override void OnInit()
         {
-            _headerLabel.text = _headerText;
+            _headerLabel.text = HeaderText;
         }
 
         public void Initialize(IRepository repository, IEnumerable<Branch> branches)

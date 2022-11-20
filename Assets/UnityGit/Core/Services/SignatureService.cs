@@ -5,15 +5,11 @@ using UIComponents;
 namespace UnityGit.Core.Services
 {
     [Dependency(typeof(IStatusService), provide: typeof(StatusService))]
-    public class SignatureService : Service, ISignatureService
+    public partial class SignatureService : Service, ISignatureService
     {
-        private readonly IStatusService _statusService;
+        [Provide]
+        private IStatusService _statusService;
 
-        public SignatureService()
-        {
-            _statusService = Provide<IStatusService>();
-        }
-        
         public Signature GetSignature()
         {
             var hasProjectRepository = _statusService.HasProjectRepository();

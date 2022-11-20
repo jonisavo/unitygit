@@ -6,7 +6,7 @@ using UIComponents;
 namespace UnityGit.Core.Services
 {
     [Dependency(typeof(IRepositoryService), provide: typeof(RepositoryService))]
-    public class StatusService : Service, IStatusService
+    public partial class StatusService : Service, IStatusService
     {
         public IRepository ProjectRepository { get; private set; }
 
@@ -14,11 +14,11 @@ namespace UnityGit.Core.Services
 
         private readonly List<IRepository> _packageRepositories = new List<IRepository>();
 
-        private readonly IRepositoryService _repositoryService;
+        [Provide]
+        private IRepositoryService _repositoryService;
 
         public StatusService()
         {
-            _repositoryService = Provide<IRepositoryService>();
             PopulateRepositories();
 #if UNITY_EDITOR
             UnityEditor.AssemblyReloadEvents.beforeAssemblyReload += Clear;

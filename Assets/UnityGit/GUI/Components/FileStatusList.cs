@@ -6,23 +6,23 @@ using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("FileStatusList/FileStatusList")]
-    [Stylesheet("FileStatusList/FileStatusList.style")]
+    [Layout("Components/FileStatusList/FileStatusList")]
+    [Stylesheet("Components/FileStatusList/FileStatusList.style")]
     [Dependency(typeof(ICommitService), provide: typeof(CommitService))]
-    public class FileStatusList : UIList<StatusEntry, FileStatusItem>
+    public partial class FileStatusList : UIList<StatusEntry, FileStatusItem>
     {
         private readonly IRepository _repository;
         private readonly string _header;
         
         [Query("file-status-list-foldout")]
-        private readonly Foldout _foldout;
+        private Foldout _foldout;
         [Query("file-status-list-select-all-button")]
-        private readonly Button _selectAllButton;
+        private Button _selectAllButton;
         [Query("file-status-list-deselect-all-button")]
-        private readonly Button _deselectAllButton;
+        private Button _deselectAllButton;
         
         [Provide]
-        private readonly ICommitService _commitService;
+        private ICommitService _commitService;
 
         public FileStatusList(IRepository repository, List<StatusEntry> statusEntries, string header) : base(statusEntries)
         {

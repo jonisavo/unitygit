@@ -5,22 +5,20 @@ using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("CommitWindowView/CommitWindowView")]
-    [Stylesheet("CommitWindowView/CommitWindowView.style")]
-    [Stylesheet("Dimensions")]
-    [Stylesheet("Windows")]
+    [Layout("Components/CommitWindowView/CommitWindowView")]
+    [Stylesheet("Components/CommitWindowView/CommitWindowView.style")]
     [RootClass("ugit-full-height")]
     [Dependency(typeof(IStatusService), provide: typeof(StatusService))]
     [Dependency(typeof(ICommitService), provide: typeof(CommitService))]
-    public class CommitWindowView : UnityGitUIComponent
+    public partial class CommitWindowView : UnityGitUIComponent
     {
         [Provide]
-        private readonly IStatusService _statusService;
+        private IStatusService _statusService;
         [Provide]
-        private readonly ICommitService _commitService;
+        private ICommitService _commitService;
         
         [Query("commit-window-view-status-container")]
-        private readonly ScrollView _statusContainer;
+        private ScrollView _statusContainer;
 
         public override void OnInit()
         {

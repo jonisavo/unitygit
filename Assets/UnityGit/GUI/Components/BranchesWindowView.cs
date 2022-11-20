@@ -4,14 +4,13 @@ using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("BranchesWindowView/BranchesWindowView")]
-    [Stylesheet("BranchesWindowView/BranchesWindowView.style")]
-    [Stylesheet("Windows")]
+    [Layout("Components/BranchesWindowView/BranchesWindowView")]
+    [Stylesheet("Components/BranchesWindowView/BranchesWindowView.style")]
     [Dependency(typeof(IStatusService), provide: typeof(StatusService))]
-    public class BranchesWindowView : UnityGitUIComponent
+    public partial class BranchesWindowView : UnityGitUIComponent
     {
         [Query("branches-window-view-scroll-view")]
-        private readonly ScrollView _scrollView;
+        private ScrollView _scrollView;
 
         public override void OnInit()
         {

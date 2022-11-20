@@ -7,17 +7,17 @@ namespace UnityGit.Core.Services
 {
     [Dependency(typeof(IProgressService), provide: typeof(ProgressService))]
     [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
-    public class CommitService : Service, ICommitService
+    public partial class CommitService : Service, ICommitService
     {
         public event ICommitService.CommitCreatedDelegate CommitCreated;
 
         public event ICommitService.FileSelectionChangedDelegate FileSelectionChanged;
         
         [Provide]
-        private readonly ILogService _logService;
+        private ILogService _logService;
 
         [Provide]
-        private readonly IProgressService _progressService;
+        private IProgressService _progressService;
 
         private readonly Dictionary<IRepository, HashSet<string>>
             _committedFilesDictionary = new Dictionary<IRepository, HashSet<string>>();

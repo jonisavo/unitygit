@@ -5,17 +5,14 @@ namespace UnityGit.Core.Services
 {
     [Dependency(typeof(ICredentialsService), provide: typeof(CredentialsService))]
     [Dependency(typeof(ISignatureService), provide: typeof(SignatureService))]
-    public class PullService : Service, IPullService
+    public partial class PullService : Service, IPullService
     {
-        private readonly ICredentialsService _credentialsService;
-        private readonly ISignatureService _signatureService;
-
-        public PullService()
-        {
-            _credentialsService = Provide<ICredentialsService>();
-            _signatureService = Provide<ISignatureService>();
-        }
+        [Provide]
+        private ICredentialsService _credentialsService;
         
+        [Provide]
+        private ISignatureService _signatureService;
+
         public MergeResult Pull(Repository repository)
         {
             var fetchOptions = new FetchOptions();
