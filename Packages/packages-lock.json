@@ -155,7 +155,7 @@
       "dependencies": {}
     },
     "io.savolainen.uicomponents": {
-      "version": "1.0.0-alpha.4",
+      "version": "1.0.0-alpha.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {

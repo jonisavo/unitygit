@@ -2,7 +2,7 @@
 using UIComponents;
 using UnityEngine.UIElements;
 using UnityGit.Core.Services;
-using Credentials = UnityGit.UnityGit.Core.Data.Credentials;
+using Credentials = UnityGit.Core.Data.Credentials;
 
 namespace UnityGit.GUI.Components
 {

@@ -1,6 +1,6 @@
 ﻿using LibGit2Sharp;
 using UIComponents;
-using UnityGit.UnityGit.Core.Data;
+using UnityGit.Core.Data;
 
 namespace UnityGit.Core.Services
 {

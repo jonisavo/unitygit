@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using UnityGit.Core.Data;
-using UnityGit.UnityGit.Core.Data;
 
 namespace UnityGit.Core.Services
 {

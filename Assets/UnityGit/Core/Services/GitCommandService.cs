@@ -5,7 +5,6 @@ using JetBrains.Annotations;
 using UIComponents;
 using UnityGit.Core.Data;
 using UnityGit.Core.Internal;
-using UnityGit.UnityGit.Core.Data;
 
 namespace UnityGit.Core.Services
 {

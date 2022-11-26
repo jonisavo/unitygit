@@ -1,6 +1,6 @@
 ﻿using LibGit2Sharp;
 
-namespace UnityGit.UnityGit.Core.Data
+namespace UnityGit.Core.Data
 {
     public readonly struct GitCommandInfo
     {

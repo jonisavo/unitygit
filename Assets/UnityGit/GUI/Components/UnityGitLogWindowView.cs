@@ -1,7 +1,7 @@
 ﻿using UIComponents;
 using UnityEngine.UIElements;
 using UnityGit.Core.Services;
-using UnityGit.UnityGit.Core.Data;
+using UnityGit.Core.Data;
 
 namespace UnityGit.GUI.Components
 {

@@ -1,4 +1,4 @@
-﻿namespace UnityGit.UnityGit.Core.Data
+﻿namespace UnityGit.Core.Data
 {
     public struct Credentials
     {
