@@ -18,9 +18,6 @@ namespace UnityGit.GUI.Components
         [Query("test-run-button")]
         private Button _runButton;
 
-        [Query]
-        private UnityGitLog _unityGitLog;
-
         [Provide]
         private IGitCommandService _gitCommandService;
 

@@ -46,15 +46,8 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-    "com.unity.roslyn": {
-      "version": "0.2.2-preview",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
     "com.unity.settings-manager": {
-      "version": "1.0.1",
+      "version": "1.0.3",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
@@ -88,7 +81,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.testtools.codecoverage": {
-      "version": "1.1.1",
+      "version": "1.2.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -107,7 +100,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.4.8",
+      "version": "1.6.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -144,12 +137,10 @@
       "dependencies": {}
     },
     "io.savolainen.uicomponents": {
-      "version": "1.0.0-alpha.5",
+      "version": "1.0.0-beta.1",
       "depth": 0,
       "source": "registry",
-      "dependencies": {
-        "com.unity.roslyn": "0.2.2-preview"
-      },
+      "dependencies": {},
       "url": "https://package.openupm.com"
     },
     "com.unity.modules.ai": {

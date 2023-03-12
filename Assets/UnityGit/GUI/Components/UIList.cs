@@ -37,7 +37,7 @@ namespace UnityGit.GUI.Components
             listView.itemsSource = items;
             listView.makeItem = MakeItem;
             listView.bindItem = BindItemInternal;
-            listView.itemHeight = itemHeight;
+            listView.fixedItemHeight = itemHeight;
             if (items.Count <= 10)
                 listView.style.minHeight = items.Count * itemHeight;
         }
