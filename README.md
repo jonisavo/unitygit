@@ -4,10 +4,11 @@
 #### There is no official release yet, and the project is subject to change drastically.
 
 ![img.png](img.png)
+![img2.png](img2.png)
 
-UnityGit, at the time of writing, offers a commit window where users can commit changes made
-to their project or packages. It also features diffing (via the diff tool configured in Unity)
-and restoring capabilities.
+UnityGit, at the time of writing, offers
+- a window for creating commits, where the user can also view, diff and restore files
+- a branch window for viewing branches, pulling and pushing.
 
 UnityGit recognizes the Git repository inside the project's root folder and any repository
 inside Packages.
