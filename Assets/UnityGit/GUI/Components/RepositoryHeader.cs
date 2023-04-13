@@ -51,7 +51,9 @@ namespace UnityGit.GUI.Components
             else
                 _repositoryNameLabel.text = _repositoryService.GetRepositoryName(repository);
 
-            _repositoryPathLabel.text = repository.Info.Path;
+            var repositoryPath = repository.Info.Path;
+
+            _repositoryPathLabel.text = repositoryPath[..^5];
         }
     }
 }
