@@ -1,0 +1,20 @@
+{
+    "name": "UnityGit.GUI",
+    "rootNamespace": "UnityGit.GUI",
+    "references": [
+        "GUID:d593635333b4cae48bac5b5f0b596e90",
+        "GUID:4f461665f9bccce438b372fb17a31c78",
+        "GUID:0d4b2041e88e9d44099749df0a6ab2d9"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

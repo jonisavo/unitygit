@@ -68,6 +68,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 .idea/
-Packages/io.savolainen*/
+Packages/io.savolainen.test/
 CodeCoverage/
 /artifacts/
