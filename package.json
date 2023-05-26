@@ -1,0 +1,16 @@
+{
+  "name": "io.savolainen.unitygit",
+  "version": "0.0.1",
+  "displayName": "UnityGit",
+  "description": "A user interface for Git inside the Unity Editor.",
+  "unity": "2020.3",
+  "author": {
+    "name": "Joni Savolainen",
+    "email": "joni@savolainen.io",
+    "url": "https://savolainen.io"
+  },
+  "dependencies": {
+    "io.savolainen.uicomponents": "1.0.0-beta.3",
+    "com.marijnzwemmer.unity-toolbar-extender": "1.4.2"
+  }
+}

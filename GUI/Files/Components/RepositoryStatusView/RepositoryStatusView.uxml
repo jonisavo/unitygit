@@ -1,0 +1,3 @@
+﻿<UXML xmlns:ugit="UnityGit.GUI.Components">
+    <ugit:RepositoryHeader name="repository-status-header" />
+</UXML>

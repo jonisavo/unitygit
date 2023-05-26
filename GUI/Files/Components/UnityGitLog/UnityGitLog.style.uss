@@ -1,0 +1,15 @@
+﻿#output-scroll-view {
+    margin: 16px;
+    padding: 6px;
+    background-color: #000022;
+    border-radius: 8px;
+    height: 100%;
+}
+
+#output-scroll-view Label {
+    color: whitesmoke;
+}
+
+#output-scroll-view Label .error {
+    color: orangered;
+}

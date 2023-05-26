@@ -1,0 +1,8 @@
+﻿#branch-list-header-container {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 6px;
+    margin-bottom: 2px;
+    border-bottom-width: 2px;
+    border-bottom-color: gray;
+}

@@ -1,0 +1,14 @@
+﻿#run-container {
+    display: flex;
+    flex-direction: row;
+    margin: 8px;
+}
+
+#test-textfield {
+    flex: 1;
+    margin-right: 10px;
+}
+
+#test-run-button {
+    min-width: 60px;
+}

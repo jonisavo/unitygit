@@ -1,0 +1,9 @@
+﻿<UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement name="branch-list-container">
+        <ui:VisualElement name="branch-list-header-container">
+            <ui:Label name="branch-list-header-label" />
+            <ui:Label name="branch-list-header-count-label" />
+        </ui:VisualElement>
+        <ui:ListView name="branch-list-listview" selection-type="None" />
+    </ui:VisualElement>
+</UXML>

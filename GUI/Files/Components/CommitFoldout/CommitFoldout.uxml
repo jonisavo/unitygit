@@ -1,0 +1,17 @@
+﻿<UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:Foldout name="commit-foldout-foldout" text="Commit..." value="false">
+        <ui:VisualElement name="commit-foldout-message-author-container">
+            <ui:VisualElement class="author-field">
+                <ui:Label text="Author name" />
+                <ui:TextField name="commit-foldout-author-name-textfield" />
+            </ui:VisualElement>
+            <ui:VisualElement class="author-field">
+                <ui:Label text="Author e-mail" />
+                <ui:TextField name="commit-foldout-author-email-textfield" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Label text="Commit message" />
+        <ui:TextField name="commit-foldout-message-textfield" multiline="true" />
+        <ui:Button name="commit-foldout-commit-button" text="Commit" />
+    </ui:Foldout>
+</UXML>

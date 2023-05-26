@@ -1,0 +1,47 @@
+﻿#changed-file-container {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    border-top-color: #444444;
+    border-top-width: 1px;
+    padding-top: 8px;
+}
+
+#changed-file-description-container {
+    margin-left: 2px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+#changed-file-filename {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -unity-text-overflow-position: start;
+    padding-right: 16px;
+}
+
+#changed-file-toggle {
+    border-width: 1px;
+    background-color: darkgray;
+    border-color: darkgray;
+}
+
+.state-added {
+    color: lawngreen;
+}
+
+.state-modified {
+    color: whitesmoke;
+}
+
+.state-removed {
+    color: darkred;
+}
+
+.state-renamed {
+    color: aqua;
+}
+
+.state-ignored, .state-unknown {
+    color: gray;
+}

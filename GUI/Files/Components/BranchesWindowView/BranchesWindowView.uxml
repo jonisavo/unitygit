@@ -1,0 +1,5 @@
+﻿<UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement name="branches-window-view-container" class="ugit-window-container">
+        <ui:ScrollView name="branches-window-view-scroll-view" />
+    </ui:VisualElement>
+</UXML>

@@ -1,0 +1,22 @@
+﻿#file-status-list-container {
+    border-width: 12px;
+    border-top-width: 8px;
+    border-left-width: 8px;
+    border-radius: 16px;
+    border-color: #333333;
+    background-color: #333333;
+    margin: 4px;
+}
+
+#file-status-list-options-container {
+    min-width: 30%;
+    flex-direction: row-reverse;
+    margin-bottom: 4px;
+}
+
+#file-status-list-listview {
+    flex-grow: 1;
+    min-height: 300px;
+    max-height: 900px;
+    background-color: #222222;
+}

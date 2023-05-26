@@ -1,0 +1,5 @@
+﻿<UXML xmlns:ugit="UnityGit.GUI.Components">
+    <ugit:RepositoryHeader name="repository-branches-header" />
+    <ugit:BranchList header="Local" name="repository-branches-local-list" />
+    <ugit:BranchList header="Remote" name="repository-branches-remote-list" />
+</UXML>

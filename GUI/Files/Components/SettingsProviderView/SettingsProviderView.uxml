@@ -1,0 +1,6 @@
+﻿<UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:Label name="settings-provider-unitygit-label" text="UnityGit"/>
+    <ui:VisualElement name="settings-provider-info-container" />
+    <ui:VisualElement name="settings-provider-credentials-container" />
+    <ui:Button name="settings-provider-refresh-repositories-button" text="Refresh repositories" />
+</UXML>

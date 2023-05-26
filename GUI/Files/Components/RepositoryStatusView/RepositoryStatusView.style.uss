@@ -1,0 +1,24 @@
+﻿#repository-status-container {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#repository-status-labels {
+    flex-direction: column;
+}
+
+.label {
+    padding-right: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#repository-status-name-label {
+    -unity-font-style: bold;
+    font-size: 14px;
+}
+
+#repository-status-path-label {
+    font-size: 10px;
+    -unity-text-overflow-position: start;
+}
