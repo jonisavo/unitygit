@@ -4,6 +4,11 @@ using UnityGit.Core.Data;
 
 namespace UnityGit.Core.Services
 {
+    public interface IPushService
+    {
+        void Push(IRepository repository, Branch branch);
+    }
+    
     [Dependency(typeof(IDialogService), provide: typeof(DialogService))]
     [Dependency(typeof(IGitCommandService), provide: typeof(GitCommandService))]
     public partial class PushService : Service, IPushService

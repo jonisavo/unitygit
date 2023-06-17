@@ -6,6 +6,15 @@ using UnityGit.Core.Utilities;
 
 namespace UnityGit.Core.Services
 {
+    public interface IRestoreService
+    {
+        delegate void FileRestoredDelegate(IRepository repository, string filePath);
+
+        event FileRestoredDelegate FileRestored;
+        
+        void RestoreFile(IRepository repository, string filePath);
+    }
+    
     [Dependency(typeof(IDialogService), provide: typeof(DialogService))]
     [Dependency(typeof(ICheckoutService), provide: typeof(CheckoutService))]
     [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]

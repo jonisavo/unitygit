@@ -7,6 +7,21 @@ using UnityEngine;
 
 namespace UnityGit.Core.Services
 {
+    public interface IRepositoryService
+    {
+        IRepository GetProjectRepository();
+        
+        List<IRepository> GetPackageRepositories();
+        
+        bool IsProjectRepository(IRepository repository);
+        
+        string GetProjectRepositoryName();
+        
+        string GetRepositoryName(IRepository repository);
+        
+        bool AreRepositoriesEqual(IRepository repositoryOne, IRepository repositoryTwo);
+    }
+    
     public class RepositoryService : IRepositoryService
     {
         [CanBeNull]

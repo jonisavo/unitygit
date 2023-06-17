@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UIComponents;
 using UIComponents.DependencyInjection;
-using UnityEngine;
 using ILogger = UIComponents.ILogger;
 
 namespace UnityGit.Core.Services

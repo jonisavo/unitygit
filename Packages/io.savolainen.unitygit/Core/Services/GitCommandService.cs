@@ -9,6 +9,13 @@ using Debug = UnityEngine.Debug;
 
 namespace UnityGit.Core.Services
 {
+    public interface IGitCommandService
+    {
+        Task<GitProcessResult> Run(GitCommandInfo info);
+        
+        bool IsRunning { get; }
+    }
+    
     [Dependency(typeof(IProgressService), provide: typeof(ProgressService))]
     [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
     public partial class GitCommandService : Service, IGitCommandService

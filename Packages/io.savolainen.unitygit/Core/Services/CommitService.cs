@@ -5,6 +5,27 @@ using UIComponents;
 
 namespace UnityGit.Core.Services
 {
+    public interface ICommitService
+    {
+        delegate void CommitCreatedDelegate(Commit commit);
+
+        event CommitCreatedDelegate CommitCreated;
+        
+        delegate void FileSelectionChangedDelegate(IRepository repository, string filePath, bool selected);
+
+        event FileSelectionChangedDelegate FileSelectionChanged;
+
+        void SelectFile(IRepository repository, string filePath);
+
+        void DeselectFile(IRepository repository, string filePath);
+
+        bool IsFileSelected(IRepository repository, string filePath);
+
+        int GetSelectedCount();
+        
+        void CommitSelected(string message, Signature commitSignature);
+    }
+    
     [Dependency(typeof(IProgressService), provide: typeof(ProgressService))]
     [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
     public partial class CommitService : Service, ICommitService

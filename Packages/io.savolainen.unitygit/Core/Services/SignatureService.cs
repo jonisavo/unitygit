@@ -1,9 +1,16 @@
 ﻿using System;
+using JetBrains.Annotations;
 using LibGit2Sharp;
 using UIComponents;
 
 namespace UnityGit.Core.Services
 {
+    public interface ISignatureService
+    {
+        [CanBeNull]
+        Signature GetSignature();
+    }
+    
     [Dependency(typeof(IStatusService), provide: typeof(StatusService))]
     public partial class SignatureService : Service, ISignatureService
     {
