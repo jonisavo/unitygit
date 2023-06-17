@@ -3,6 +3,11 @@ using UIComponents;
 
 namespace UnityGit.Core.Services
 {
+    public interface IPullService
+    {
+        MergeResult Pull(Repository repository);
+    }
+    
     [Dependency(typeof(ICredentialsService), provide: typeof(CredentialsService))]
     [Dependency(typeof(ISignatureService), provide: typeof(SignatureService))]
     public partial class PullService : Service, IPullService

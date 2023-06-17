@@ -5,6 +5,21 @@ using UIComponents;
 
 namespace UnityGit.Core.Services
 {
+    public interface IStatusService
+    {
+        IRepository ProjectRepository { get; }
+
+        IReadOnlyList<IRepository> PackageRepositories { get; }
+
+        void Clear();
+
+        bool HasProjectRepository();
+
+        bool HasPackageRepositories();
+        
+        void PopulateRepositories();
+    }
+    
     [Dependency(typeof(IRepositoryService), provide: typeof(RepositoryService))]
     public partial class StatusService : Service, IStatusService
     {

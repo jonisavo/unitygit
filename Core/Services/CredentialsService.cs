@@ -5,6 +5,17 @@ using Credentials = UnityGit.Core.Data.Credentials;
 
 namespace UnityGit.Core.Services
 {
+    public interface ICredentialsService
+    {
+        Credentials GetCredentialsForRepository(IRepository repository);
+
+        bool HasCredentialsForRepository(IRepository repository);
+
+        void SetCredentialsForRepository(IRepository repository, Credentials credentials);
+        
+        CredentialsHandler GetCredentialsHandlerForRepository(IRepository repository);
+    }
+    
     public class CredentialsService : ICredentialsService
     {
         private readonly Dictionary<IRepository, Credentials> _credentials =

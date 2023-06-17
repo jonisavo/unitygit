@@ -6,12 +6,15 @@ using UnityEngine;
 
 namespace UnityGit.Core.Services
 {
+    public interface IDiffService
+    {
+        void DiffFile(IRepository repository, string filePath);
+    }
+    
     public class DiffService : IDiffService
     {
         public void DiffFile(IRepository repository, string filePath)
         {
-            // var patch = repository.Diff.Compare<Patch>(new[] { filePath });
-
             var headFilePath = Path.Combine(Application.temporaryCachePath, "HEAD");
             
             var blob = repository.Head.Tip[filePath].Target as Blob;
