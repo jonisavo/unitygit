@@ -26,7 +26,7 @@ jobs:
           git config --global user.name 'github-bot'
           git config --global user.email 'github-bot@users.noreply.github.com'
       - name: Copy meta files to package folder
-        run: cp README.md "$UNITYGIT_PATH"
+        run: cp README.md README.md.meta "$UNITYGIT_PATH"
       - name: Create commit
         run: |
           git add -A

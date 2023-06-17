@@ -28,7 +28,7 @@ namespace UnityGit.Core.Services
     
     [Dependency(typeof(IProgressService), provide: typeof(ProgressService))]
     [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
-    public partial class CommitService : Service, ICommitService
+    public sealed partial class CommitService : Service, ICommitService
     {
         public event ICommitService.CommitCreatedDelegate CommitCreated;
 

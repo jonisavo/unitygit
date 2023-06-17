@@ -12,7 +12,7 @@ namespace UnityGit.Core.Services
     }
     
     [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
-    public partial class CheckoutService : Service, ICheckoutService
+    public sealed partial class CheckoutService : Service, ICheckoutService
     {
         [Provide]
         private ILogService _logService;

@@ -21,7 +21,7 @@ namespace UnityGit.Core.Services
     }
     
     [Dependency(typeof(IRepositoryService), provide: typeof(RepositoryService))]
-    public partial class StatusService : Service, IStatusService
+    public sealed partial class StatusService : Service, IStatusService
     {
         public IRepository ProjectRepository { get; private set; }
 

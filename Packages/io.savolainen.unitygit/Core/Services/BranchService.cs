@@ -11,7 +11,7 @@ namespace UnityGit.Core.Services
         bool IsAheadOfRemote(Branch branch);
     }
     
-    public class BranchService : IBranchService
+    public sealed class BranchService : IBranchService
     {
         public string GetBranchName(Branch branch)
         {

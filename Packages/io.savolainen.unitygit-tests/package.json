@@ -1,0 +1,15 @@
+{
+  "name": "io.savolainen.unitygit-tests",
+  "version": "0.0.1",
+  "displayName": "UnityGit Tests",
+  "description": "Tests for UnityGit",
+  "unity": "2021.3",
+  "author": {
+    "name": "Joni Savolainen",
+    "email": "joni@savolainen.io",
+    "url": "https://savolainen.io"
+  },
+  "dependencies": {
+    "io.savolainen.uicomponents": "1.0.0-beta.3"
+  }
+}

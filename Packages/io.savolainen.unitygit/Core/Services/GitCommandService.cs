@@ -18,7 +18,7 @@ namespace UnityGit.Core.Services
     
     [Dependency(typeof(IProgressService), provide: typeof(ProgressService))]
     [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
-    public partial class GitCommandService : Service, IGitCommandService
+    public sealed partial class GitCommandService : Service, IGitCommandService
     {
         public bool IsRunning { get; private set; }
 
@@ -62,7 +62,7 @@ namespace UnityGit.Core.Services
             {
                 _logService.LogMessage($"Running {_currentProcess}");
                 CommandStarted?.Invoke();
-                result = await _currentProcess.RunAsync();
+                result = await _currentProcess.Run();
                 OnProcessExited(result);
             }
             catch (Exception exception)

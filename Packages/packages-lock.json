@@ -140,6 +140,14 @@
         "com.marijnzwemmer.unity-toolbar-extender": "1.4.2"
       }
     },
+    "io.savolainen.unitygit-tests": {
+      "version": "file:io.savolainen.unitygit-tests",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "io.savolainen.uicomponents": "1.0.0-beta.3"
+      }
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,

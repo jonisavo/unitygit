@@ -4,7 +4,7 @@ using UnityGit.Core.Data;
 
 namespace UnityGit.Core.Services
 {
-    public class UnityGitLogService : ILogService
+    public sealed class UnityGitLogService : ILogService
     {
         private readonly List<OutputLine> _outputLines =
             new List<OutputLine>(30);
