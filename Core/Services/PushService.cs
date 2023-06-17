@@ -11,7 +11,7 @@ namespace UnityGit.Core.Services
     
     [Dependency(typeof(IDialogService), provide: typeof(DialogService))]
     [Dependency(typeof(IGitCommandService), provide: typeof(GitCommandService))]
-    public partial class PushService : Service, IPushService
+    public sealed partial class PushService : Service, IPushService
     {
         [Provide]
         private IDialogService _dialogService;

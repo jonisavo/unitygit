@@ -10,7 +10,7 @@ namespace UnityGit.Core.Services
     
     [Dependency(typeof(ICredentialsService), provide: typeof(CredentialsService))]
     [Dependency(typeof(ISignatureService), provide: typeof(SignatureService))]
-    public partial class PullService : Service, IPullService
+    public sealed partial class PullService : Service, IPullService
     {
         [Provide]
         private ICredentialsService _credentialsService;

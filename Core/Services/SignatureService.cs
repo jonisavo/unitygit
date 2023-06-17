@@ -12,7 +12,7 @@ namespace UnityGit.Core.Services
     }
     
     [Dependency(typeof(IStatusService), provide: typeof(StatusService))]
-    public partial class SignatureService : Service, ISignatureService
+    public sealed partial class SignatureService : Service, ISignatureService
     {
         [Provide]
         private IStatusService _statusService;

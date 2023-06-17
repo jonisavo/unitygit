@@ -22,7 +22,7 @@ namespace UnityGit.Core.Services
         bool AreRepositoriesEqual(IRepository repositoryOne, IRepository repositoryTwo);
     }
     
-    public class RepositoryService : IRepositoryService
+    public sealed class RepositoryService : IRepositoryService
     {
         [CanBeNull]
         public IRepository GetProjectRepository()

@@ -2,10 +2,11 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using UnityGit.Core.Data;
+using Debug = UnityEngine.Debug;
 
 namespace UnityGit.Core.Internal
 {
-    internal class GitProcess
+    internal sealed class GitProcess
     {
         private readonly Process _process;
 
@@ -63,7 +64,7 @@ namespace UnityGit.Core.Internal
             _timeoutMs = timeoutMilliseconds;
         }
 
-        public async Task<GitProcessResult> RunAsync()
+        public async Task<GitProcessResult> Run()
         {
             using (_process)
             {
@@ -73,6 +74,8 @@ namespace UnityGit.Core.Internal
                     _result.ExitCode = _process.ExitCode;
                     return _result;
                 }
+
+                _result.Started = true;
 
                 _process.BeginOutputReadLine();
                 _process.BeginErrorReadLine();
@@ -96,7 +99,15 @@ namespace UnityGit.Core.Internal
                 }
                 else
                 {
-                    _process.Kill();
+                    try
+                    {
+                        _process.Kill();   
+                    } catch (Exception e)
+                    {
+                        Debug.LogWarning("Could not kill Git process.");
+                        Debug.LogWarning(e.ToString());
+                    }
+                    
                     _result.Timeout = true;
                 }
             }

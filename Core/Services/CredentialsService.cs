@@ -16,7 +16,7 @@ namespace UnityGit.Core.Services
         CredentialsHandler GetCredentialsHandlerForRepository(IRepository repository);
     }
     
-    public class CredentialsService : ICredentialsService
+    public sealed class CredentialsService : ICredentialsService
     {
         private readonly Dictionary<IRepository, Credentials> _credentials =
             new Dictionary<IRepository, Credentials>();

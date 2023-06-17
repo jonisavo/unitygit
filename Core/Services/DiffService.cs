@@ -11,7 +11,7 @@ namespace UnityGit.Core.Services
         void DiffFile(IRepository repository, string filePath);
     }
     
-    public class DiffService : IDiffService
+    public sealed class DiffService : IDiffService
     {
         public void DiffFile(IRepository repository, string filePath)
         {

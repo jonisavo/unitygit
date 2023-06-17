@@ -5,7 +5,7 @@ namespace UnityGit.Core.Data
     /// <summary>
     /// Result of a Git process run.
     /// </summary>
-    public class GitProcessResult
+    public sealed class GitProcessResult
     {
         /// <summary>
         /// Whether the process was started.

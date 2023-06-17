@@ -9,7 +9,7 @@ namespace UnityGit.Core.Services
         bool Error(string message);
     }
     
-    public class DialogService : IDialogService
+    public sealed class DialogService : IDialogService
     {
         public bool Confirm(string message)
         {
