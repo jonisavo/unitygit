@@ -1,0 +1,46 @@
+﻿# Workflow for updating the upm branch automatically.
+
+name: upm
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  workflow_dispatch:
+
+env:
+  UNITYGIT_PATH: 'Packages/io.savolainen.unitygit'
+  BRANCH_NAME: upm
+
+jobs:
+  run:
+    name: Update UPM branch
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up github-bot credentials
+        run: |
+          git config --global user.name 'github-bot'
+          git config --global user.email 'github-bot@users.noreply.github.com'
+      - name: Copy meta files to package folder
+        run: cp README.md "$UNITYGIT_PATH"
+      - name: Create commit
+        run: |
+          git add -A
+          git commit -m "chore(ci): prepare upm branch"
+      - name: Remove existing upm branch
+        run: git branch -D upm || echo skipping upm branch deletion
+      - name: Split subtree
+        run: git subtree split -P "$UNITYGIT_PATH" -b "$BRANCH_NAME"
+      - name: Push subtree
+        run: git push -u origin --force "$BRANCH_NAME"
+      - name: Create UPM tag
+        if: startsWith(github.ref_name, 'v')
+        env:
+          TAG_NAME: ${{ format('upm/{0}', github.ref_name) }}
+        run: |
+          git tag "$TAG_NAME" --annotate --message 'Release $TAG_NAME for upm' "$BRANCH_NAME"
+          git push origin "$TAG_NAME"
