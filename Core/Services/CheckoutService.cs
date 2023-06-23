@@ -12,10 +12,14 @@ namespace UnityGit.Core.Services
     }
     
     [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
+    [Dependency(typeof(ICommandsService), provide: typeof(CommandsService))]
     public sealed partial class CheckoutService : Service, ICheckoutService
     {
         [Provide]
         private ILogService _logService;
+        
+        [Provide]
+        private ICommandsService _commandsService;
         
         public Branch CheckoutBranch(IRepository repository, Branch branch)
         {
@@ -25,7 +29,7 @@ namespace UnityGit.Core.Services
 
             try
             {
-                checkedOutBranch = Commands.Checkout(repository, branch);
+                checkedOutBranch = _commandsService.Checkout(repository, branch);
                 _logService.LogMessage($"Checked out branch {checkedOutBranch.FriendlyName}.");
             }
             catch (Exception exception)

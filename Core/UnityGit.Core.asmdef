@@ -13,7 +13,7 @@
     "precompiledReferences": [
         "LibGit2Sharp.dll"
     ],
-    "autoReferenced": true,
+    "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
