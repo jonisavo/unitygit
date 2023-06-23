@@ -5,7 +5,6 @@ using System.IO;
 using NUnit.Framework;
 using UnityEngine.TestTools;
 using UnityGit.Core.Internal;
-using Debug = UnityEngine.Debug;
 
 namespace UnityGit.Tests.Core
 {

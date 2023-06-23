@@ -4,7 +4,8 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "UnityGit.Core"
+        "UnityGit.Core",
+        "UIComponents"
     ],
     "includePlatforms": [
         "Editor"
