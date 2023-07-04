@@ -17,6 +17,7 @@ namespace UnityGit.Core.Services
         public void FinishWithError(int progressId, string message);
     }
     
+    /// <summary>Acts as a wrapper for Unity's Progress API.</summary>
     public sealed class ProgressService : IProgressService
     {
         public int Start(string name, string description, ProgressOptions options)

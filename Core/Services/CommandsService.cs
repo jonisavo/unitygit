@@ -1,4 +1,5 @@
 ﻿using LibGit2Sharp;
+using UnityEngine.TestTools;
 
 namespace UnityGit.Core.Services
 {
@@ -12,6 +13,7 @@ namespace UnityGit.Core.Services
     }
     
     /// <summary>Acts as a wrapper for LibGit2Sharp.Commands.</summary>
+    [ExcludeFromCoverage]
     public class CommandsService : ICommandsService
     {
         public Branch Checkout(IRepository repository, Branch branch)
