@@ -6,9 +6,10 @@ namespace UnityGit.Core.Services
     {
         bool Confirm(string message);
 
-        bool Error(string message);
+        void Error(string message);
     }
     
+    /// <summary>Acts as a wrapper for Unity's EditorUtility.DisplayDialog method.</summary>
     public sealed class DialogService : IDialogService
     {
         public bool Confirm(string message)
@@ -16,9 +17,9 @@ namespace UnityGit.Core.Services
             return EditorUtility.DisplayDialog("[UnityGit] Are you sure?", message, "Yes", "No");
         }
 
-        public bool Error(string message)
+        public void Error(string message)
         {
-            return EditorUtility.DisplayDialog("[UnityGit] Error", message, "OK");
+            EditorUtility.DisplayDialog("[UnityGit] Error", message, "OK");
         }
     }
 }
