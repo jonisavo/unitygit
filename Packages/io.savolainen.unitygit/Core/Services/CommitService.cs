@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using LibGit2Sharp;
 using UIComponents;
+using UnityEngine;
 
 namespace UnityGit.Core.Services
 {
@@ -28,6 +29,7 @@ namespace UnityGit.Core.Services
     
     [Dependency(typeof(IProgressService), provide: typeof(ProgressService))]
     [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
+    [Dependency(typeof(ICommandsService), provide: typeof(CommandsService))]
     public sealed partial class CommitService : Service, ICommitService
     {
         public event ICommitService.CommitCreatedDelegate CommitCreated;
@@ -39,6 +41,9 @@ namespace UnityGit.Core.Services
 
         [Provide]
         private IProgressService _progressService;
+        
+        [Provide]
+        private ICommandsService _commandsService;
 
         private readonly Dictionary<IRepository, HashSet<string>>
             _committedFilesDictionary = new Dictionary<IRepository, HashSet<string>>();
@@ -92,12 +97,9 @@ namespace UnityGit.Core.Services
         {
             var selectedCount = GetSelectedCount();
 
-            if (_committedFilesDictionary.Count == 0)
-                return;
-            
             foreach (var filePath in _committedFilesDictionary[repository])
             {
-                Commands.Stage(repository, filePath);
+                _commandsService.Stage(repository, filePath);
                 FileSelectionChanged?.Invoke(repository, filePath, false);
             }
             
@@ -113,8 +115,7 @@ namespace UnityGit.Core.Services
 
             try
             {
-                var commit = repository.Commit(
-                    message, commitSignature, commitSignature);
+                var commit = _commandsService.Commit(repository, message, commitSignature);
 
                 CommitCreated?.Invoke(commit);
                 
@@ -129,8 +130,8 @@ namespace UnityGit.Core.Services
                 _logService.LogError("Can not create empty commit.");
             }
             catch (Exception exception)
-            { 
-                _progressService.FinishWithError(progressId, $"Commit failed with message {exception.Message}");
+            {
+                _progressService.FinishWithError(progressId, $"Commit failed with message '{exception.Message}'");
                 _logService.LogException(exception);
             }
         }
