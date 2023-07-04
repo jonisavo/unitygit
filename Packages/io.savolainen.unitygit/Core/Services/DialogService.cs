@@ -1,4 +1,5 @@
 ﻿using UnityEditor;
+using UnityEngine.TestTools;
 
 namespace UnityGit.Core.Services
 {
@@ -10,6 +11,7 @@ namespace UnityGit.Core.Services
     }
     
     /// <summary>Acts as a wrapper for Unity's EditorUtility.DisplayDialog method.</summary>
+    [ExcludeFromCoverage]
     public sealed class DialogService : IDialogService
     {
         public bool Confirm(string message)
