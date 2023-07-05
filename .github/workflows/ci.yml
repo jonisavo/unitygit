@@ -8,9 +8,6 @@ on:
     types: [opened, synchronize, reopened]
   workflow_dispatch: {}
 
-env:
-  PROJECT_UNITY_VERSION: 2021.3.26f1
-
 jobs:
   buildAndTestForLinux:
     name: Build & Test for ${{ matrix.targetPlatform }} on ${{ matrix.unityVersion }}
@@ -21,7 +18,7 @@ jobs:
         unityVersion:
           - 2021.3.26f1
           - 2022.3.3f1
-          - 2023.1.3f1
+          - 2023.1.2f1
         targetPlatform:
           - StandaloneLinux64
           - StandaloneWindows64
@@ -45,6 +42,7 @@ jobs:
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
+          testMode: EditMode
           unityVersion: ${{ matrix.unityVersion }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           customParameters: -debugCodeOptimization -enableCodeCoverage -coverageResultsPath ./CodeCoverage -coverageOptions "useProjectSettings;generateAdditionalMetrics"
@@ -64,7 +62,6 @@ jobs:
           files: CodeCoverage/**/*.xml
 
       - name: Commit Unity project changes
-        if: ${{ matrix.unityVersion != env.PROJECT_UNITY_VERSION }}
         run: |
           git config --global user.name 'github-bot'
           git config --global user.email 'github-bot@users.noreply.github.com'
