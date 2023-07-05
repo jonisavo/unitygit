@@ -33,8 +33,15 @@ namespace UnityGit.Core.Services
             if (!Directory.Exists(gitRepositoryPath))
                 return null;
 
-            if (!Repository.IsValid(gitRepositoryPath))
+            try
+            {
+                if (!Repository.IsValid(gitRepositoryPath))
+                    return null;
+            }
+            catch
+            {
                 return null;
+            }
 
             return new Repository(gitRepositoryPath);
         }
