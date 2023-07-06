@@ -76,6 +76,12 @@ namespace UnityGit.Core.Services
             
             return result;
         }
+        
+        /// <summary>Used for unit testing.</summary>
+        internal void SetIsRunning(bool isRunning)
+        {
+            IsRunning = isRunning;
+        }
 
         private static GitProcess CreateGitProcess(GitCommandInfo info)
         {

@@ -6,7 +6,7 @@ using Debug = UnityEngine.Debug;
 
 namespace UnityGit.Core.Internal
 {
-    internal sealed class GitProcess
+    internal class GitProcess
     {
         private readonly Process _process;
 
@@ -64,7 +64,7 @@ namespace UnityGit.Core.Internal
             _timeoutMs = timeoutMilliseconds;
         }
 
-        public async Task<GitProcessResult> Run()
+        public virtual async Task<GitProcessResult> Run()
         {
             using (_process)
             {
