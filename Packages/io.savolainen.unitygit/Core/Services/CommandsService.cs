@@ -10,6 +10,8 @@ namespace UnityGit.Core.Services
         void Stage(IRepository repository, string filePath);
 
         Commit Commit(IRepository repository, string message, Signature author);
+
+        MergeResult Pull(Repository repository, Signature signature, PullOptions pullOptions);
     }
     
     /// <summary>Acts as a wrapper for LibGit2Sharp.Commands.</summary>
@@ -29,6 +31,11 @@ namespace UnityGit.Core.Services
         public Commit Commit(IRepository repository, string message, Signature author)
         {
             return repository.Commit(message, author, author);
+        }
+
+        public MergeResult Pull(Repository repository, Signature signature, PullOptions pullOptions)
+        {
+            return Commands.Pull(repository, signature, pullOptions);
         }
     }
 }
