@@ -3,6 +3,7 @@ using LibGit2Sharp;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
+using UIComponents.Testing;
 using UnityGit.Core.Services;
 
 namespace UnityGit.Tests.Core.Services
@@ -25,7 +26,7 @@ namespace UnityGit.Tests.Core.Services
             _branch = Substitute.For<Branch>();
             var tip = Substitute.For<Commit>();
             _branch.Tip.Returns(tip);
-            _checkoutService = new ServiceTestBed<CheckoutService>()
+            _checkoutService = new TestBed<CheckoutService>()
                 .WithSingleton(_logService)
                 .WithSingleton(_commandsService)
                 .Instantiate();

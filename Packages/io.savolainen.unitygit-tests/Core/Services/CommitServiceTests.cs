@@ -3,6 +3,7 @@ using LibGit2Sharp;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
+using UIComponents.Testing;
 using UnityGit.Core.Services;
 
 namespace UnityGit.Tests.Core.Services
@@ -37,7 +38,7 @@ namespace UnityGit.Tests.Core.Services
                 Arg.Any<Signature>()
                 ).Returns(Substitute.For<Commit>());
 
-            _commitService = new ServiceTestBed<CommitService>()
+            _commitService = new TestBed<CommitService>()
                 .WithSingleton(_logService)
                 .WithSingleton(_progressService)
                 .WithSingleton(_commandsService)
