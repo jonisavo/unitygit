@@ -20,6 +20,8 @@ namespace UnityGit.Core.Services
         string GetRepositoryName(IRepository repository);
         
         bool AreRepositoriesEqual(IRepository repositoryOne, IRepository repositoryTwo);
+
+        bool IsValid(IRepository repository);
     }
     
     public sealed class RepositoryService : IRepositoryService
@@ -108,6 +110,11 @@ namespace UnityGit.Core.Services
                 return false;
             
             return repositoryOne.Info.Path.Equals(repositoryTwo.Info.Path);
+        }
+
+        public bool IsValid(IRepository repository)
+        {
+            return Repository.IsValid(repository.Info.Path);
         }
     }
 }
