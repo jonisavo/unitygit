@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using UnityEngine.TestTools;
 
 namespace UnityGit.Core.Services
 {
@@ -7,6 +8,7 @@ namespace UnityGit.Core.Services
         void Delete(string path);
     }
     
+    [ExcludeFromCoverage]
     internal sealed class FileService : IFileService
     {
         public void Delete(string path)

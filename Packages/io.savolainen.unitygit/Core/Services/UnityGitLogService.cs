@@ -29,7 +29,8 @@ namespace UnityGit.Core.Services
             LogError($"{exception.GetType().Name} occurred.");
             if (!string.IsNullOrEmpty(exception.Message))
                 LogError(exception.Message);
-            LogError(exception.StackTrace);
+            if (!string.IsNullOrEmpty(exception.StackTrace))
+                LogError(exception.StackTrace);
         }
 
         public void LogOutputLine(OutputLine outputLine)

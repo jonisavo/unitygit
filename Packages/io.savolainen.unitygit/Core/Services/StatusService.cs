@@ -2,7 +2,7 @@
 using System.Linq;
 using LibGit2Sharp;
 using UIComponents;
-using UIComponents.DependencyInjection;
+using UnityEngine.TestTools;
 
 namespace UnityGit.Core.Services
 {
@@ -24,11 +24,11 @@ namespace UnityGit.Core.Services
     [Dependency(typeof(IRepositoryService), provide: typeof(RepositoryService))]
     public sealed partial class StatusService : Service, IStatusService
     {
-        public IRepository ProjectRepository { get; private set; }
+        public IRepository ProjectRepository { get; internal set; }
 
         public IReadOnlyList<IRepository> PackageRepositories => _packageRepositories;
 
-        private readonly List<IRepository> _packageRepositories = new List<IRepository>();
+        internal readonly List<IRepository> _packageRepositories = new List<IRepository>();
 
         [Provide]
         private IRepositoryService _repositoryService;
@@ -79,14 +79,14 @@ namespace UnityGit.Core.Services
         {
             var indexesToRemove = new List<int>(repositories.Count);
             
-            for (var i = 0; i < repositories.Count; i++)
+            for (var i = repositories.Count - 1; i >= 0; i--)
             {
                 var repository = repositories[i];
 
-                if (repository == null || !_repositoryService.IsValid(repository))
+                if (!_repositoryService.IsValid(repository))
                     indexesToRemove.Add(i);
             }
-            
+
             foreach (var index in indexesToRemove)
                 repositories.RemoveAt(index);
         }
@@ -96,6 +96,7 @@ namespace UnityGit.Core.Services
     /// Contains the user's repositories.
     /// </summary>
     [UnityEditor.InitializeOnLoad]
+    [ExcludeFromCoverage]
     public static partial class StaticStatusContainer
     {
         [Dependency(typeof(IStatusService), provide: typeof(StatusService))]
