@@ -12,12 +12,13 @@ namespace UnityGit.Core.Services
 
         event FileRestoredDelegate FileRestored;
         
-        void RestoreFile(IRepository repository, string filePath);
+        bool RestoreFile(IRepository repository, string filePath);
     }
     
     [Dependency(typeof(IDialogService), provide: typeof(DialogService))]
     [Dependency(typeof(ICheckoutService), provide: typeof(CheckoutService))]
     [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
+    [Dependency(typeof(IFileService), provide: typeof(FileService))]
     public sealed partial class RestoreService : Service, IRestoreService
     {
         public event IRestoreService.FileRestoredDelegate FileRestored;
@@ -28,29 +29,33 @@ namespace UnityGit.Core.Services
         private ICheckoutService _checkoutService;
         [Provide]
         private ILogService _logService;
+        [Provide]
+        private IFileService _fileService;
 
-        public void RestoreFile(IRepository repository, string filePath)
+        public bool RestoreFile(IRepository repository, string filePath)
         {
             var status = repository.RetrieveStatus(filePath);
 
             if (status == FileStatus.Nonexistent)
-                return;
+                return false;
             
             if (FileStatusUtilities.IsNew(status))
             {
                 if (!TryDeleteFile(repository, filePath))
-                    return;
+                    return false;
             }
             else
             {
                 if (!TryRestoreFile(repository, filePath))
-                    return;
+                    return false;
             }
 
             FileRestored?.Invoke(repository, filePath);
+
+            return true;
         }
 
-        private bool TryDeleteFile(IRepository repository, string filePath)
+        public bool TryDeleteFile(IRepository repository, string filePath)
         {
             if (!_dialogService.Confirm($"Are you sure you want to delete {filePath}?"))
                 return false;
@@ -62,26 +67,27 @@ namespace UnityGit.Core.Services
             
             try
             {
-                File.Delete(path);
+                _fileService.Delete(path);
                 success = true;
                 _logService.LogMessage("File deleted.");
             } catch (Exception exception)
             {
-                _dialogService.Error($"Failed to delete {filePath}.");
+                _dialogService.Error($"Failed to delete {path}.");
                 _logService.LogException(exception);
             }
 
             return success;
         }
 
-        private bool TryRestoreFile(IRepository repository, string filePath)
+        public bool TryRestoreFile(IRepository repository, string filePath)
         {
             if (!_dialogService.Confirm($"Are you sure you want to restore {filePath}?"))
                 return false;
                 
             var success = false;
             
-            _logService.LogMessage($"Restoring file {filePath}...");
+            var path = Path.Combine(repository.Info.WorkingDirectory, filePath);
+            _logService.LogMessage($"Restoring file {path}...");
 
             try
             {
@@ -91,7 +97,7 @@ namespace UnityGit.Core.Services
             }
             catch (Exception exception)
             {
-                _dialogService.Error($"Failed to restore file {filePath}.");
+                _dialogService.Error($"Failed to restore {path}.");
                 _logService.LogException(exception);
             }
 

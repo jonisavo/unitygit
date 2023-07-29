@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using LibGit2Sharp;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.TestTools;
 
 namespace UnityGit.Core.Services
 {
@@ -25,7 +26,7 @@ namespace UnityGit.Core.Services
         
         private readonly InvokeDiffToolDelegate _invokeDiffDelegate;
         
-        [PublicAPI]
+        [PublicAPI] [ExcludeFromCoverage]
         public DiffService() : this(EditorUtility.InvokeDiffTool) {}
         
         public DiffService(InvokeDiffToolDelegate invokeDiffDelegate)

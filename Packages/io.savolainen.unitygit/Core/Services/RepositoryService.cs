@@ -9,6 +9,8 @@ namespace UnityGit.Core.Services
 {
     public interface IRepositoryService
     {
+        IRepository GetRepository(string directoryPath);
+        
         IRepository GetProjectRepository();
         
         List<IRepository> GetPackageRepositories();
@@ -20,22 +22,21 @@ namespace UnityGit.Core.Services
         string GetRepositoryName(IRepository repository);
         
         bool AreRepositoriesEqual(IRepository repositoryOne, IRepository repositoryTwo);
+
+        bool IsValid(IRepository repository);
     }
     
     public sealed class RepositoryService : IRepositoryService
     {
         [CanBeNull]
-        public IRepository GetProjectRepository()
+        public IRepository GetRepository(string repositoryPath)
         {
-            var projectFullPath = Directory.GetCurrentDirectory();
-            var gitRepositoryPath = Path.Combine(projectFullPath, ".git");
-
-            if (!Directory.Exists(gitRepositoryPath))
+            if (!Directory.Exists(repositoryPath))
                 return null;
 
             try
             {
-                if (!Repository.IsValid(gitRepositoryPath))
+                if (!Repository.IsValid(repositoryPath))
                     return null;
             }
             catch
@@ -43,9 +44,16 @@ namespace UnityGit.Core.Services
                 return null;
             }
 
-            return new Repository(gitRepositoryPath);
+            return new Repository(repositoryPath);
         }
         
+        [CanBeNull]
+        public IRepository GetProjectRepository()
+        {
+            var gitRepositoryPath = Path.Combine(Directory.GetCurrentDirectory(), ".git");
+            return GetRepository(gitRepositoryPath);
+        }
+
         public List<IRepository> GetPackageRepositories()
         {
             var repositories = new List<IRepository>();
@@ -108,6 +116,11 @@ namespace UnityGit.Core.Services
                 return false;
             
             return repositoryOne.Info.Path.Equals(repositoryTwo.Info.Path);
+        }
+
+        public bool IsValid(IRepository repository)
+        {
+            return Repository.IsValid(repository.Info.Path);
         }
     }
 }

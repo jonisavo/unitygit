@@ -2,6 +2,7 @@
 using System.Linq;
 using LibGit2Sharp;
 using UIComponents;
+using UnityEngine.TestTools;
 
 namespace UnityGit.Core.Services
 {
@@ -23,30 +24,14 @@ namespace UnityGit.Core.Services
     [Dependency(typeof(IRepositoryService), provide: typeof(RepositoryService))]
     public sealed partial class StatusService : Service, IStatusService
     {
-        public IRepository ProjectRepository { get; private set; }
+        public IRepository ProjectRepository { get; internal set; }
 
         public IReadOnlyList<IRepository> PackageRepositories => _packageRepositories;
 
-        private readonly List<IRepository> _packageRepositories = new List<IRepository>();
+        internal readonly List<IRepository> _packageRepositories = new List<IRepository>();
 
         [Provide]
         private IRepositoryService _repositoryService;
-
-        public StatusService()
-        {
-            PopulateRepositories();
-#if UNITY_EDITOR
-            UnityEditor.AssemblyReloadEvents.beforeAssemblyReload += Clear;
-#endif
-        }
-
-        ~StatusService()
-        {
-#if UNITY_EDITOR
-            UnityEditor.AssemblyReloadEvents.beforeAssemblyReload -= Clear;
-#endif
-            Clear();
-        }
 
         public void Clear()
         {
@@ -94,16 +79,46 @@ namespace UnityGit.Core.Services
         {
             var indexesToRemove = new List<int>(repositories.Count);
             
-            for (var i = 0; i < repositories.Count; i++)
+            for (var i = repositories.Count - 1; i >= 0; i--)
             {
                 var repository = repositories[i];
 
-                if (repository == null || !Repository.IsValid(repository.Info.Path))
+                if (!_repositoryService.IsValid(repository))
                     indexesToRemove.Add(i);
             }
-            
+
             foreach (var index in indexesToRemove)
                 repositories.RemoveAt(index);
+        }
+    }
+
+    /// <summary>
+    /// Contains the user's repositories.
+    /// </summary>
+    [UnityEditor.InitializeOnLoad]
+    [ExcludeFromCoverage]
+    public static partial class StaticStatusContainer
+    {
+        [Dependency(typeof(IStatusService), provide: typeof(StatusService))]
+        private partial class Container : Service
+        {
+            [Provide]
+            public IStatusService StatusService;
+        }
+
+        private static readonly Container StaticContainer;
+
+        static StaticStatusContainer()
+        {
+            StaticContainer = new Container();
+            StaticContainer.StatusService.PopulateRepositories();
+            UnityEditor.AssemblyReloadEvents.beforeAssemblyReload += Clear;
+        }
+
+        private static void Clear()
+        {
+            UnityEditor.AssemblyReloadEvents.beforeAssemblyReload -= Clear;
+            StaticContainer.StatusService.Clear();
         }
     }
 }

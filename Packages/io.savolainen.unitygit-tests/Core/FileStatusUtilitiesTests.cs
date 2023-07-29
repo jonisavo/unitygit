@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using LibGit2Sharp;
+using NSubstitute;
 using UnityGit.Core.Utilities;
 
 namespace UnityGit.Tests.Core
@@ -17,10 +18,32 @@ namespace UnityGit.Tests.Core
         }
 
         [Test]
+        public void IsModified_ReturnsTrue_WhenEntryHasModifiedFlags()
+        {
+            var entry = Substitute.For<StatusEntry>();
+            entry.State.Returns(FileStatus.ModifiedInIndex | FileStatus.ModifiedInWorkdir);
+            
+            var result = FileStatusUtilities.IsModified(entry);
+            
+            Assert.IsTrue(result);
+        }
+
+        [Test]
         public void IsModified_ReturnsFalse_WhenStatusDoesNotHaveModifiedFlags()
         {
             var result = FileStatusUtilities.IsModified(FileStatus.Unaltered);
 
+            Assert.IsFalse(result);
+        }
+        
+        [Test]
+        public void IsModified_ReturnsFalse_WhenEntryDoesNotHaveModifiedFlags()
+        {
+            var entry = Substitute.For<StatusEntry>();
+            entry.State.Returns(FileStatus.Unaltered);
+            
+            var result = FileStatusUtilities.IsModified(entry);
+            
             Assert.IsFalse(result);
         }
 
@@ -32,12 +55,34 @@ namespace UnityGit.Tests.Core
 
             Assert.IsTrue(result);
         }
+        
+        [Test]
+        public void IsNew_ReturnsTrue_WhenEntryHasNewFlags()
+        {
+            var entry = Substitute.For<StatusEntry>();
+            entry.State.Returns(FileStatus.NewInIndex | FileStatus.NewInWorkdir);
+            
+            var result = FileStatusUtilities.IsNew(entry);
+            
+            Assert.IsTrue(result);
+        }
 
         [Test]
         public void IsNew_ReturnsFalse_WhenStatusDoesNotHaveNewFlags()
         {
             var result = FileStatusUtilities.IsNew(FileStatus.Unaltered);
 
+            Assert.IsFalse(result);
+        }
+        
+        [Test]
+        public void IsNew_ReturnsFalse_WhenEntryDoesNotHaveNewFlags()
+        {
+            var entry = Substitute.For<StatusEntry>();
+            entry.State.Returns(FileStatus.Unaltered);
+            
+            var result = FileStatusUtilities.IsNew(entry);
+            
             Assert.IsFalse(result);
         }
 
@@ -82,6 +127,17 @@ namespace UnityGit.Tests.Core
 
             Assert.IsTrue(result);
         }
+        
+        [Test]
+        public void Exists_ReturnsTrue_WhenEntryDoesNotExistFlagsAreNotSet()
+        {
+            var entry = Substitute.For<StatusEntry>();
+            entry.State.Returns(FileStatus.Unaltered);
+            
+            var result = FileStatusUtilities.Exists(entry);
+            
+            Assert.IsTrue(result);
+        }
 
         [Test]
         public void Exists_ReturnsFalse_WhenStatusHasNonexistentFlag()
@@ -98,6 +154,21 @@ namespace UnityGit.Tests.Core
             var result = FileStatusUtilities.Exists(status);
             
             Assert.IsFalse(result);
+        }
+        
+        [Test]
+        public void Exists_ReturnsFalse_WhenEntryHasNonexistentOrDeletedFlags()
+        {
+            var entryDeleted = Substitute.For<StatusEntry>();
+            entryDeleted.State.Returns(FileStatus.DeletedFromIndex | FileStatus.DeletedFromWorkdir);
+            var entryNonexistent = Substitute.For<StatusEntry>();
+            entryNonexistent.State.Returns(FileStatus.Nonexistent);
+            
+            var deletedResult = FileStatusUtilities.Exists(entryDeleted);
+            var nonexistentResult = FileStatusUtilities.Exists(entryNonexistent);
+            
+            Assert.IsFalse(deletedResult);
+            Assert.IsFalse(nonexistentResult);
         }
     }
 }
