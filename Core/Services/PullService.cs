@@ -10,6 +10,7 @@ namespace UnityGit.Core.Services
     
     [Dependency(typeof(ICredentialsService), provide: typeof(CredentialsService))]
     [Dependency(typeof(ISignatureService), provide: typeof(SignatureService))]
+    [Dependency(typeof(ICommandsService), provide: typeof(CommandsService))]
     public sealed partial class PullService : Service, IPullService
     {
         [Provide]
@@ -17,6 +18,9 @@ namespace UnityGit.Core.Services
         
         [Provide]
         private ISignatureService _signatureService;
+
+        [Provide]
+        private ICommandsService _commandsService;
 
         public MergeResult Pull(Repository repository)
         {
@@ -33,7 +37,7 @@ namespace UnityGit.Core.Services
                 FetchOptions = fetchOptions
             };
 
-            return Commands.Pull(repository, _signatureService.GetSignature(), pullOptions);
+            return _commandsService.Pull(repository, _signatureService.GetSignature(), pullOptions);
         }
     }
 }

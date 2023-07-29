@@ -1,4 +1,5 @@
 ﻿using UnityEditor;
+using UnityEngine.TestTools;
 
 namespace UnityGit.Core.Services
 {
@@ -18,6 +19,7 @@ namespace UnityGit.Core.Services
     }
     
     /// <summary>Acts as a wrapper for Unity's Progress API.</summary>
+    [ExcludeFromCoverage]
     public sealed class ProgressService : IProgressService
     {
         public int Start(string name, string description, ProgressOptions options)

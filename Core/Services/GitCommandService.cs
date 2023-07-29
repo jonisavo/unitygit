@@ -5,7 +5,6 @@ using JetBrains.Annotations;
 using UIComponents;
 using UnityGit.Core.Data;
 using UnityGit.Core.Internal;
-using Debug = UnityEngine.Debug;
 
 namespace UnityGit.Core.Services
 {
@@ -30,6 +29,8 @@ namespace UnityGit.Core.Services
         
         public event CommandFinishedDelegate CommandFinished;
 
+        public delegate GitProcess CreateProcessDelegate(GitCommandInfo info);
+
         [Provide]
         private ILogService _logService;
 
@@ -39,6 +40,30 @@ namespace UnityGit.Core.Services
         private GitProcess _currentProcess;
         
         private int _progressId;
+
+        private readonly CreateProcessDelegate _createProcessDelegate;
+
+        public static GitProcess CreateGitProcess(GitCommandInfo info)
+        {
+            var process = new Process();
+            process.StartInfo.FileName = "git";
+            process.StartInfo.Arguments = info.Arguments;
+            process.StartInfo.WorkingDirectory = info.Repository.Info.WorkingDirectory;
+
+            var gitProcess = new GitProcess(process);
+
+            if (info.TimeoutMs > 0)
+                gitProcess.SetTimeout(info.TimeoutMs);
+
+            return gitProcess;
+        }
+
+        public GitCommandService() : this(CreateGitProcess) {}
+
+        public GitCommandService(CreateProcessDelegate createDelegate)
+        {
+            _createProcessDelegate = createDelegate;
+        }
         
         [CanBeNull]
         public async Task<GitProcessResult> Run(GitCommandInfo info)
@@ -56,7 +81,7 @@ namespace UnityGit.Core.Services
                 new ProgressOptions { Sticky = true }
             );
 
-            _currentProcess = CreateGitProcess(info);
+            _currentProcess = _createProcessDelegate(info);
 
             try
             {
@@ -76,20 +101,11 @@ namespace UnityGit.Core.Services
             
             return result;
         }
-
-        private static GitProcess CreateGitProcess(GitCommandInfo info)
+        
+        /// <summary>Used for unit testing.</summary>
+        internal void SetIsRunning(bool isRunning)
         {
-            var process = new Process();
-            process.StartInfo.FileName = "git";
-            process.StartInfo.Arguments = info.Arguments;
-            process.StartInfo.WorkingDirectory = info.Repository.Info.WorkingDirectory;
-
-            var gitProcess = new GitProcess(process);
-            
-            if (info.TimeoutMs > 0)
-                gitProcess.SetTimeout(info.TimeoutMs);
-
-            return gitProcess;
+            IsRunning = isRunning;
         }
 
         private void FinishProcessProgress(GitProcessResult result)
@@ -107,7 +123,7 @@ namespace UnityGit.Core.Services
             else if (result.Timeout)
                 errorMessage = "Process timed out";
             else
-                errorMessage = $"Failed with exit code {result.ExitCode}";
+                errorMessage = $"Process ended with exit code {result.ExitCode}";
             
             _progressService.FinishWithError(_progressId, errorMessage);
         }
