@@ -1,5 +1,7 @@
 ﻿#if true
 
+using System.Collections.Generic;
+using System.Linq;
 using LibGit2Sharp;
 using UIComponents.DependencyInjection;
 using UnityEditor;
@@ -76,14 +78,8 @@ namespace UnityGit.Editor.Toolbar
             return BranchService.GetBranchName(head);
         }
 
-        private static void DoBranchToolbarButton()
+        private static void AddBranchButtonsToMenu(GenericMenu menu, IEnumerable<Branch> branches)
         {
-            if (!GUILayout.Button(BranchButtonContent, Styles.BranchButtonStyle))
-                return;
-            
-            var menu = new GenericMenu();
-            var branches = StatusService.ProjectRepository.Branches;
-
             foreach (var branch in branches)
             {
                 var branchName = branch.FriendlyName;
@@ -99,10 +95,24 @@ namespace UnityGit.Editor.Toolbar
                     var repository = StatusService.ProjectRepository;
 
                     CheckoutService.CheckoutBranch(repository, itemAsBranch);
-                }, branch);
+                }, branch);   
             }
+        }
+
+        private static void DoBranchToolbarButton()
+        {
+            if (!GUILayout.Button(BranchButtonContent, Styles.BranchButtonStyle))
+                return;
             
-            menu.AddSeparator("");
+            var menu = new GenericMenu();
+            var branchPartitions =
+                StatusService.ProjectRepository.Branches.GroupBy((branch) => branch.IsRemote);
+
+            foreach (var partition in branchPartitions)
+            {
+                AddBranchButtonsToMenu(menu, partition);
+                menu.AddSeparator("");
+            }
             
             menu.AddItem(new GUIContent("Open window..."), false, BranchesWindow.ShowWindow);
 
