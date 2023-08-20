@@ -1,12 +1,12 @@
 ﻿#if true
 
 using LibGit2Sharp;
-using UIComponents;
 using UIComponents.DependencyInjection;
 using UnityEditor;
 using UnityEngine;
 using UnityGit.Core.Services;
 using UnityGit.GUI;
+using UnityGit.Editor.Windows;
 using UnityToolbarExtender;
 
 namespace UnityGit.Editor.Toolbar
@@ -16,11 +16,11 @@ namespace UnityGit.Editor.Toolbar
     {
         private static class Styles
         {
-            public static readonly GUIStyle branchButtonStyle;
+            public static readonly GUIStyle BranchButtonStyle;
 
             static Styles()
             {
-                branchButtonStyle = new GUIStyle("DropDown")
+                BranchButtonStyle = new GUIStyle("DropDown")
                 {
                     stretchWidth = false,
                     clipping = TextClipping.Overflow,
@@ -78,7 +78,7 @@ namespace UnityGit.Editor.Toolbar
 
         private static void DoBranchToolbarButton()
         {
-            if (!GUILayout.Button(BranchButtonContent, Styles.branchButtonStyle))
+            if (!GUILayout.Button(BranchButtonContent, Styles.BranchButtonStyle))
                 return;
             
             var menu = new GenericMenu();
@@ -99,7 +99,7 @@ namespace UnityGit.Editor.Toolbar
                     var repository = StatusService.ProjectRepository;
 
                     CheckoutService.CheckoutBranch(repository, itemAsBranch);
-;               }, branch);
+                }, branch);
             }
             
             menu.AddSeparator("");

@@ -3,13 +3,13 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityGit.GUI.Components;
 
-namespace UnityGit.Editor
+namespace UnityGit.Editor.Windows
 {
     public class CommitWindow : EditorWindow
     {
         private bool _shouldRedraw;
         
-        [MenuItem("Git/Commit", priority = 10)]
+        [MenuItem("Window/Git/Commit", priority = 10)]
         public static void ShowWindow()
         {
             var window = GetWindow<CommitWindow>();

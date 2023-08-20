@@ -3,11 +3,11 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityGit.GUI.Components;
 
-namespace UnityGit.Editor
+namespace UnityGit.Editor.Windows
 {
     public class BranchesWindow : EditorWindow
     {
-        [MenuItem("Git/Branches", priority = 20)]
+        [MenuItem("Window/Git/Branches", priority = 20)]
         public static void ShowWindow()
         {
             var window = GetWindow<BranchesWindow>();

@@ -1,13 +1,12 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 using UnityGit.GUI.Components;
 
-namespace UnityGit.Editor
+namespace UnityGit.Editor.Windows
 {
     public class UnityGitLogWindow : EditorWindow
     {
-        [MenuItem("Git/UnityGit Log")]
+        [MenuItem("Window/Git/UnityGit Log")]
         public static void ShowWindow()
         {
             var window = GetWindow<UnityGitLogWindow>();
