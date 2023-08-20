@@ -24,7 +24,7 @@ namespace UnityGit.Core.Services
                 DoPush(repository, branch);
         }
         
-        private void DoPush(IRepository repository, Branch branch)
+        private async void DoPush(IRepository repository, Branch branch)
         {
             var pushCommandInfo = new GitCommandInfo(
                 $"push {branch.RemoteName} {branch.FriendlyName}",
@@ -33,7 +33,10 @@ namespace UnityGit.Core.Services
                 repository
             );
 
-            _gitCommandService.Run(pushCommandInfo);
+            var result = await _gitCommandService.Run(pushCommandInfo);
+
+            if (result.ExitCode != 0)
+                _dialogService.Error("Pushing failed. Refer to the UnityGit log for more information.");
         }
     }
 }
