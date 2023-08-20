@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Threading.Tasks;
+using NUnit.Framework;
 using NSubstitute;
 using LibGit2Sharp;
 using UnityGit.Core.Services;
@@ -33,6 +34,11 @@ namespace UnityGit.Tests.Core.Services
             branch.RemoteName.Returns("origin");
             branch.FriendlyName.Returns("feature/stuff");
             _dialogService.Confirm(Arg.Any<string>()).Returns(true);
+            _gitCommandService.Run(Arg.Any<GitCommandInfo>()).Returns(Task.FromResult(new GitProcessResult()
+            {
+                ExitCode = 0,
+                Started = true
+            }));
 
             _pushService.Push(repository, branch);
 
@@ -43,6 +49,25 @@ namespace UnityGit.Tests.Core.Services
                 Assert.That(info.ProgressDescription, Is.EqualTo("Pushing feature/stuff to origin"));
                 Assert.That(info.Repository, Is.SameAs(repository));
             }));
+        }
+
+        [Test]
+        public void Push_Informs_On_Error()
+        {
+            var repository = Substitute.For<IRepository>();
+            var branch = Substitute.For<Branch>();
+            branch.RemoteName.Returns("origin");
+            branch.FriendlyName.Returns("feature/stuff");
+            _dialogService.Confirm(Arg.Any<string>()).Returns(true);
+            _gitCommandService.Run(Arg.Any<GitCommandInfo>()).Returns(Task.FromResult(new GitProcessResult()
+            {
+                ExitCode = 128,
+                Started = true
+            }));
+
+            _pushService.Push(repository, branch);
+            
+            _dialogService.Received(1).Error(Arg.Any<string>());
         }
 
         [Test]
