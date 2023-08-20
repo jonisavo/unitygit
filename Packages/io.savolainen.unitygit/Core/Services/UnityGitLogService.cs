@@ -14,13 +14,13 @@ namespace UnityGit.Core.Services
 
         public void LogMessage(string line)
         {
-            var outputLine = new OutputLine(line, false);
+            var outputLine = new OutputLine("[unitygit] " + line, false);
             LogOutputLine(outputLine);
         }
 
         public void LogError(string line)
         {
-            var outputLine = new OutputLine(line, true);
+            var outputLine = new OutputLine("[unitygit] " + line, true);
             LogOutputLine(outputLine);
         }
 

@@ -12,7 +12,7 @@ namespace UnityGit.Tests.Core.Services
         public void LogMessage_AddsOutputLineToList()
         {
             var logService = new UnityGitLogService();
-            var expectedLine = new OutputLine("Test message", false);
+            var expectedLine = new OutputLine("[unitygit] Test message", false);
             
             logService.LogMessage("Test message");
             var outputLines = logService.GetOutputLines();
@@ -25,7 +25,7 @@ namespace UnityGit.Tests.Core.Services
         public void LogError_AddsOutputLineToList()
         {
             var logService = new UnityGitLogService();
-            var expectedLine = new OutputLine("Test error", true);
+            var expectedLine = new OutputLine("[unitygit] Test error", true);
             
             logService.LogError("Test error");
             var outputLines = logService.GetOutputLines();
@@ -54,11 +54,11 @@ namespace UnityGit.Tests.Core.Services
             var outputLines = logService.GetOutputLines();
             
             Assert.AreEqual(3, outputLines.Count);
-            Assert.AreEqual("TestException occurred.", outputLines[0].Text);
+            Assert.AreEqual("[unitygit] TestException occurred.", outputLines[0].Text);
             Assert.AreEqual(true, outputLines[0].IsError);
-            Assert.AreEqual("Test exception", outputLines[1].Text);
+            Assert.AreEqual("[unitygit] Test exception", outputLines[1].Text);
             Assert.AreEqual(true, outputLines[1].IsError);
-            Assert.AreEqual(outputLines[2].Text, "Stack trace");
+            Assert.AreEqual("[unitygit] Stack trace", outputLines[2].Text);
             Assert.AreEqual(true, outputLines[2].IsError);
         }
         
