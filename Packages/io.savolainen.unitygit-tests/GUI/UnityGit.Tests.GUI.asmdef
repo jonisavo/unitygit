@@ -1,0 +1,32 @@
+{
+    "name": "UnityGit.Tests.GUI",
+    "rootNamespace": "UnityGit.Tests",
+    "references": [
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "UnityGit.Core",
+        "UnityGit.GUI",
+        "UIComponents",
+        "UIComponents.Testing",
+        "UnityGit.Tests.Core"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "Castle.Core.dll",
+        "NSubstitute.dll",
+        "System.Runtime.CompilerServices.Unsafe.dll",
+        "LibGit2Sharp.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

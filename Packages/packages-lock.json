@@ -92,6 +92,12 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
+    "io.savolainen.test": {
+      "version": "file:io.savolainen.test",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "io.savolainen.uicomponents": {
       "version": "1.0.0-beta.4",
       "depth": 0,

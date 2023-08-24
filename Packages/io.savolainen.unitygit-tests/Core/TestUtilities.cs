@@ -10,6 +10,7 @@ namespace UnityGit.Tests.Core
             var repository = Substitute.For<IRepository>();
             var repositoryInfo = Substitute.For<RepositoryInformation>();
             repositoryInfo.WorkingDirectory.Returns(path);
+            repositoryInfo.Path.Returns(path);
             repository.Info.Returns(repositoryInfo);
 
             return repository;

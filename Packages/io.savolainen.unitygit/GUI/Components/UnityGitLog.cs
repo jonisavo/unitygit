@@ -19,14 +19,6 @@ namespace UnityGit.GUI.Components
         [Provide(CastFrom = typeof(ILogService))]
         private UnityGitLogService _logService;
 
-        public void Redraw()
-        {
-            _scrollView.Clear();
-            
-            foreach (var line in _logService.GetOutputLines())
-                AddLogLine(line);
-        }
-
         public void OnAttachToPanel(AttachToPanelEvent evt)
         {
             foreach (var line in _logService.GetOutputLines())
