@@ -1,20 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using UIComponents;
 using UIComponents.DependencyInjection;
 using UnityGit.Core.Services;
 
 namespace UnityGit.Editor.Toolbar
 {
-    internal class BranchToolbarButtonServices : IDependencyConsumer
+    [Dependency(typeof(IStatusService), provide: typeof(StatusService))]
+    [Dependency(typeof(ICheckoutService), provide: typeof(CheckoutService))]
+    [Dependency(typeof(IBranchService), provide: typeof(BranchService))]
+    internal partial class BranchToolbarButtonServices : DependencyConsumer
     {
-        public IEnumerable<IDependency> GetDependencies()
-        {
-            return new IDependency[]
-            {
-                Dependency.SingletonFor<IStatusService, StatusService>(),
-                Dependency.SingletonFor<ICheckoutService, CheckoutService>(),
-                Dependency.SingletonFor<IBranchService, BranchService>()
-            };
-        }
+        [Provide]
+        public IStatusService StatusService;
+        
+        [Provide]
+        public ICheckoutService CheckoutService;
+        
+        [Provide]
+        public IBranchService BranchService;
     }
 
 }
