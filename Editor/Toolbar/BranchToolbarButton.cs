@@ -33,23 +33,15 @@ namespace UnityGit.Editor.Toolbar
                 };
             }
         }
-        
-        private static readonly IStatusService StatusService;
-        private static readonly ICheckoutService CheckoutService;
-        private static readonly IBranchService BranchService;
+
+        private static readonly BranchToolbarButtonServices Services;
 
         private static readonly GUIContent BranchButtonContent;
 
         static BranchToolbarButton()
         {
             ToolbarExtender.LeftToolbarGUI.Add(DoBranchToolbarItem);
-            var injector = DiContext.Current.GetInjector(typeof(BranchToolbarButton));
-            var services = new BranchToolbarButtonServices();
-            DiContext.Current.RegisterConsumer(services);
-            injector.SetConsumer(services);
-            StatusService = injector.Provide<IStatusService>();
-            CheckoutService = injector.Provide<ICheckoutService>();
-            BranchService = injector.Provide<IBranchService>();
+            Services = new BranchToolbarButtonServices();
 
             var texture = Icons.GetIcon(Icons.Name.Merge);
             
@@ -62,20 +54,20 @@ namespace UnityGit.Editor.Toolbar
 
             GUILayout.Space(6);
 
-            using (new EditorGUI.DisabledScope(!StatusService.HasProjectRepository()))
+            using (new EditorGUI.DisabledScope(!Services.StatusService.HasProjectRepository()))
                 DoBranchToolbarButton();
         }
 
         private static string GetToolbarButtonText()
         {
-            var hasRepo = StatusService.HasProjectRepository();
+            var hasRepo = Services.StatusService.HasProjectRepository();
             
             if (!hasRepo)
                 return "No repository";
 
-            var head = StatusService.ProjectRepository.Head;
+            var head = Services.StatusService.ProjectRepository.Head;
 
-            return BranchService.GetBranchName(head);
+            return Services.BranchService.GetBranchName(head);
         }
 
         private static void AddBranchButtonsToMenu(GenericMenu menu, IEnumerable<Branch> branches)
@@ -92,9 +84,9 @@ namespace UnityGit.Editor.Toolbar
                     if (itemAsBranch == null || itemAsBranch.IsCurrentRepositoryHead)
                         return;
 
-                    var repository = StatusService.ProjectRepository;
+                    var repository = Services.StatusService.ProjectRepository;
 
-                    CheckoutService.CheckoutBranch(repository, itemAsBranch);
+                    Services.CheckoutService.CheckoutBranch(repository, itemAsBranch);
                 }, branch);   
             }
         }
@@ -106,7 +98,7 @@ namespace UnityGit.Editor.Toolbar
             
             var menu = new GenericMenu();
             var branchPartitions =
-                StatusService.ProjectRepository.Branches.GroupBy((branch) => branch.IsRemote);
+                Services.StatusService.ProjectRepository.Branches.GroupBy((branch) => branch.IsRemote);
 
             foreach (var partition in branchPartitions)
             {
