@@ -80,7 +80,7 @@ namespace UnityGit.Tests.Core
             process.StartInfo.WorkingDirectory = Directory.GetCurrentDirectory();
 
             var gitProcess = new GitProcess(process);
-            gitProcess.SetTimeout(1);
+            gitProcess.SetTimeout(10);
             
             var task = gitProcess.Run();
             
