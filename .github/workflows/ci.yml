@@ -17,9 +17,9 @@ jobs:
       matrix:
         unityVersion:
           - 2021.3.3f1
-          - 2021.3.29f1
-          - 2022.3.5f1
-          - 2023.1.6f1
+          - 2021.3.31f1
+          - 2022.3.10f1
+          - 2023.1.16f1
         targetPlatform:
           - StandaloneLinux64
           - StandaloneWindows64
@@ -38,7 +38,7 @@ jobs:
             Library-${{ matrix.targetPlatform }}-
             Library-
 
-      - uses: game-ci/unity-test-runner@v2
+      - uses: game-ci/unity-test-runner@v3
         id: testRunner
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -69,7 +69,7 @@ jobs:
           git add -A
           git commit -m "chore(ci): switch to different unity version" || echo skipping commit
 
-      - uses: game-ci/unity-builder@v2
+      - uses: game-ci/unity-builder@v3
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
