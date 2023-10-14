@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using LibGit2Sharp;
 using UIComponents;
-using UnityEngine;
 
 namespace UnityGit.Core.Services
 {

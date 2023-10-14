@@ -11,8 +11,6 @@ namespace UnityGit.Core.Services
     public interface IGitCommandService
     {
         Task<GitProcessResult> Run(GitCommandInfo info);
-        
-        bool IsRunning { get; }
     }
     
     [Dependency(typeof(IProgressService), provide: typeof(ProgressService))]
