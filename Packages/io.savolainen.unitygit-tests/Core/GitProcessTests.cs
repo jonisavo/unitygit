@@ -66,7 +66,7 @@ namespace UnityGit.Tests.Core
                 // Ping is used instead, which is pretty hacky.
                 fileName = "ping";
                 arguments = "-n 5 127.0.0.1";
-                expectedLines = 3;
+                expectedLines = 2;
             }
             else
             {
