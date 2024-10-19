@@ -15,7 +15,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "3.0.27",
+      "version": "3.0.31",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -58,7 +58,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.testtools.codecoverage": {
-      "version": "1.2.5",
+      "version": "1.2.6",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -92,7 +92,7 @@
       "dependencies": {}
     },
     "io.savolainen.uicomponents": {
-      "version": "1.0.0-beta.8",
+      "version": "1.0.0-beta.9",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -103,7 +103,7 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "io.savolainen.uicomponents": "1.0.0-beta.3",
+        "io.savolainen.uicomponents": "1.0.0-beta.9",
         "com.marijnzwemmer.unity-toolbar-extender": "1.4.2"
       }
     },
@@ -112,7 +112,7 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {
-        "io.savolainen.uicomponents": "1.0.0-beta.3"
+        "io.savolainen.uicomponents": "1.0.0-beta.9"
       }
     },
     "com.unity.modules.ai": {
