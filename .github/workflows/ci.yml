@@ -17,9 +17,9 @@ jobs:
       matrix:
         unityVersion:
           - 2021.3.3f1
-          - 2021.3.34f1
-          - 2022.3.18f1
-          - 2023.2.7f1
+          - 2021.3.45f1
+          - 2022.3.50f1
+          - 6000.0.23f1
         targetPlatform:
           - StandaloneLinux64
           - StandaloneWindows64
@@ -71,7 +71,10 @@ jobs:
           git add -A
           git commit -m "chore(ci): switch to different unity version" || echo skipping commit
 
+      # Unfortunately, the additional build step causes game-ci's
+      # Docker containers to run out of disk space on Windows.
       - uses: game-ci/unity-builder@v4
+        if: ${{ matrix.targetPlatform != 'StandaloneWindows64' }}
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}

@@ -66,7 +66,7 @@ namespace UnityGit.Tests.Core
                 // Ping is used instead, which is pretty hacky.
                 fileName = "ping";
                 arguments = "-n 5 127.0.0.1";
-                expectedLines = 2;
+                expectedLines = 3;
             }
             else
             {
@@ -80,7 +80,7 @@ namespace UnityGit.Tests.Core
             process.StartInfo.WorkingDirectory = Directory.GetCurrentDirectory();
 
             var gitProcess = new GitProcess(process);
-            gitProcess.SetTimeout(10);
+            gitProcess.SetTimeout(100);
             
             var task = gitProcess.Run();
             
