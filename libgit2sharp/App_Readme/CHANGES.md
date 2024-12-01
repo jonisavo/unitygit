@@ -1,5 +1,27 @@
 # LibGit2Sharp Changes
 
+## v0.30 - ([diff](https://github.com/libgit2/libgit2sharp/compare/0.29.0..0.30.0))
+
+### Changes
+- This release includes [libgit2 v1.7.2](https://github.com/libgit2/libgit2/releases/tag/v1.7.2).
+- Updates for trimming compatibility [#2084](https://github.com/libgit2/libgit2sharp/pull/2084)
+- Updates for .NET 8 [#2085](https://github.com/libgit2/libgit2sharp/pull/2085)
+
+## v0.29 - ([diff](https://github.com/libgit2/libgit2sharp/compare/0.28.0..0.29.0))
+
+### Changes
+- This release includes [libgit2 v1.7.1](https://github.com/libgit2/libgit2/releases/tag/v1.7.1).
+  - CI changes for the native binaries has removed support for CentOS 7. See [#2066](https://github.com/libgit2/libgit2sharp/pull/2066) for details.
+
+### Additions
+- Add proxy options [#2065](https://github.com/libgit2/libgit2sharp/pull/2065)
+  - See PR for details, including some breaking changes to `CloneOptions` and `SubmoduleUpdateOptions`
+
+## v0.28 - ([diff](https://github.com/libgit2/libgit2sharp/compare/0.27.2..0.28.0))
+
+### Additions
+- Add CustomHeaders to PushOptions [#2052](https://github.com/libgit2/libgit2sharp/pull/2052)
+
 ## v0.27.2 - ([diff](https://github.com/libgit2/libgit2sharp/compare/0.27.1..0.27.2))
 
 ### Changes

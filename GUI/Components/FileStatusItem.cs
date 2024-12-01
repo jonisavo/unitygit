@@ -91,6 +91,7 @@ namespace UnityGit.GUI.Components
             _ignored = _statusEntry.State.HasFlag(FileStatus.Ignored);
 
             _filenameLabel.text = _statusEntry.FilePath;
+            _filenameLabel.tooltip = _statusEntry.FilePath;
 
             var isSelected = _commitService.IsFileSelected(_repository, _statusEntry.FilePath);
             
@@ -120,31 +121,33 @@ namespace UnityGit.GUI.Components
         {
             public readonly string USSClass;
             public readonly string Text;
+            public readonly string Tooltip;
 
-            public StateLabelOptions(string className, string text)
+            public StateLabelOptions(string className, string text, string tooltip)
             {
                 USSClass = className;
                 Text = text;
+                Tooltip = tooltip;
             }
         }
 
         private static readonly StateLabelOptions AddedStateOptions =
-            new StateLabelOptions("state-added", "A");
+            new StateLabelOptions("state-added", "A", "Added");
 
         private static readonly StateLabelOptions ModifiedStateOptions =
-            new StateLabelOptions("state-modified", "M");
+            new StateLabelOptions("state-modified", "M", "Modified");
 
         private static readonly StateLabelOptions RemovedStateOptions =
-            new StateLabelOptions("state-removed", "D");
+            new StateLabelOptions("state-removed", "D", "Removed");
 
         private static readonly StateLabelOptions RenamedStateOptions =
-            new StateLabelOptions("state-renamed", "R");
+            new StateLabelOptions("state-renamed", "R", "Renamed");
 
         private static readonly StateLabelOptions IgnoredStateOptions =
-            new StateLabelOptions("state-ignored", "I");
+            new StateLabelOptions("state-ignored", "I", "Ignored");
 
         private static readonly StateLabelOptions UnknownStateOptions =
-            new StateLabelOptions("state-unknown", "?");
+            new StateLabelOptions("state-unknown", "?", "Unknown");
 
         private static readonly string[] StateClassNames = new[]
         {
@@ -178,6 +181,7 @@ namespace UnityGit.GUI.Components
             var stateLabelOptions = GetStateLabelOptions();
 
             _stateLabel.text = stateLabelOptions.Text;
+            _stateLabel.tooltip = stateLabelOptions.Tooltip;
             
             foreach (var className in StateClassNames)
                 _stateLabel.RemoveFromClassList(className);
