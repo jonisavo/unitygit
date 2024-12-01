@@ -88,7 +88,10 @@ namespace UnityGit.Core.Services
             }
 
             foreach (var index in indexesToRemove)
+            {
+                repositories[index].Dispose();
                 repositories.RemoveAt(index);
+            }
         }
     }
 
