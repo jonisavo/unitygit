@@ -18,8 +18,8 @@ jobs:
         unityVersion:
           - 2021.3.3f1
           - 2021.3.45f1
-          - 2022.3.50f1
-          - 6000.0.23f1
+          - 2022.3.53f1
+          - 6000.0.29f1
         targetPlatform:
           - StandaloneLinux64
           - StandaloneWindows64
