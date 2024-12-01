@@ -3490,8 +3490,8 @@
             </summary>
         </member>
         <member name="T:LibGit2Sharp.Core.GitFetchOptionsWrapper">
-            <summary> 
-            Git fetch options wrapper. Disposable wrapper for GitFetchOptions 
+            <summary>
+            Git fetch options wrapper. Disposable wrapper for GitFetchOptions
             </summary>
         </member>
         <member name="T:LibGit2Sharp.Core.GitFilter">
@@ -3931,6 +3931,11 @@
         <member name="P:LibGit2Sharp.Core.GitOid.Empty">
             <summary>
             Static convenience property to return an id (all zeros).
+            </summary>
+        </member>
+        <member name="T:LibGit2Sharp.Core.GitPushOptionsWrapper">
+            <summary>
+            Git push options wrapper. Disposable wrapper for <see cref="T:LibGit2Sharp.Core.GitPushOptions"/>.
             </summary>
         </member>
         <member name="T:LibGit2Sharp.Core.GitRemoteCallbacks">
@@ -4956,25 +4961,25 @@
             </summary>
         </member>
         <member name="P:LibGit2Sharp.FetchOptions.CustomHeaders">
-            <summary>
-            Get/Set the custom headers.
+             <summary>
+             Get/Set the custom headers.
             
-            <para> 
-            This allows you to set custom headers (e.g. X-Forwarded-For, 
-            X-Request-Id, etc),
-            </para>
-            </summary>
-            <remarks>
-            Libgit2 sets some headers for HTTP requests (User-Agent, Host, 
-            Accept, Content-Type, Transfer-Encoding, Content-Length, Accept) that
-            cannot be overriden.
-            </remarks>
-            <example>
-            var fetchOptions - new FetchOptions() {
-                CustomHeaders = new String[] {"X-Request-Id: 12345"}
-            };
-            </example>
-            <value>The custom headers string array</value>
+             <para>
+             This allows you to set custom headers (e.g. X-Forwarded-For,
+             X-Request-Id, etc),
+             </para>
+             </summary>
+             <remarks>
+             Libgit2 sets some headers for HTTP requests (User-Agent, Host,
+             Accept, Content-Type, Transfer-Encoding, Content-Length, Accept) that
+             cannot be overriden.
+             </remarks>
+             <example>
+             var fetchOptions - new FetchOptions() {
+                 CustomHeaders = new String[] {"X-Request-Id: 12345"}
+             };
+             </example>
+             <value>The custom headers string array</value>
         </member>
         <member name="T:LibGit2Sharp.FetchOptionsBase">
             <summary>
@@ -5007,7 +5012,7 @@
         <member name="P:LibGit2Sharp.FetchOptionsBase.CertificateCheck">
             <summary>
             This handler will be called to let the user make a decision on whether to allow
-            the connection to preoceed based on the certificate presented by the server.
+            the connection to proceed based on the certificate presented by the server.
             </summary>
         </member>
         <member name="P:LibGit2Sharp.FetchOptionsBase.RepositoryOperationStarting">
@@ -5018,6 +5023,11 @@
         <member name="P:LibGit2Sharp.FetchOptionsBase.RepositoryOperationCompleted">
             <summary>
             Completed operating on the current repository.
+            </summary>
+        </member>
+        <member name="P:LibGit2Sharp.FetchOptionsBase.ProxyOptions">
+            <summary>
+            Options for connecting through a proxy.
             </summary>
         </member>
         <member name="T:LibGit2Sharp.FileStatus">
@@ -7373,6 +7383,20 @@
             <param name="remote">The <see cref="T:LibGit2Sharp.Remote"/> to list from.</param>
             <returns>The references in the <see cref="T:LibGit2Sharp.Remote"/> repository.</returns>
         </member>
+        <member name="M:LibGit2Sharp.Network.ListReferences(LibGit2Sharp.Remote,LibGit2Sharp.ProxyOptions)">
+            <summary>
+            List references in a <see cref="T:LibGit2Sharp.Remote"/> repository.
+            <para>
+            When the remote tips are ahead of the local ones, the retrieved
+            <see cref="T:LibGit2Sharp.DirectReference"/>s may point to non existing
+            <see cref="T:LibGit2Sharp.GitObject"/>s in the local repository. In that
+            case, <see cref="P:LibGit2Sharp.DirectReference.Target"/> will return <c>null</c>.
+            </para>
+            </summary>
+            <param name="remote">The <see cref="T:LibGit2Sharp.Remote"/> to list from.</param>
+            <param name="proxyOptions">Options for connecting through a proxy.</param>
+            <returns>The references in the <see cref="T:LibGit2Sharp.Remote"/> repository.</returns>
+        </member>
         <member name="M:LibGit2Sharp.Network.ListReferences(LibGit2Sharp.Remote,LibGit2Sharp.Handlers.CredentialsHandler)">
             <summary>
             List references in a <see cref="T:LibGit2Sharp.Remote"/> repository.
@@ -7385,6 +7409,21 @@
             </summary>
             <param name="remote">The <see cref="T:LibGit2Sharp.Remote"/> to list from.</param>
             <param name="credentialsProvider">The <see cref="T:System.Func`1"/> used to connect to remote repository.</param>
+            <returns>The references in the <see cref="T:LibGit2Sharp.Remote"/> repository.</returns>
+        </member>
+        <member name="M:LibGit2Sharp.Network.ListReferences(LibGit2Sharp.Remote,LibGit2Sharp.Handlers.CredentialsHandler,LibGit2Sharp.ProxyOptions)">
+            <summary>
+            List references in a <see cref="T:LibGit2Sharp.Remote"/> repository.
+            <para>
+            When the remote tips are ahead of the local ones, the retrieved
+            <see cref="T:LibGit2Sharp.DirectReference"/>s may point to non existing
+            <see cref="T:LibGit2Sharp.GitObject"/>s in the local repository. In that
+            case, <see cref="P:LibGit2Sharp.DirectReference.Target"/> will return <c>null</c>.
+            </para>
+            </summary>
+            <param name="remote">The <see cref="T:LibGit2Sharp.Remote"/> to list from.</param>
+            <param name="credentialsProvider">The <see cref="T:System.Func`1"/> used to connect to remote repository.</param>
+            <param name="proxyOptions">Options for connecting through a proxy.</param>
             <returns>The references in the <see cref="T:LibGit2Sharp.Remote"/> repository.</returns>
         </member>
         <member name="M:LibGit2Sharp.Network.ListReferences(System.String)">
@@ -7400,6 +7439,20 @@
             <param name="url">The url to list from.</param>
             <returns>The references in the remote repository.</returns>
         </member>
+        <member name="M:LibGit2Sharp.Network.ListReferences(System.String,LibGit2Sharp.ProxyOptions)">
+            <summary>
+            List references in a remote repository.
+            <para>
+            When the remote tips are ahead of the local ones, the retrieved
+            <see cref="T:LibGit2Sharp.DirectReference"/>s may point to non existing
+            <see cref="T:LibGit2Sharp.GitObject"/>s in the local repository. In that
+            case, <see cref="P:LibGit2Sharp.DirectReference.Target"/> will return <c>null</c>.
+            </para>
+            </summary>
+            <param name="url">The url to list from.</param>
+            <param name="proxyOptions">Options for connecting through a proxy.</param>
+            <returns>The references in the remote repository.</returns>
+        </member>
         <member name="M:LibGit2Sharp.Network.ListReferences(System.String,LibGit2Sharp.Handlers.CredentialsHandler)">
             <summary>
             List references in a remote repository.
@@ -7412,6 +7465,21 @@
             </summary>
             <param name="url">The url to list from.</param>
             <param name="credentialsProvider">The <see cref="T:System.Func`1"/> used to connect to remote repository.</param>
+            <returns>The references in the remote repository.</returns>
+        </member>
+        <member name="M:LibGit2Sharp.Network.ListReferences(System.String,LibGit2Sharp.Handlers.CredentialsHandler,LibGit2Sharp.ProxyOptions)">
+            <summary>
+            List references in a remote repository.
+            <para>
+            When the remote tips are ahead of the local ones, the retrieved
+            <see cref="T:LibGit2Sharp.DirectReference"/>s may point to non existing
+            <see cref="T:LibGit2Sharp.GitObject"/>s in the local repository. In that
+            case, <see cref="P:LibGit2Sharp.DirectReference.Target"/> will return <c>null</c>.
+            </para>
+            </summary>
+            <param name="url">The url to list from.</param>
+            <param name="credentialsProvider">The <see cref="T:System.Func`1"/> used to connect to remote repository.</param>
+            <param name="proxyOptions">Options for connecting through a proxy.</param>
             <returns>The references in the remote repository.</returns>
         </member>
         <member name="M:LibGit2Sharp.Network.Fetch(System.String,System.Collections.Generic.IEnumerable{System.String})">
@@ -8784,6 +8852,52 @@
             <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> that holds the serialized object data about the exception being thrown.</param>
             <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext"/> that contains contextual information about the source or destination.</param>
         </member>
+        <member name="T:LibGit2Sharp.ProxyOptions">
+            <summary>
+            Options for connecting through a proxy.
+            </summary>
+        </member>
+        <member name="P:LibGit2Sharp.ProxyOptions.ProxyType">
+            <summary>
+            The type of proxy to use. Set to Auto by default.
+            </summary>
+        </member>
+        <member name="P:LibGit2Sharp.ProxyOptions.Url">
+            <summary>
+            The URL of the proxy when <see cref="T:LibGit2Sharp.ProxyType"/> is set to Specified.
+            </summary>
+        </member>
+        <member name="P:LibGit2Sharp.ProxyOptions.CredentialsProvider">
+            <summary>
+            Handler to generate <see cref="T:LibGit2Sharp.Credentials"/> for authentication.
+            </summary>
+        </member>
+        <member name="P:LibGit2Sharp.ProxyOptions.CertificateCheck">
+            <summary>
+            This handler will be called to let the user make a decision on whether to allow
+            the connection to proceed based on the certificate presented by the server.
+            </summary>
+        </member>
+        <member name="T:LibGit2Sharp.ProxyType">
+            <summary>
+            The type of proxy to use.
+            </summary>
+        </member>
+        <member name="F:LibGit2Sharp.ProxyType.None">
+            <summary>
+            Do not attempt to connect through a proxy.
+            </summary>
+        </member>
+        <member name="F:LibGit2Sharp.ProxyType.Auto">
+            <summary>
+            Try to auto-detect the proxy from the git configuration.
+            </summary>
+        </member>
+        <member name="F:LibGit2Sharp.ProxyType.Specified">
+            <summary>
+            Connect via the URL given in the options.
+            </summary>
+        </member>
         <member name="T:LibGit2Sharp.PullOptions">
             <summary>
             Parameters controlling Pull behavior.
@@ -8852,6 +8966,31 @@
             <summary>
             Called once between the negotiation step and the upload. It provides
             information about what updates will be performed.
+            </summary>
+        </member>
+        <member name="P:LibGit2Sharp.PushOptions.CustomHeaders">
+            <summary>
+            Get/Set the custom headers.
+            <para>
+            This allows you to set custom headers (e.g. X-Forwarded-For,
+            X-Request-Id, etc),
+            </para>
+            </summary>
+            <remarks>
+            Libgit2 sets some headers for HTTP requests (User-Agent, Host,
+            Accept, Content-Type, Transfer-Encoding, Content-Length, Accept) that
+            cannot be overriden.
+            </remarks>
+            <example>
+            var pushOptions - new PushOptions() {
+                CustomHeaders = new String[] {"X-Request-Id: 12345"}
+            };
+            </example>
+            <value>The custom headers string array</value>
+        </member>
+        <member name="P:LibGit2Sharp.PushOptions.ProxyOptions">
+            <summary>
+            Options for connecting through a proxy.
             </summary>
         </member>
         <member name="T:LibGit2Sharp.PushResult">
@@ -10618,6 +10757,14 @@
             <param name="url">The url to list from.</param>
             <returns>The references in the remote repository.</returns>
         </member>
+        <member name="M:LibGit2Sharp.Repository.ListRemoteReferences(System.String,LibGit2Sharp.ProxyOptions)">
+            <summary>
+            Lists the Remote Repository References.
+            </summary>
+            <param name="url">The url to list from.</param>
+            <param name="proxyOptions">Options for connecting through a proxy.</param>
+            <returns>The references in the remote repository.</returns>
+        </member>
         <member name="M:LibGit2Sharp.Repository.ListRemoteReferences(System.String,LibGit2Sharp.Handlers.CredentialsHandler)">
             <summary>
             Lists the Remote Repository References.
@@ -10629,6 +10776,20 @@
             </para>
             <param name="url">The url to list from.</param>
             <param name="credentialsProvider">The <see cref="T:System.Func`1"/> used to connect to remote repository.</param>
+            <returns>The references in the remote repository.</returns>
+        </member>
+        <member name="M:LibGit2Sharp.Repository.ListRemoteReferences(System.String,LibGit2Sharp.Handlers.CredentialsHandler,LibGit2Sharp.ProxyOptions)">
+            <summary>
+            Lists the Remote Repository References.
+            </summary>
+            <para>
+            Does not require a local Repository. The retrieved
+            <see cref="P:LibGit2Sharp.IBelongToARepository.Repository"/>
+            throws <see cref="T:System.InvalidOperationException"/> in this case.
+            </para>
+            <param name="url">The url to list from.</param>
+            <param name="credentialsProvider">The <see cref="T:System.Func`1"/> used to connect to remote repository.</param>
+            <param name="proxyOptions">Options for connecting through a proxy.</param>
             <returns>The references in the remote repository.</returns>
         </member>
         <member name="M:LibGit2Sharp.Repository.Discover(System.String)">
@@ -12576,13 +12737,13 @@
             Update specified submodule.
             <para>
               This will:
-              1) Optionally initialize the if it not already initialzed,
+              1) Optionally initialize the if it not already initialized,
               2) clone the sub repository if it has not already been cloned, and
               3) checkout the commit ID for the submodule in the sub repository.
             </para>
             </summary>
             <param name="name">The name of the submodule to update.</param>
-            <param name="options">Options controlling submodule udpate behavior and callbacks.</param>
+            <param name="options">Options controlling submodule update behavior and callbacks.</param>
         </member>
         <member name="M:LibGit2Sharp.SubmoduleCollection.GetEnumerator">
             <summary>
@@ -12822,6 +12983,11 @@
             <summary>
             The flags specifying what conditions are
             reported through the OnCheckoutNotify delegate.
+            </summary>
+        </member>
+        <member name="P:LibGit2Sharp.SubmoduleUpdateOptions.FetchOptions">
+            <summary>
+            Collection of parameters controlling Fetch behavior.
             </summary>
         </member>
         <member name="T:LibGit2Sharp.SupportedCredentialTypes">
