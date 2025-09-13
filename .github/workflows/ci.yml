@@ -18,8 +18,9 @@ jobs:
         unityVersion:
           - 2021.3.3f1
           - 2021.3.45f1
-          - 2022.3.53f1
-          - 6000.0.29f1
+          - 2022.3.62f1
+          - 6000.0.57f1
+          - 6000.2.4f1
         targetPlatform:
           - StandaloneLinux64
           - StandaloneWindows64
@@ -29,7 +30,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: Library
           key: Library-${{ matrix.targetPlatform }}-${{ matrix.unityVersion }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
@@ -50,11 +51,12 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           customParameters: -debugCodeOptimization -enableCodeCoverage -coverageResultsPath ./CodeCoverage -coverageOptions "useProjectSettings;generateAdditionalMetrics"
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: Test results (all modes)
+          name: Test results for ${{ matrix.targetPlatform }} on ${{ matrix.unityVersion }}
           path: ${{ steps.testRunner.outputs.artifactsPath }}
+          overwrite: true
 
       - name: Upload code coverage to Codecov
         uses: codecov/codecov-action@v3
