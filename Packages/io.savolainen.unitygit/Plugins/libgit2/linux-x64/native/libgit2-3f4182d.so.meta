@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 286dbe8025b2d2b45bd292837f481c58
+guid: f1de442a921c74452a4c52ac22e4dfdc
 PluginImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -7,7 +7,7 @@ PluginImporter:
   executionOrder: {}
   defineConstraints: []
   isPreloaded: 1
-  isOverridable: 0
+  isOverridable: 1
   isExplicitlyReferenced: 0
   validateReferences: 1
   platformData:
@@ -22,6 +22,12 @@ PluginImporter:
         Exclude Win: 1
         Exclude Win64: 1
   - first:
+      Android: Android
+    second:
+      enabled: 0
+      settings:
+        Is16KbAligned: false
+  - first:
       Any: 
     second:
       enabled: 0
@@ -33,7 +39,7 @@ PluginImporter:
       settings:
         CPU: x86_64
         DefaultValueInitialized: true
-        OS: OSX
+        OS: Linux
   - first:
       Standalone: Linux64
     second:
@@ -45,7 +51,7 @@ PluginImporter:
     second:
       enabled: 0
       settings:
-        CPU: x86_64
+        CPU: None
   - first:
       Standalone: Win
     second:
