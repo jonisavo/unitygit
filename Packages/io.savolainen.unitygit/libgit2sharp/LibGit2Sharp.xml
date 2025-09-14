@@ -1203,12 +1203,18 @@
         </member>
         <member name="T:LibGit2Sharp.CloneOptions">
             <summary>
-            Options to define clone behaviour
+            Options to define clone behavior
             </summary>
+        </member>
+        <member name="M:LibGit2Sharp.CloneOptions.#ctor(LibGit2Sharp.FetchOptions)">
+            <summary>
+            Creates <see cref="T:LibGit2Sharp.CloneOptions"/> with specified <see cref="P:LibGit2Sharp.CloneOptions.FetchOptions"/> for a non-bare clone.
+            </summary>
+            <param name="fetchOptions">The fetch options to use.</param>
         </member>
         <member name="M:LibGit2Sharp.CloneOptions.#ctor">
             <summary>
-            Creates default <see cref="T:LibGit2Sharp.CloneOptions"/> for a non-bare clone
+            Creates default <see cref="T:LibGit2Sharp.CloneOptions"/> for a non-bare clone.
             </summary>
         </member>
         <member name="P:LibGit2Sharp.CloneOptions.IsBare">
@@ -2439,6 +2445,11 @@
         <member name="T:LibGit2Sharp.ConfigurationLevel">
             <summary>
             Specifies the level of configuration to use.
+            </summary>
+        </member>
+        <member name="F:LibGit2Sharp.ConfigurationLevel.Worktree">
+            <summary>
+            Worktree specific configuration file; $GIT_DIR/config.worktree
             </summary>
         </member>
         <member name="F:LibGit2Sharp.ConfigurationLevel.Local">
@@ -4160,6 +4171,17 @@
             </returns>
             </summary>
         </member>
+        <member name="M:LibGit2Sharp.Core.Proxy.git_libgit2_opts_get_owner_validation">
+            <summary>
+            Gets the value of owner validation
+            </summary>
+        </member>
+        <member name="M:LibGit2Sharp.Core.Proxy.git_libgit2_opts_set_owner_validation(System.Boolean)">
+            <summary>
+            Enable or disable owner validation
+            </summary>
+            <param name="enabled">true to enable owner validation, false otherwise</param>
+        </member>
         <member name="M:LibGit2Sharp.Core.Proxy.git_worktree_lookup(LibGit2Sharp.Core.Handles.RepositoryHandle,System.String)">
             <summary>
             Returns a handle to the corresponding worktree,
@@ -4960,6 +4982,14 @@
             </para>
             </summary>
         </member>
+        <member name="P:LibGit2Sharp.FetchOptions.Depth">
+            <summary>
+            Specifies the depth of the fetch to perform.
+            <para>
+            Default value is 0 (full fetch).
+            </para>
+            </summary>
+        </member>
         <member name="P:LibGit2Sharp.FetchOptions.CustomHeaders">
              <summary>
              Get/Set the custom headers.
@@ -5687,6 +5717,21 @@
             The user-agent string.
             </returns>
             </summary>
+        </member>
+        <member name="M:LibGit2Sharp.GlobalSettings.GetOwnerValidation">
+            <summary>
+            Gets the owner validation setting for repository directories.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:LibGit2Sharp.GlobalSettings.SetOwnerValidation(System.Boolean)">
+            <summary>
+             Sets whether repository directories should be owned by the current user. The default is to validate ownership.
+            </summary>
+            <remarks>
+             Disabling owner validation can lead to security vulnerabilities (see CVE-2022-24765).
+            </remarks>
+            <param name="enabled">true to enable owner validation; otherwise, false.</param>
         </member>
         <member name="T:LibGit2Sharp.Handlers.ProgressHandler">
             <summary>
@@ -9368,12 +9413,6 @@
             <summary>
             Needed for mocking purposes.
             </summary>
-        </member>
-        <member name="M:LibGit2Sharp.Reference.#ctor(LibGit2Sharp.IRepository,System.String,System.String)">
-            <remarks>
-            This would be protected+internal, were that supported by C#.
-            Do not use except in subclasses.
-            </remarks>
         </member>
         <member name="M:LibGit2Sharp.Reference.IsValidName(System.String)">
              <summary>
@@ -14075,36 +14114,35 @@
         </member>
         <member name="M:LibGit2Sharp.WorktreeCollection.Add(System.String,System.String,System.String,System.Boolean)">
             <summary>
-            
+            Creates a worktree.
             </summary>
-            <param name="committishOrBranchSpec"></param>
-            <param name="name"></param>
-            <param name="path"></param>
+            <param name="committishOrBranchSpec">The committish to checkout into the new worktree.</param>
+            <param name="name">Name of the worktree.</param>
+            <param name="path">Location of the worktree.</param>
             <param name="isLocked"></param>
-            <returns></returns>
         </member>
         <member name="M:LibGit2Sharp.WorktreeCollection.Add(System.String,System.String,System.Boolean)">
             <summary>
-            
+            Creates a worktree.
             </summary>
-            <param name="name"></param>
-            <param name="path"></param>
+            <param name="name">Name of the worktree.</param>
+            <param name="path">Location of the worktree.</param>
             <param name="isLocked"></param>
         </member>
         <member name="M:LibGit2Sharp.WorktreeCollection.Prune(LibGit2Sharp.Worktree)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="worktree"></param>
-            <returns></returns>
+             </summary>
+             <param name="worktree"></param>
+             <returns></returns>
         </member>
         <member name="M:LibGit2Sharp.WorktreeCollection.Prune(LibGit2Sharp.Worktree,System.Boolean)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="worktree"></param>
-            <param name="ifLocked"></param>
-            <returns></returns>
+             </summary>
+             <param name="worktree"></param>
+             <param name="ifLocked"></param>
+             <returns></returns>
         </member>
         <member name="M:LibGit2Sharp.WorktreeCollection.GetEnumerator">
             <summary>
