@@ -5,8 +5,8 @@ using UnityEngine.UIElements;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("Components/BranchList/BranchList.uxml")]
-    [Stylesheet("Components/BranchList/BranchList.style.uss")]
+    [Layout]
+    [Stylesheet]
     public partial class BranchList : UIList<Branch, BranchListItem>
     {
         [Query("branch-list-header-label")]

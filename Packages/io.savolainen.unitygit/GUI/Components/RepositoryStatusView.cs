@@ -5,8 +5,8 @@ using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("Components/RepositoryStatusView/RepositoryStatusView.uxml")]
-    [Stylesheet("Components/RepositoryStatusView/RepositoryStatusView.style.uss")]
+    [Layout]
+    [Stylesheet]
     [Dependency(typeof(IRestoreService), provide: typeof(RestoreService))]
     public partial class RepositoryStatusView : UnityGitUIComponent
     {

@@ -5,8 +5,8 @@ using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("Components/UnityGitLog/UnityGitLog.uxml")]
-    [Stylesheet("Components/UnityGitLog/UnityGitLog.style.uss")]
+    [Layout]
+    [Stylesheet]
     [RootClass("ugit-full-height")]
     [Dependency(typeof(ILogService), provide: typeof(UnityGitLogService))]
     public partial class UnityGitLog : UnityGitUIComponent, IOnAttachToPanel, IOnDetachFromPanel

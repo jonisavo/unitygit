@@ -4,8 +4,8 @@ using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("Components/BranchesWindowView/BranchesWindowView.uxml")]
-    [Stylesheet("Components/BranchesWindowView/BranchesWindowView.style.uss")]
+    [Layout]
+    [Stylesheet]
     [Dependency(typeof(IStatusService), provide: typeof(StatusService))]
     public partial class BranchesWindowView : UnityGitUIComponent
     {

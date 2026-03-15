@@ -6,8 +6,8 @@ using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("Components/RepositoryBranchesView/RepositoryBranchesView.uxml")]
-    [Stylesheet("Components/RepositoryBranchesView/RepositoryBranchesView.style.uss")]
+    [Layout]
+    [Stylesheet]
     [Dependency(typeof(IGitCommandService), provide: typeof(GitCommandService))]
     public partial class RepositoryBranchesView : UnityGitUIComponent, IOnAttachToPanel
     {

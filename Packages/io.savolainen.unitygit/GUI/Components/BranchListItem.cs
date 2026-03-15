@@ -6,8 +6,8 @@ using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("Components/BranchListItem/BranchListItem.uxml")]
-    [Stylesheet("Components/BranchListItem/BranchListItem.style.uss")]
+    [Layout]
+    [Stylesheet]
     [Dependency(typeof(IBranchService), provide: typeof(BranchService))]
     [Dependency(typeof(IPushService), provide: typeof(PushService))]
     [Dependency(typeof(IPullService), provide: typeof(PullService))]

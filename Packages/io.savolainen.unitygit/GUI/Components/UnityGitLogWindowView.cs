@@ -5,8 +5,8 @@ using UnityGit.Core.Data;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("Components/UnityGitLogWindowView/UnityGitLogWindowView.uxml")]
-    [Stylesheet("Components/UnityGitLogWindowView/UnityGitLogWindowView.style.uss")]
+    [Layout]
+    [Stylesheet]
     [RootClass("ugit-full-height")]
     [Dependency(typeof(IGitCommandService), provide: typeof(GitCommandService))]
     [Dependency(typeof(IRepositoryService), provide: typeof(RepositoryService))]

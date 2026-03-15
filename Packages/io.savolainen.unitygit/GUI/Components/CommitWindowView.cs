@@ -6,8 +6,8 @@ using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("Components/CommitWindowView/CommitWindowView.uxml")]
-    [Stylesheet("Components/CommitWindowView/CommitWindowView.style.uss")]
+    [Layout]
+    [Stylesheet]
     [RootClass("ugit-full-height")]
     [Dependency(typeof(IStatusService), provide: typeof(StatusService))]
     [Dependency(typeof(ICommitService), provide: typeof(CommitService))]
