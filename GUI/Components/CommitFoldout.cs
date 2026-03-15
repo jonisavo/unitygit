@@ -6,8 +6,8 @@ using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("Components/CommitFoldout/CommitFoldout.uxml")]
-    [Stylesheet("Components/CommitFoldout/CommitFoldout.style.uss")]
+    [Layout]
+    [Stylesheet]
     [Dependency(typeof(ISignatureService), provide: typeof(SignatureService))]
     [Dependency(typeof(ICommitService), provide: typeof(CommitService))]
     public partial class CommitFoldout : UnityGitUIComponent

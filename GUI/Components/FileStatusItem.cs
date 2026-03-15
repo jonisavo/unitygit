@@ -7,8 +7,8 @@ using UnityGit.Core.Utilities;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("Components/FileStatusItem/FileStatusItem.uxml")]
-    [Stylesheet("Components/FileStatusItem/FileStatusItem.style.uss")]
+    [Layout]
+    [Stylesheet]
     [Dependency(typeof(ICommitService), provide: typeof(CommitService))]
     [Dependency(typeof(IRestoreService), provide: typeof(RestoreService))]
     [Dependency(typeof(IDiffService), provide: typeof(DiffService))]

@@ -5,8 +5,8 @@ using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("Components/RepositoryHeader/RepositoryHeader.uxml")]
-    [Stylesheet("Components/RepositoryHeader/RepositoryHeader.style.uss")]
+    [Layout]
+    [Stylesheet]
     [Dependency(typeof(IRepositoryService), provide: typeof(RepositoryService))]
     public partial class RepositoryHeader : UnityGitUIComponent
     {

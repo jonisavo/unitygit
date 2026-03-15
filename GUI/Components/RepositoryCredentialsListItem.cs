@@ -6,8 +6,8 @@ using Credentials = UnityGit.Core.Data.Credentials;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("Components/RepositoryCredentialsListItem/RepositoryCredentialsListItem.uxml")]
-    [Stylesheet("Components/RepositoryCredentialsListItem/RepositoryCredentialsListItem.style.uss")]
+    [Layout]
+    [Stylesheet]
     [Dependency(typeof(IRepositoryService), provide: typeof(RepositoryService))]
     [Dependency(typeof(ICredentialsService), provide: typeof(CredentialsService))]
     public partial class RepositoryCredentialsListItem : UnityGitUIComponent

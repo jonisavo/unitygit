@@ -4,8 +4,8 @@ using UnityGit.Core.Services;
 
 namespace UnityGit.GUI.Components
 {
-    [Layout("Components/SettingsProviderView/SettingsProviderView.uxml")]
-    [Stylesheet("Components/SettingsProviderView/SettingsProviderView.style.uss")]
+    [Layout]
+    [Stylesheet]
     [RootClass("container")]
     [Dependency(typeof(IStatusService), provide: typeof(StatusService))]
     public partial class SettingsProviderView : UnityGitUIComponent
