@@ -1,13 +1,13 @@
 {
   "dependencies": {
-    "com.marijnzwemmer.unity-toolbar-extender": "1.4.2",
-    "com.unity.ide.rider": "3.0.37",
-    "com.unity.ide.visualstudio": "2.0.23",
+    "com.marijnzwemmer.unity-toolbar-extender": "1.4.5",
+    "com.unity.ide.rider": "3.0.39",
     "com.unity.ide.vscode": "1.2.5",
     "com.unity.test-framework": "1.1.33",
     "com.unity.testtools.codecoverage": "1.2.7",
+    "com.unity.toolchain.linux-x86_64": "2.0.11",
     "com.unity.ugui": "1.0.0",
-    "io.savolainen.uicomponents": "1.0.0-beta.9",
+    "io.savolainen.uicomponents": "1.0.0-beta.10",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
